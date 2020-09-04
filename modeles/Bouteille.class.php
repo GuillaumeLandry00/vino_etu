@@ -170,7 +170,4 @@ class Bouteille extends Modele {
 	}
 }
 
-
-
-
 ?>
