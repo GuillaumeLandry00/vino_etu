@@ -80,7 +80,7 @@ class Controler
 			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
-				//var_dump($_POST['data']);
+				var_dump($_POST['data']);
 				
 				//var_dump($data);
 				$resultat = $bte->ajouterBouteilleCellier($body);
