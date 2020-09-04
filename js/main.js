@@ -18,10 +18,11 @@ window.addEventListener('load', function() {
         element.addEventListener("click", function(evt){
             let id = evt.target.parentElement.dataset.id;
             let requete = new Request(BaseURL+"index.php?requete=boireBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
-            console.log('url de base'+requete);
+
             fetch(requete)
             .then(response => {
                 if (response.status === 200) {
+                  console.log('url de base'+response.json());
                   return response.json();
                 } else {
                   throw new Error('Erreur');
