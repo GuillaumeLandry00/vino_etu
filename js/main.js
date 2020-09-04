@@ -8,9 +8,9 @@
  *
  */
 
-//const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
-const BaseURL = document.baseURI;
-console.log('url de base'+BaseURL);
+const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
+//const BaseURL = document.baseURI;
+console.log('url de basess'+BaseURL);
 window.addEventListener('load', function() {
     console.log("load");
     document.querySelectorAll(".btnBoire").forEach(function(element){
