@@ -22,7 +22,6 @@ window.addEventListener('load', function() {
             fetch(requete)
             .then(response => {
                 if (response.status === 200) {
-                  console.log('url de base'+response.json());
                   return response.json();
                 } else {
                   throw new Error('Erreur');
