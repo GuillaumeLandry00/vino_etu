@@ -22,7 +22,7 @@ class SAQ extends Modele {
 
 	public function __construct() {
 		parent::__construct();
-		if (!($this -> stmt = $this -> _db -> prepare("INSERT INTO vino__bouteille(nom, type, image, code_saq, pays, description, prix_saq, url_saq, url_img, format) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
+		if (!($this -> stmt = $this -> _db -> prepare("INSERT INTO vino__bouteille(nom, image, code_saq, pays, description, prix_saq, url_saq, url_img,format,fk__vino__type_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
 			echo "Echec de la préparation : (" . $mysqli -> errno . ") " . $mysqli -> error;
 		}
 	}
@@ -33,73 +33,127 @@ class SAQ extends Modele {
 	 * @param int $debut
 	 */
 	public function getProduits($nombre = 24, $page = 1) {
+	//gestion des alertes
+		error_reporting(-1);
+		ini_set("display_errors", 1);
 		$s = curl_init();
-		$url = "https://www.saq.com/fr/produits/vin/vin-rouge?p=1&product_list_limit=24&product_list_order=name_asc";
-		//curl_setopt($s, CURLOPT_URL, "http://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?searchType=&orderBy=&categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=".$debut."&tri=&metaData=YWRpX2YxOjA8TVRAU1A%2BYWRpX2Y5OjE%3D&pageSize=". $nombre ."&catalogId=50000&searchTerm=*&sensTri=&pageView=&facet=&categoryId=39919&storeId=20002");
-		//curl_setopt($s, CURLOPT_URL, "https://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=" . $debut . "&pageSize=" . $nombre . "&catalogId=50000&searchTerm=*&categoryId=39919&storeId=20002");
-		curl_setopt($s, CURLOPT_URL, $url);
-		curl_setopt($s, CURLOPT_RETURNTRANSFER, true);
-		//curl_setopt($s, CURLOPT_FOLLOWLOCATION, 1);
-
-		self::$_webpage = curl_exec($s);
-		self::$_status = curl_getinfo($s, CURLINFO_HTTP_CODE);
-		curl_close($s);
-
-		$doc = new DOMDocument();
-		$doc -> recover = true;
-		$doc -> strictErrorChecking = false;
-		@$doc -> loadHTML(self::$_webpage);
-		$elements = $doc -> getElementsByTagName("li");
-		$i = 0;
+		$article_url = 'https://www.saq.com/fr/produits/vin/vin-rouge?p=1&product_list_limit=24&product_list_order=name_asc';
+		//verifier que l url existe 
+		if (isset($article_url)){
+		  $str = @file_get_contents($article_url);
+		  // retourne  des erreurs
+		  if ($str === FALSE) {
+			echo 'problem getting url';
+			return false;
+		  }
 		
-		foreach ($elements as $key => $noeud) {
-			//var_dump($noeud -> getAttribute('class')) ;
-			//if ("resultats_product" == str$noeud -> getAttribute('class')) {
-			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
-
-				//echo $this->get_inner_html($noeud);
+				curl_setopt($s, CURLOPT_URL, $article_url);
+				curl_setopt($s, CURLOPT_RETURNTRANSFER, true);
+				//curl_setopt($s, CURLOPT_FOLLOWLOCATION, 1);
+		
+				self::$_webpage = curl_exec($s);
+		  curl_close($s);
+		  $document = new DOMDocument();
+		  //chargement de la page
+		 var_dump( @ $document->loadHTML($str) );
+		//recuperer tous les Li
+		  $elementList = $document->getElementsByTagName('LI');
+		  $i = 0;
+		  $tags = array ( 'li');
+		  $texts = array ();
+		
+		  foreach($tags as $tag) {
+			$elementList = $document->getElementsByTagName($tag);
+		   // var_dump(count($elementList));
+			foreach($elementList as $key =>$noeud) {
+			 if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
+				
 				$info = self::recupereInfo($noeud);
+			      
+			     //netoyer le lien
+			     $pattern = '/https:/i';
+	             $info -> img=preg_replace($pattern, '',$info->img);
+			    //affichage  des infos par necessaire 
 				echo "<p>".$info->nom;
-				$retour = $this -> ajouteProduit($info);
+				echo "<p>".$info->img;
+				echo "<p>".$info->url;
+				echo "<p>".$info -> desc -> type;
+				echo "<p>".$info -> desc -> format;
+				echo "<p>".$info -> desc -> code_SAQ;
+				echo "<p>".$info -> desc -> pays;
+				echo "<p>".$info -> desc -> texte;
+				echo "<p>".$info->prix;
+			
+				 $retour = self::ajouteProduit($info);
 				echo "<br>Code de retour : " . $retour -> raison . "<br>";
 				if ($retour -> succes == false) {
-					echo "<pre>";
-					var_dump($info);
-					echo "</pre>";
-					echo "<br>";
+				    echo "<pre>"; 
+				    echo "</pre>";
+				    echo "<br>";
 				} else {
-					$i++;
+				    $i++;
 				}
 				echo "</p>";
 			}
+			}
+		   
+		  }
+		  
 		}
-
 		return $i;
 	}
 
-	private function get_inner_html($node) {
-		$innerHTML = '';
-		$children = $node -> childNodes;
-		foreach ($children as $child) {
-			$innerHTML .= $child -> ownerDocument -> saveXML($child);
-		}
+	/**
+ * function qui retourne tout les boueilles de l url
+ * @param $node l'element li 
+ * @return la page hmtl des bouteilles
+ */
+private function get_inner_html($node) {
+    $innerHTML = '';
+    $children = $node -> childNodes;
+    foreach ($children as $child) {
+        $innerHTML .= $child -> ownerDocument -> saveXML($child);
+    }
 
-		return $innerHTML;
-	}
-	private function nettoyerEspace($chaine)
+    return $innerHTML;
+}
+/**
+ * nettoie les espaces 
+ */
+private function nettoyerEspace($chaine)
 	{
 		return preg_replace('/\s+/', ' ',$chaine);
-	}
+    }
+
+    /**
+     * recuperer les donnees de chaque element li 
+     */
 	private function recupereInfo($noeud) {
 		
 		$info = new stdClass();
-		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
-		;
+		//traiter les images
+		//var_dump( $noeud -> getElementsByTagName("img") -> item(0) ->getAttribute('class'));
+		if ($noeud -> getElementsByTagName("img") -> item(0) ->getAttribute('class') == 'product-image-photo') {
+			$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); 
+		}
+		if ($noeud -> getElementsByTagName("img") -> item(0) ->getAttribute('class') == '') {
+			$info -> img = $noeud -> getElementsByTagName("img") -> item(1) -> getAttribute('src'); 
+		}
+		
+		
+		
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
 		
-		$info -> nom = self::nettoyerEspace(trim($a_titre -> textContent));	//TODO : Retirer le format de la bouteille du titre.
-		
+        $info -> nom = self::nettoyerEspace(trim($a_titre -> textContent));
+		// Retirer le format de la bouteille du titre.
+		//mettre le nom sous forme de tableau	
+		$tabNom= explode(" ", $info -> nom);
+		for($j=0; $j<count($tabNom)-3 ;$j++) {
+		 $tab[]=$tabNom[$j]; 
+		}
+		//chainage des nom 
+		$info -> nom=implode(" ", $tab);
 		// Type, format et pays
 		$aElements = $noeud -> getElementsByTagName("strong");
 		foreach ($aElements as $node) {
@@ -126,9 +180,7 @@ class SAQ extends Modele {
 				if(preg_match("/\d+/", $node -> textContent, $aRes))
 				{
 					$info -> desc -> code_SAQ = trim($aRes[0]);
-				}
-				
-				
+				}	
 				
 			}
 		}
@@ -141,14 +193,16 @@ class SAQ extends Modele {
 		}
 		//var_dump($info);
 		return $info;
-	}
-
-	private function ajouteProduit($bte) {
+    }
+    /**
+     * ajout du produit 
+     */
+    private function ajouteProduit($bte) {
 		$retour = new stdClass();
 		$retour -> succes = false;
 		$retour -> raison = '';
 
-		//var_dump($bte);
+	//	var_dump($bte);
 		// Récupère le type
 		$rows = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
 		
@@ -159,7 +213,7 @@ class SAQ extends Modele {
 
 			$rows = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
 			if ($rows -> num_rows < 1) {
-				$this -> stmt -> bind_param("sissssisss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format);
+				$this -> stmt -> bind_param("sssssisssi", $bte -> nom,  $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> type, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format,$type);
 				$retour -> succes = $this -> stmt -> execute();
 				$retour -> raison = self::INSERE;
 				//var_dump($this->stmt);
@@ -176,5 +230,6 @@ class SAQ extends Modele {
 
 	}
 
+	
 }
 ?>

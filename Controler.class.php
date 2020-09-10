@@ -57,8 +57,8 @@ class Controler
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
-            $cellier = $bte->getListeBouteilleCellier();
-            
+			$cellier = $bte->getListeBouteilleCellier();
+			//var_dump($cellier);
             echo json_encode($cellier);
                   
 		}
@@ -77,6 +77,7 @@ class Controler
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
+		
 			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
@@ -111,6 +112,7 @@ class Controler
 			$bte = new Bouteille();
 			$resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
 			echo json_encode($resultat);
+			
 		}
 		
 }
