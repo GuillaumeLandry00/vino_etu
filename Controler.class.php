@@ -29,19 +29,26 @@ class Controler
 					$this->autocompleteBouteille();
 					break;
 				case 'ajouterNouvelleBouteilleCellier':
+					echo $_GET['requete'];
 					$this->ajouterNouvelleBouteilleCellier();
 					break;
 				case 'ajouterBouteilleCellier':
+					
 					$this->ajouterBouteilleCellier();
 					break;
 				case 'boireBouteilleCellier':
 					$this->boireBouteilleCellier();
+					break;
+				case 'modifierBouteilleCellier':
+					echo $_GET['requete'];
+					$this->modifierBouteilleCellier();
 					break;
 				default:
 					$this->accueil();
 					break;
 			}
 		}
+		
 
 		private function accueil()
 		{
@@ -77,19 +84,37 @@ class Controler
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
-		
 			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
-				//var_dump($_POST['data']);
-				
-				//var_dump($data);
+
 				$resultat = $bte->ajouterBouteilleCellier($body);
 				echo json_encode($resultat);
 			}
 			else{
 				include("vues/entete.php");
 				include("vues/ajouter.php");
+				include("vues/pied.php");
+			}
+			
+            
+		}
+
+
+		private function modifierBouteilleCellier()
+		{
+			$body = json_decode(file_get_contents('php://input'));
+			
+			if(!empty($body)){
+				$bte = new Bouteille();
+				$resultat = $bte->modifierBouteilleCellier($body);
+				echo json_encode($resultat);
+			}
+			else{
+				$bte = new Bouteille();
+            	$data = $bte->getUneBouteilleCellier($_GET['id']);
+				include("vues/entete.php");
+				include("vues/modifier.php");
 				include("vues/pied.php");
 			}
 			

@@ -46,6 +46,14 @@ class SAQ extends Modele {
 			echo 'problem getting url';
 			return false;
 		  }
+		//$url = "https://www.saq.com/fr/produits/vin/vin-rouge?p=1&product_list_limit=24&product_list_order=name_asc";
+		//curl_setopt($s, CURLOPT_URL, "http://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?searchType=&orderBy=&categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=".$debut."&tri=&metaData=YWRpX2YxOjA8TVRAU1A%2BYWRpX2Y5OjE%3D&pageSize=". $nombre ."&catalogId=50000&searchTerm=*&sensTri=&pageView=&facet=&categoryId=39919&storeId=20002");
+		//curl_setopt($s, CURLOPT_URL, "https://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=" . $debut . "&pageSize=" . $nombre . "&catalogId=50000&searchTerm=*&categoryId=39919&storeId=20002");
+		curl_setopt($s, CURLOPT_URL, $article_url);
+		curl_setopt($s, CURLOPT_RETURNTRANSFER, true);
+		//curl_setopt($s, CURLOPT_FOLLOWLOCATION, 1);
+
+		$i = 0;
 		
 				curl_setopt($s, CURLOPT_URL, $article_url);
 				curl_setopt($s, CURLOPT_RETURNTRANSFER, true);

@@ -17,7 +17,7 @@ foreach ($data as $cle => $bouteille) {
             <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
         </div>
         <div class="options" data-id="<?php echo $bouteille['vino__bouteille_id'] ?>">
-            <button>Modifier</button>
+            <button ><a href="?requete=modifierBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>">Modifier</a></button>
             <button class='btnAjouter'>Ajouter</button>
             <button class='btnBoire'>Boire</button>
             
