@@ -48,7 +48,7 @@ class SAQ extends Modele {
 		$doc = new DOMDocument();
 		$doc -> recover = true;
 		$doc -> strictErrorChecking = false;
-		@$doc -> loadHTML(self::$_webpage);
+		$doc -> loadHTML(self::$_webpage);
 		$elements = $doc -> getElementsByTagName("li");
 		$i = 0;
 		

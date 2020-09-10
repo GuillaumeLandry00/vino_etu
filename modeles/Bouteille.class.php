@@ -28,33 +28,42 @@ class Bouteille extends Modele {
 		
 		return $rows;
 	}
-	
+
+	/**
+	 * Fonction: Permetant de montrer tous les bouteilles qui sont dans des celliers
+	 * 
+	 * TODO:: Ajouter un WHERE losrqu'on nous allons avoir les USER et ajouter param
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return array de tous les bouteilles du cellier
+	 */
 	public function getListeBouteilleCellier()
 	{
 		
 		$rows = Array();
-		$requete ='SELECT 
-						c.id as id_bouteille_cellier,
-						c.id_bouteille, 
-						c.date_achat, 
-						c.garde_jusqua, 
-						c.notes, 
-						c.prix, 
-						c.quantite,
-						c.millesime, 
-						b.id,
-						b.nom, 
-						b.type, 
-						b.image, 
-						b.code_saq, 
-						b.url_saq, 
-						b.pays, 
-						b.description,
-						t.type 
-						from vino__cellier c 
-						INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
-						INNER JOIN vino__type t ON t.id = b.type
-						'; 
+		$requete ='SELECT
+		B.nom,
+		B.format,
+		B.image,
+		B.code_saq,
+		B.pays,
+		B.description,
+		B.prix_saq,
+		B.url_saq,
+		B.url_img,
+		C.quantite,
+		C.prix,
+		C.date_achat,
+		C.notes,
+		C.garde_jusqua,
+		C.millesime,
+		T.type,
+		C.vino__bouteille_id
+		FROM cellier__bouteille AS C
+		INNER JOIN vino__bouteille AS B ON C.vino__bouteille_id = B.id
+		INNER JOIN vino__type AS T ON B.fk__vino__type_id =T.id
+		'; 
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
 			if($res->num_rows)
@@ -72,7 +81,61 @@ class Bouteille extends Modele {
 			 //$this->_db->error;
 		}
 		
+		return $rows;
+	}
+
+	/**
+	 * Fonction: Permetant de montrer tous les bouteilles qui sont dans des celliers
+	 * 
+	 * TODO:: Ajouter un WHERE losrqu'on nous allons avoir les USER et ajouter param
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return array de tous les bouteilles du cellier
+	 */
+	public function getUneBouteilleCellier($id)
+	{
 		
+		$rows = Array();
+		$requete ='SELECT
+		B.nom,
+		B.format,
+		B.image,
+		B.code_saq,
+		B.pays,
+		B.description,
+		B.prix_saq,
+		B.url_saq,
+		B.url_img,
+		C.quantite,
+		C.prix,
+		C.date_achat,
+		C.notes,
+		C.garde_jusqua,
+		C.millesime,
+		T.type,
+		C.vino__bouteille_id
+		FROM cellier__bouteille AS C
+		INNER JOIN vino__bouteille AS B ON C.vino__bouteille_id = B.id
+		INNER JOIN vino__type AS T ON B.fk__vino__type_id =T.id
+		WHERE C.vino__bouteille_id = '.$id.'
+		'; 
+		if(($res = $this->_db->query($requete)) ==	 true)
+		{
+			if($res->num_rows)
+			{
+				while($row = $res->fetch_assoc())
+				{
+					$row['nom'] = trim(utf8_encode($row['nom']));
+					$rows[] = $row;
+				}
+			}
+		}
+		else 
+		{
+			throw new Exception("Erreur de requête sur la base de donnée", 1);
+			 //$this->_db->error;
+		}
 		
 		return $rows;
 	}
@@ -132,17 +195,96 @@ class Bouteille extends Modele {
 	public function ajouterBouteilleCellier($data)
 	{
 		//TODO : Valider les données.
-		//var_dump($data);	
-		
-		$requete = "INSERT INTO vino__cellier(id_bouteille,date_achat,garde_jusqua,notes,prix,quantite,millesime) VALUES (".
-		"'".$data->id_bouteille."',".
-		"'".$data->date_achat."',".
-		"'".$data->garde_jusqua."',".
-		"'".$data->notes."',".
-		"'".$data->prix."',".
-		"'".$data->quantite."',".
-		"'".$data->millesime."')";
 
+		//Initialise un tableau pour inserer des erreurs
+		$erreur = array();
+
+		//Verification bon format de date YYYY-MM-DD seulement si une valeur est entr/
+		if($data->date_achat !== ""){
+			$regExp = "/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/i";
+			if(!preg_match($regExp, $data->date_achat)){
+				//Ajoute une erreur dans le tableau
+				$erreur[] ="Erreur date achat";
+			}
+		}
+		if($data->garde_jusqua !== ""){
+			echo "Je suis ICI";
+			$regExp = "/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/i";
+			if(!preg_match($regExp, $data->garde_jusqua)){
+				//Ajoute une erreur dans le tableau
+				$erreur[] ="Erreur garde_jusqua";
+			}
+		}
+
+		//Verification du prix 
+		$regExp = "/^[1-9]\d*,?\d\d$/i";
+		if(!preg_match($regExp, $data->prix)){
+			$erreur[] ="Erreur prix";
+		}
+
+		//Verification de la quantite
+		$regExp = "/^[1-9]\d*$/i";
+		if(!preg_match($regExp, $data->quantite)){
+			$erreur[] = "Erreur quantite";
+		}
+
+		//Verification  du millesime 1000 à 2999
+		if($data->millesime !== ""){
+			
+			$regExp = "/^[12][0-9]{3}$/i";
+			if(!preg_match($regExp, $data->millesime)){
+				$erreur[] = "Erreur millesime";
+			}
+		}
+		var_dump($erreur);
+		//Verifie si il y a des erreurs
+		if(count($erreur) == 0){
+			$requete = "INSERT INTO cellier__bouteille(vino__bouteille_id,vino__cellier_id,date_achat,garde_jusqua,notes,prix,quantite,millesime)
+			VALUES (".
+			"'".$data->id_bouteille."',".
+			//Todo aller chercher le cellier de l'user je l'ai mi a 1 pour des fins pratique
+			"'". 1 ."',".
+			"'".$data->date_achat."',".
+			"'".$data->garde_jusqua."',".
+			"'".$data->notes."',".
+			"'".$data->prix."',".
+			"'".$data->quantite."',".
+			"'".$data->millesime."')";
+
+			$res = $this->_db->query($requete);
+		}else{
+			//Si contient erreur envoie quelle sont les erreurs
+			$res = $erreur;
+			//Debug
+			//var_dump($erreur);
+		}
+		
+        
+		return $res;
+	}
+
+	/**
+	 * Cette méthode change les données d'une bouteille dans le cellier
+	 * 
+	 * @param array $data contenant tous les infos necessaire
+	 * 
+	 * @return Boolean Succès ou échec de l'ajout.
+	 */
+	public function modifierBouteilleCellier($data)
+	{
+		//TODO : Valider les données.
+			
+		
+		$requete = "UPDATE cellier__bouteille
+		SET quantite = " . $data->quantite . ", 
+		prix = " . $data->prix . ", 
+		date_achat = ' " . $data->date_achat . " ', 
+		notes = ' " . $data->notes . " ', 
+		garde_jusqua = ' " . $data->garde_jusqua . " ', 
+		millesime = " . $data->millesime . "
+		WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=1;"; 
+		//TODO: Aller chercher le $id du cellier avec $_SESSION
+		echo $requete;
         $res = $this->_db->query($requete);
         
 		return $res;
@@ -162,7 +304,7 @@ class Bouteille extends Modele {
 		//TODO : Valider les données.
 			
 			
-		$requete = "UPDATE vino__cellier SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE id = ". $id;
+		$requete = "UPDATE cellier__bouteille SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE 	vino__bouteille_id = ". $id;
 		//echo $requete;
         $res = $this->_db->query($requete);
         
