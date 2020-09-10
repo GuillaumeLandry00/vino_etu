@@ -217,7 +217,7 @@ class Bouteille extends Modele {
 			}
 		}
 		if($data->garde_jusqua !== ""){
-			echo "Je suis ICI";
+			//echo "Je suis ICI";
 			$regExp = "/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/i";
 			if(!preg_match($regExp, $data->garde_jusqua)){
 				//Ajoute une erreur dans le tableau
@@ -292,7 +292,7 @@ class Bouteille extends Modele {
 		millesime = " . $data->millesime . "
 		WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=1;"; 
 		//TODO: Aller chercher le $id du cellier avec $_SESSION
-		echo $requete;
+	//	echo $requete;
         $res = $this->_db->query($requete);
         
 		return $res;

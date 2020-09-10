@@ -3,7 +3,6 @@
     <div class="nouvelleBouteille" vertical layout>
         Recherche : <input type="text" name="nom_bouteille">
         <ul class="listeAutoComplete">
-
         </ul>
             <div >
                 <p>Nom : <span data-id="" class="nom_bouteille"></span></p>
