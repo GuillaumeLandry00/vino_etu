@@ -8,6 +8,7 @@
  *
  */
 
+//Test commit
 //Permet de definir la BaseUrl
 //const BaseURL = "http://vino.ca/";
 const BaseURL = document.baseURI;
