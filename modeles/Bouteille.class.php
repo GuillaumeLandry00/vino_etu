@@ -192,19 +192,7 @@ class Bouteille extends Modele {
 	 */
 	public function ajouterBouteilleCellier($data)
 	{
-		//TODO : Valider les données.
-		//TODO gerer les doublons
-		$requete = "INSERT INTO cellier__bouteille(vino__bouteille_id,vino__cellier_id,date_achat,garde_jusqua,notes,prix,quantite,millesime)
-		VALUES (".
-		"'".$data->id_bouteille."',".
-		//Todo aller chercher le cellier de l'user je l'ai mi a 1 pour des fins pratique
-		"'". 1 ."',".
-		"'".$data->date_achat."',".
-		"'".$data->garde_jusqua."',".
-		"'".$data->notes."',".
-		"'".$data->prix."',".
-		"'".$data->quantite."',".
-		"'".$data->millesime."')";
+
 		//Initialise un tableau pour inserer des erreurs
 		$erreur = array();
 
@@ -213,28 +201,27 @@ class Bouteille extends Modele {
 			$regExp = "/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/i";
 			if(!preg_match($regExp, $data->date_achat)){
 				//Ajoute une erreur dans le tableau
-				$erreur[] ="Erreur date achat";
+				$erreur["date_achat"] = true;
 			}
 		}
 		if($data->garde_jusqua !== ""){
-			echo "Je suis ICI";
 			$regExp = "/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/i";
 			if(!preg_match($regExp, $data->garde_jusqua)){
 				//Ajoute une erreur dans le tableau
-				$erreur[] ="Erreur garde_jusqua";
+				$erreur["garde_jusqua"] = true;
 			}
 		}
 
 		//Verification du prix 
-		$regExp = "/^[1-9]\d*,?\d\d$/i";
+		$regExp = "/^[1-9]\d*\.?\d\d$/i";
 		if(!preg_match($regExp, $data->prix)){
-			$erreur[] ="Erreur prix";
+			$erreur["prix"] = true;
 		}
 
 		//Verification de la quantite
 		$regExp = "/^[1-9]\d*$/i";
 		if(!preg_match($regExp, $data->quantite)){
-			$erreur[] = "Erreur quantite";
+			$erreur["quantite"] = true;
 		}
 
 		//Verification  du millesime 1000 à 2999
@@ -242,10 +229,10 @@ class Bouteille extends Modele {
 			
 			$regExp = "/^[12][0-9]{3}$/i";
 			if(!preg_match($regExp, $data->millesime)){
-				$erreur[] = "Erreur millesime";
+				$erreur["millesime"] = true ;
 			}
 		}
-		var_dump($erreur);
+
 		//Verifie si il y a des erreurs
 		if(count($erreur) == 0){
 			$requete = "INSERT INTO cellier__bouteille(vino__bouteille_id,vino__cellier_id,date_achat,garde_jusqua,notes,prix,quantite,millesime)
@@ -261,14 +248,12 @@ class Bouteille extends Modele {
 			"'".$data->millesime."')";
 
 			$res = $this->_db->query($requete);
+
 		}else{
 			//Si contient erreur envoie quelle sont les erreurs
 			$res = $erreur;
-			//Debug
-			//var_dump($erreur);
+			
 		}
-		
-        
 		return $res;
 	}
 	/**
@@ -280,20 +265,64 @@ class Bouteille extends Modele {
 	 */
 	public function modifierBouteilleCellier($data)
 	{
-		//TODO : Valider les données.
-			
 		
-		$requete = "UPDATE cellier__bouteille
-		SET quantite = " . $data->quantite . ", 
-		prix = " . $data->prix . ", 
-		date_achat = ' " . $data->date_achat . " ', 
-		notes = ' " . $data->notes . " ', 
-		garde_jusqua = ' " . $data->garde_jusqua . " ', 
-		millesime = " . $data->millesime . "
-		WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=1;"; 
-		//TODO: Aller chercher le $id du cellier avec $_SESSION
-		echo $requete;
-        $res = $this->_db->query($requete);
+		//Initialise un tableau pour inserer des erreurs
+		$erreur = array();
+
+		//Verification bon format de date YYYY-MM-DD seulement si une valeur est entr/
+		if($data->date_achat !== ""){
+			$regExp = "/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/i";
+			if(!preg_match($regExp, $data->date_achat)){
+				//Ajoute une erreur dans le tableau
+				$erreur["date_achat"] = true;
+			}
+		}
+		if($data->garde_jusqua !== ""){
+			$regExp = "/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/i";
+			if(!preg_match($regExp, $data->garde_jusqua)){
+				//Ajoute une erreur dans le tableau
+				$erreur["garde_jusqua"] = true;
+			}
+		}
+
+		//Verification du prix 
+		$regExp = "/^[1-9]\d*\.?\d\d$/i";
+		if(!preg_match($regExp, $data->prix)){
+			$erreur["prix"] = true;
+		}
+
+		//Verification de la quantite
+		$regExp = "/^[1-9]\d*$/i";
+		if(!preg_match($regExp, $data->quantite)){
+			$erreur["quantite"] = true;
+		}
+
+		//Verification  du millesime 1000 à 2999
+		if($data->millesime !== ""){
+			
+			$regExp = "/^[12][0-9]{3}$/i";
+			if(!preg_match($regExp, $data->millesime)){
+				$erreur["millesime"] = true ;
+			}
+		}
+
+		//Verifie si il y a des erreurs
+		if(count($erreur) == 0){
+			$requete = "UPDATE cellier__bouteille
+			SET quantite = " . $data->quantite . ", 
+			prix = " . $data->prix . ", 
+			date_achat = ' " . $data->date_achat . " ', 
+			notes = ' " . $data->notes . " ', 
+			garde_jusqua = ' " . $data->garde_jusqua . " ', 
+			millesime = " . $data->millesime . "
+			WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=1;"; 
+			//TODO: Aller chercher le $id du cellier avec $_SESSION
+			$res = $this->_db->query($requete);
+		}else{
+			//Si contient erreur envoie quelle sont les erreurs
+			$res = $erreur;
+
+		}
         
 		return $res;
 	}

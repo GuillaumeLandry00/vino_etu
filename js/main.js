@@ -8,37 +8,11 @@
  *
  */
 
+//Test commit
 //Permet de definir la BaseUrl
 //const BaseURL = "http://vino.ca/";
 const BaseURL = document.baseURI;
 console.log(BaseURL);
-//Permet de load la page
-window.addEventListener("load", function () {
-  console.log("load");
-  document.querySelectorAll(".btnBoire").forEach(function (element) {
-    console.log(element);
-    element.addEventListener("click", function (evt) {
-      let id = evt.target.parentElement.dataset.id;
-      let requete = new Request(
-        BaseURL + "index.php?requete=boireBouteilleCellier",
-        { method: "POST", body: '{"id": ' + id + "}" }
-      );
-
-      fetch(requete)
-        .then((response) => {
-          if (response.status === 200) {
-          
-             //window.location.href=window.location.href;
-            return response.json();
-            
-          } else {
-            throw new Error("Erreur");
-          }
-        })
-        .then((response) => {
-         //rechargement de la page
-         location.reload();
-          console.debug(response);
 
 //Permet de load la page
 window.addEventListener("load", function () {
@@ -61,20 +35,13 @@ window.addEventListener("load", function () {
           }
         })
         .then((response) => {
+          location.reload();
           console.debug(response);
-
         })
         .catch((error) => {
           console.error(error);
         });
-    
     });
-      location.reload();
-    });
-    // $(".fermer").click((evt)=>{
-    // location.reload();
-
-    // });
   });
 
   //Permet de selectionner tous les éléments avec la classe .btnAjouter
@@ -90,15 +57,6 @@ window.addEventListener("load", function () {
         { method: "POST", body: '{"id": ' + id + "}" }
       );
 
-    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
-    element.addEventListener("click", function (evt) {
-      //Permet d'aller chercher le id et créer la requête
-      let id = evt.target.parentElement.dataset.id;
-      let requete = new Request(
-        BaseURL + "index.php?requete=ajouterBouteilleCellier",
-        { method: "POST", body: '{"id": ' + id + "}" }
-      );
-
       fetch(requete)
         .then((response) => {
           if (response.status === 200) {
@@ -106,16 +64,10 @@ window.addEventListener("load", function () {
           } else {
             throw new Error("Erreur");
           }
-          
         })
         .then((response) => {
           //rechargement de la page
           location.reload();
-          console.debug(response);
-        })
-          location.reload();
-        })
-        .then((response) => {
           console.debug(response);
         })
         .catch((error) => {
@@ -126,7 +78,6 @@ window.addEventListener("load", function () {
 
   let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
   console.log(inputNomBouteille);
-  let liste = document.querySelector(".listeAutoComplete");
 
   let liste = document.querySelector(".listeAutoComplete");
   if (inputNomBouteille) {
@@ -161,9 +112,7 @@ window.addEventListener("load", function () {
       }
     });
 
-    //Créer un objet bouteille avec les inputs entrés
     //Créer un objet bouteille
-
     let bouteille = {
       nom: document.querySelector(".nom_bouteille"),
       millesime: document.querySelector("[name='millesime']"),
@@ -202,60 +151,6 @@ window.addEventListener("load", function () {
           millesime: bouteille.millesime.value,
         };
 
-        //Permet de creer un objet options pour les requete
-        let requete = new Request(
-          BaseURL + "index.php?requete=ajouterNouvelleBouteilleCellier",
-          {
-            method: "POST",
-            body: JSON.stringify(param)
-          }
-        );
-        fetch(requete)
-          .then((response) => {
-            if (response.status === 200) {
-             
-              return response.json();
-            } else {
-              throw new Error("Erreur");
-            }
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
-    }
-
-    liste.addEventListener("click", function (evt) {
-      console.dir(evt.target);
-      //Permet de vérifier qu'il a bien clique sur LI
-      if (evt.target.tagName == "LI") {
-        //Permet d'aller attribuer les données de la recherche dans les inputs
-        bouteille.nom.dataset.id = evt.target.dataset.id;
-        bouteille.nom.innerHTML = evt.target.innerHTML;
-
-        liste.innerHTML = "";
-        inputNomBouteille.value = "";
-      }
-    });
-
-    //Ajouter une nouvelle bouteille
-    let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
-    if (btnAjouter) {
-      btnAjouter.addEventListener("click", function (evt) {
-        //Permet d'aller chercher les valeurs des inputs
-        var param = {
-          id_bouteille: bouteille.nom.dataset.id,
-          date_achat: bouteille.date_achat.value,
-          garde_jusqua: bouteille.garde_jusqua.value,
-          notes: bouteille.notes.value,
-          prix: bouteille.prix.value,
-          quantite: bouteille.quantite.value,
-          millesime: bouteille.millesime.value,
-        };
-
         console.log(JSON.stringify(param));
 
         //Permet de creer un objet options pour les requete
@@ -264,11 +159,14 @@ window.addEventListener("load", function () {
           {
             method: "POST",
             body: JSON.stringify(param),
+            headers: { "Content-Type": "application/json" },
           }
         );
         fetch(requete)
           .then((response) => {
             if (response.status === 200) {
+              //Rentre ici
+              console.log(response);
               return response.json();
             } else {
               throw new Error("Erreur");
@@ -276,6 +174,37 @@ window.addEventListener("load", function () {
           })
           .then((response) => {
             console.log(response);
+            //Permet de verifier si il y des erreurs et afficher
+            if (response.prix == true) {
+              document.getElementById("errPrix").innerHTML =
+                "Veuillez entrer un prix valide 00.00";
+            }
+            //Vérifie le millesime
+            if (response.millesime == true) {
+              document.getElementById("errMillesime").innerHTML =
+                "Veuillez entrer une année entre 1000 et 2999";
+            }
+            //Vérifie les dates
+            if (response.date_achat == true || response.garde_jusqua == true) {
+              document.getElementById("errDate").innerHTML =
+                "Veuillez entrer la date sous le format YYYY-MM-DD";
+            }
+            //Vérifie la quantite
+            if (response.quantite == true) {
+              document.getElementById("errQt").innerHTML =
+                "Veuillez entrer une quantite valide";
+            }
+
+            //Permet de confirmer si l'ajout à eu lieu
+            if (response == true) {
+              document.getElementById("confirmation").innerHTML =
+                "Bien ajoutée!";
+              document.getElementById("confirmation").style.color = "green";
+            } else if (response == false) {
+              document.getElementById("confirmation").innerHTML =
+                "Ajout non effectuée";
+              document.getElementById("confirmation").style.color = "red";
+            }
           })
           .catch((error) => {
             console.error(error);
@@ -305,7 +234,7 @@ window.addEventListener("load", function () {
         {
           method: "PUT",
           body: JSON.stringify(param),
-          // headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
@@ -320,11 +249,41 @@ window.addEventListener("load", function () {
         })
         .then((response) => {
           console.log(response);
+          //Permet de verifier si il y des erreurs et afficher
+          if (response.prix == true) {
+            document.getElementById("errPrix").innerHTML =
+              "Veuillez entrer un prix valide 00.00";
+          }
+          //Vérifie le millesime
+          if (response.millesime == true) {
+            document.getElementById("errMillesime").innerHTML =
+              "Veuillez entrer une année entre 1000 et 2999";
+          }
+          //Vérifie les dates
+          if (response.date_achat == true || response.garde_jusqua == true) {
+            document.getElementById("errDate").innerHTML =
+              "Veuillez entrer la date sous le format YYYY-MM-DD";
+          }
+          //Vérifie la quantite
+          if (response.quantite == true) {
+            document.getElementById("errQt").innerHTML =
+              "Veuillez entrer une quantite valide";
+          }
+
+          //Permet de confirmer si le modifier à eu lieu
+          if (response == true) {
+            document.getElementById("confirmation").innerHTML =
+              "Modfication effectuée!";
+            document.getElementById("confirmation").style.color = "green";
+          } else if (response == false) {
+            document.getElementById("confirmation").innerHTML =
+              "Moofication non effectuée";
+            document.getElementById("confirmation").style.color = "red";
+          }
         })
         .catch((error) => {
           console.error(error);
         });
     });
-
   }
 });

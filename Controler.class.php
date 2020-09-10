@@ -29,18 +29,15 @@ class Controler
 					$this->autocompleteBouteille();
 					break;
 				case 'ajouterNouvelleBouteilleCellier':
-					echo $_GET['requete'];
 					$this->ajouterNouvelleBouteilleCellier();
 					break;
 				case 'ajouterBouteilleCellier':
-					
 					$this->ajouterBouteilleCellier();
 					break;
 				case 'boireBouteilleCellier':
 					$this->boireBouteilleCellier();
 					break;
 				case 'modifierBouteilleCellier':
-					echo $_GET['requete'];
 					$this->modifierBouteilleCellier();
 					break;
 				default:
@@ -66,6 +63,7 @@ class Controler
 			$bte = new Bouteille();
 			$cellier = $bte->getListeBouteilleCellier();
 			//var_dump($cellier);
+			
             echo json_encode($cellier);
                   
 		}
@@ -87,7 +85,6 @@ class Controler
 			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
-
 				$resultat = $bte->ajouterBouteilleCellier($body);
 				echo json_encode($resultat);
 			}
