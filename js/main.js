@@ -12,6 +12,33 @@
 //const BaseURL = "http://vino.ca/";
 const BaseURL = document.baseURI;
 console.log(BaseURL);
+//Permet de load la page
+window.addEventListener("load", function () {
+  console.log("load");
+  document.querySelectorAll(".btnBoire").forEach(function (element) {
+    console.log(element);
+    element.addEventListener("click", function (evt) {
+      let id = evt.target.parentElement.dataset.id;
+      let requete = new Request(
+        BaseURL + "index.php?requete=boireBouteilleCellier",
+        { method: "POST", body: '{"id": ' + id + "}" }
+      );
+
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+          
+             //window.location.href=window.location.href;
+            return response.json();
+            
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+         //rechargement de la page
+         location.reload();
+          console.debug(response);
 
 //Permet de load la page
 window.addEventListener("load", function () {
@@ -35,10 +62,13 @@ window.addEventListener("load", function () {
         })
         .then((response) => {
           console.debug(response);
+
         })
         .catch((error) => {
           console.error(error);
         });
+    
+    });
       location.reload();
     });
     // $(".fermer").click((evt)=>{
@@ -60,6 +90,15 @@ window.addEventListener("load", function () {
         { method: "POST", body: '{"id": ' + id + "}" }
       );
 
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet d'aller chercher le id et créer la requête
+      let id = evt.target.parentElement.dataset.id;
+      let requete = new Request(
+        BaseURL + "index.php?requete=ajouterBouteilleCellier",
+        { method: "POST", body: '{"id": ' + id + "}" }
+      );
+
       fetch(requete)
         .then((response) => {
           if (response.status === 200) {
@@ -67,6 +106,13 @@ window.addEventListener("load", function () {
           } else {
             throw new Error("Erreur");
           }
+          
+        })
+        .then((response) => {
+          //rechargement de la page
+          location.reload();
+          console.debug(response);
+        })
           location.reload();
         })
         .then((response) => {
@@ -79,9 +125,10 @@ window.addEventListener("load", function () {
   });
 
   let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
-
+  console.log(inputNomBouteille);
   let liste = document.querySelector(".listeAutoComplete");
 
+  let liste = document.querySelector(".listeAutoComplete");
   if (inputNomBouteille) {
     inputNomBouteille.addEventListener("keyup", function (evt) {
       console.log(evt);
@@ -114,7 +161,9 @@ window.addEventListener("load", function () {
       }
     });
 
+    //Créer un objet bouteille avec les inputs entrés
     //Créer un objet bouteille
+
     let bouteille = {
       nom: document.querySelector(".nom_bouteille"),
       millesime: document.querySelector("[name='millesime']"),
@@ -124,6 +173,60 @@ window.addEventListener("load", function () {
       garde_jusqua: document.querySelector("[name='garde_jusqua']"),
       notes: document.querySelector("[name='notes']"),
     };
+
+    liste.addEventListener("click", function (evt) {
+      console.dir(evt.target);
+      //Permet de vérifier qu'il a bien clique sur LI
+      if (evt.target.tagName == "LI") {
+        //Permet d'aller attribuer les données de la recherche dans les inputs
+        bouteille.nom.dataset.id = evt.target.dataset.id;
+        bouteille.nom.innerHTML = evt.target.innerHTML;
+
+        liste.innerHTML = "";
+        inputNomBouteille.value = "";
+      }
+    });
+
+    //Ajouter une nouvelle bouteille
+    let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
+    if (btnAjouter) {
+      btnAjouter.addEventListener("click", function (evt) {
+        //Permet d'aller chercher les valeurs des inputs
+        var param = {
+          id_bouteille: bouteille.nom.dataset.id,
+          date_achat: bouteille.date_achat.value,
+          garde_jusqua: bouteille.garde_jusqua.value,
+          notes: bouteille.notes.value,
+          prix: bouteille.prix.value,
+          quantite: bouteille.quantite.value,
+          millesime: bouteille.millesime.value,
+        };
+
+        //Permet de creer un objet options pour les requete
+        let requete = new Request(
+          BaseURL + "index.php?requete=ajouterNouvelleBouteilleCellier",
+          {
+            method: "POST",
+            body: JSON.stringify(param)
+          }
+        );
+        fetch(requete)
+          .then((response) => {
+            if (response.status === 200) {
+             
+              return response.json();
+            } else {
+              throw new Error("Erreur");
+            }
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
+    }
 
     liste.addEventListener("click", function (evt) {
       console.dir(evt.target);
@@ -222,5 +325,6 @@ window.addEventListener("load", function () {
           console.error(error);
         });
     });
+
   }
 });

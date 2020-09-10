@@ -3,10 +3,10 @@
 foreach ($data as $cle => $bouteille) {
     
     ?>
-    <div class="bouteille" data-quantite="">
+        <div class="bouteille" data-quantite="">
         <div class="img">
             
-            <img src="https:<?php echo $bouteille['image'] ?>">
+            <img src="https:<?php echo $bouteille['image'] ?> " width="100" height="100">
         </div>
         <div class="description">
             <p class="nom">Nom : <?php echo $bouteille['nom'] ?></p>

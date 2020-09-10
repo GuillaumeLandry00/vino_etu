@@ -80,7 +80,6 @@ class Bouteille extends Modele {
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
 			 //$this->_db->error;
 		}
-		
 		return $rows;
 	}
 
@@ -136,7 +135,6 @@ class Bouteille extends Modele {
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
 			 //$this->_db->error;
 		}
-		
 		return $rows;
 	}
 	
@@ -195,7 +193,18 @@ class Bouteille extends Modele {
 	public function ajouterBouteilleCellier($data)
 	{
 		//TODO : Valider les données.
-
+		//TODO gerer les doublons
+		$requete = "INSERT INTO cellier__bouteille(vino__bouteille_id,vino__cellier_id,date_achat,garde_jusqua,notes,prix,quantite,millesime)
+		VALUES (".
+		"'".$data->id_bouteille."',".
+		//Todo aller chercher le cellier de l'user je l'ai mi a 1 pour des fins pratique
+		"'". 1 ."',".
+		"'".$data->date_achat."',".
+		"'".$data->garde_jusqua."',".
+		"'".$data->notes."',".
+		"'".$data->prix."',".
+		"'".$data->quantite."',".
+		"'".$data->millesime."')";
 		//Initialise un tableau pour inserer des erreurs
 		$erreur = array();
 
@@ -262,7 +271,6 @@ class Bouteille extends Modele {
         
 		return $res;
 	}
-
 	/**
 	 * Cette méthode change les données d'une bouteille dans le cellier
 	 * 
@@ -302,9 +310,7 @@ class Bouteille extends Modele {
 	public function modifierQuantiteBouteilleCellier($id, $nombre)
 	{
 		//TODO : Valider les données.
-			
-			
-		$requete = "UPDATE cellier__bouteille SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE 	vino__bouteille_id = ". $id;
+		$requete = "UPDATE cellier__bouteille SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE vino__bouteille_id = ". $id;
 		//echo $requete;
         $res = $this->_db->query($requete);
         
