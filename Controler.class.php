@@ -32,7 +32,6 @@ class Controler
 					$this->ajouterNouvelleBouteilleCellier();
 					break;
 				case 'ajouterBouteilleCellier':
-					
 					$this->ajouterBouteilleCellier();
 					break;
 				case 'boireBouteilleCellier':
@@ -64,6 +63,7 @@ class Controler
 			$bte = new Bouteille();
 			$cellier = $bte->getListeBouteilleCellier();
 			//var_dump($cellier);
+			
             echo json_encode($cellier);
                   
 		}
@@ -82,7 +82,7 @@ class Controler
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
-	
+			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
 				$resultat = $bte->ajouterBouteilleCellier($body);

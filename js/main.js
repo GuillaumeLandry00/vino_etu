@@ -34,17 +34,13 @@ window.addEventListener("load", function () {
           }
         })
         .then((response) => {
+          location.reload();
           console.debug(response);
         })
         .catch((error) => {
           console.error(error);
         });
-      location.reload();
     });
-    // $(".fermer").click((evt)=>{
-    // location.reload();
-
-    // });
   });
 
   //Permet de selectionner tous les éléments avec la classe .btnAjouter
@@ -67,9 +63,10 @@ window.addEventListener("load", function () {
           } else {
             throw new Error("Erreur");
           }
-          location.reload();
         })
         .then((response) => {
+          //rechargement de la page
+          location.reload();
           console.debug(response);
         })
         .catch((error) => {
@@ -79,9 +76,9 @@ window.addEventListener("load", function () {
   });
 
   let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
+  console.log(inputNomBouteille);
 
   let liste = document.querySelector(".listeAutoComplete");
-
   if (inputNomBouteille) {
     inputNomBouteille.addEventListener("keyup", function (evt) {
       console.log(evt);

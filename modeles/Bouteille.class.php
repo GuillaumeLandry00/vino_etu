@@ -80,7 +80,6 @@ class Bouteille extends Modele {
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
 			 //$this->_db->error;
 		}
-		
 		return $rows;
 	}
 
@@ -136,7 +135,6 @@ class Bouteille extends Modele {
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
 			 //$this->_db->error;
 		}
-		
 		return $rows;
 	}
 	
@@ -258,7 +256,6 @@ class Bouteille extends Modele {
 		}
 		return $res;
 	}
-
 	/**
 	 * Cette méthode change les données d'une bouteille dans le cellier
 	 * 
@@ -342,9 +339,7 @@ class Bouteille extends Modele {
 	public function modifierQuantiteBouteilleCellier($id, $nombre)
 	{
 		//TODO : Valider les données.
-			
-			
-		$requete = "UPDATE cellier__bouteille SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE 	vino__bouteille_id = ". $id;
+		$requete = "UPDATE cellier__bouteille SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE vino__bouteille_id = ". $id;
 		//echo $requete;
         $res = $this->_db->query($requete);
         
