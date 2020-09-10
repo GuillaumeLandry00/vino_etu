@@ -161,11 +161,14 @@ window.addEventListener("load", function () {
           {
             method: "POST",
             body: JSON.stringify(param),
+            headers: { "Content-Type": "application/json" },
           }
         );
         fetch(requete)
           .then((response) => {
             if (response.status === 200) {
+              //Rentre ici
+              console.log(response);
               return response.json();
             } else {
               throw new Error("Erreur");
@@ -173,6 +176,37 @@ window.addEventListener("load", function () {
           })
           .then((response) => {
             console.log(response);
+            //Permet de verifier si il y des erreurs et afficher
+            if (response.prix == true) {
+              document.getElementById("errPrix").innerHTML =
+                "Veuillez entrer un prix valide 00.00";
+            }
+            //Vérifie le millesime
+            if (response.millesime == true) {
+              document.getElementById("errMillesime").innerHTML =
+                "Veuillez entrer une année entre 1000 et 2999";
+            }
+            //Vérifie les dates
+            if (response.date_achat == true || response.garde_jusqua == true) {
+              document.getElementById("errDate").innerHTML =
+                "Veuillez entrer la date sous le format YYYY-MM-DD";
+            }
+            //Vérifie la quantite
+            if (response.quantite == true) {
+              document.getElementById("errQt").innerHTML =
+                "Veuillez entrer une quantite valide";
+            }
+
+            //Permet de confirmer si l'ajout à eu lieu
+            if (response == true) {
+              document.getElementById("confirmation").innerHTML =
+                "Bien ajoutée!";
+              document.getElementById("confirmation").style.color = "green";
+            } else if (response == false) {
+              document.getElementById("confirmation").innerHTML =
+                "Ajout non effectuée";
+              document.getElementById("confirmation").style.color = "red";
+            }
           })
           .catch((error) => {
             console.error(error);
@@ -202,7 +236,7 @@ window.addEventListener("load", function () {
         {
           method: "PUT",
           body: JSON.stringify(param),
-          // headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
@@ -217,6 +251,37 @@ window.addEventListener("load", function () {
         })
         .then((response) => {
           console.log(response);
+          //Permet de verifier si il y des erreurs et afficher
+          if (response.prix == true) {
+            document.getElementById("errPrix").innerHTML =
+              "Veuillez entrer un prix valide 00.00";
+          }
+          //Vérifie le millesime
+          if (response.millesime == true) {
+            document.getElementById("errMillesime").innerHTML =
+              "Veuillez entrer une année entre 1000 et 2999";
+          }
+          //Vérifie les dates
+          if (response.date_achat == true || response.garde_jusqua == true) {
+            document.getElementById("errDate").innerHTML =
+              "Veuillez entrer la date sous le format YYYY-MM-DD";
+          }
+          //Vérifie la quantite
+          if (response.quantite == true) {
+            document.getElementById("errQt").innerHTML =
+              "Veuillez entrer une quantite valide";
+          }
+
+          //Permet de confirmer si le modifier à eu lieu
+          if (response == true) {
+            document.getElementById("confirmation").innerHTML =
+              "Modfication effectuée!";
+            document.getElementById("confirmation").style.color = "green";
+          } else if (response == false) {
+            document.getElementById("confirmation").innerHTML =
+              "Moofication non effectuée";
+            document.getElementById("confirmation").style.color = "red";
+          }
         })
         .catch((error) => {
           console.error(error);
