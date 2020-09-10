@@ -13,7 +13,6 @@
 
 class Controler 
 {
-	
 		/**
 		 * Traite la requête
 		 * @return void

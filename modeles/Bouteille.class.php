@@ -245,7 +245,7 @@ class Bouteille extends Modele {
 				$erreur[] = "Erreur millesime";
 			}
 		}
-		var_dump($erreur);
+		//var_dump($erreur);
 		//Verifie si il y a des erreurs
 		if(count($erreur) == 0){
 			$requete = "INSERT INTO cellier__bouteille(vino__bouteille_id,vino__cellier_id,date_achat,garde_jusqua,notes,prix,quantite,millesime)
