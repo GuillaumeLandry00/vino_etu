@@ -140,6 +140,12 @@ window.addEventListener("load", function () {
     let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
     if (btnAjouter) {
       btnAjouter.addEventListener("click", function (evt) {
+        //Permet de reinitaliser rles donnees
+        document.getElementById("errMillesime").innerHTML = "";
+        document.getElementById("errPrix").innerHTML = "";
+        document.getElementById("errDate").innerHTML = "";
+        document.getElementById("errQt").innerHTML = "";
+        document.getElementById("confirmation").innerHTML = "";
         //Permet d'aller chercher les valeurs des inputs
         var param = {
           id_bouteille: bouteille.nom.dataset.id,
@@ -217,9 +223,16 @@ window.addEventListener("load", function () {
   let btnModifier = document.querySelector("[name='modifierBouteilleCellier']");
   if (btnModifier) {
     btnModifier.addEventListener("click", function (evt) {
+      //Permet de reinitaliser rles donnees
+      document.getElementById("errMillesime").innerHTML = "";
+      document.getElementById("errPrix").innerHTML = "";
+      document.getElementById("errDate").innerHTML = "";
+      document.getElementById("errQt").innerHTML = "";
+      document.getElementById("confirmation").innerHTML = "";
+
       //Permet d'aller chercher les valeurs des inputs
       var param = {
-        id: document.getElementById("id_bouteille").innerHTML,
+        id: document.getElementById("titre").dataset.id,
         date_achat: document.querySelector("[name='date_achat']").value,
         garde_jusqua: document.querySelector("[name='garde_jusqua']").value,
         notes: document.querySelector("[name='notes']").value,
@@ -227,6 +240,7 @@ window.addEventListener("load", function () {
         quantite: document.querySelector("[name='quantite']").value,
         millesime: document.querySelector("[name='millesime']").value,
       };
+      console.log(param);
 
       //Permet de creer un objet options pour les requete
       let requete = new Request(
@@ -277,7 +291,7 @@ window.addEventListener("load", function () {
             document.getElementById("confirmation").style.color = "green";
           } else if (response == false) {
             document.getElementById("confirmation").innerHTML =
-              "Moofication non effectuée";
+              "Modication non effectuée";
             document.getElementById("confirmation").style.color = "red";
           }
         })
