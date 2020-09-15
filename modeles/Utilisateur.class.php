@@ -59,10 +59,8 @@ class Utilisateurs extends Modele {
 
         //Execute la requete à la DB
         if($this->stmt->execute()){
-            echo"Ajout";
             return true;
         }else{
-            echo"Non ajout";
             return false;
         }
     }
