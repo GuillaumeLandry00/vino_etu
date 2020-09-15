@@ -23,35 +23,38 @@ class Controler
 			
 			switch ($_GET['requete']) {
 				case 'listeBouteille':
-			
+					$this->verificationUtilisateurConnecter();
 					$this->listeBouteille();
 					break;
 				case 'autocompleteBouteille':
-				
+					$this->verificationUtilisateurConnecter();
 					$this->autocompleteBouteille();
 					break;
 				case 'ajouterNouvelleBouteilleCellier':
-				
+					$this->verificationUtilisateurConnecter();
 					$this->ajouterNouvelleBouteilleCellier();
 					break;
 				case 'ajouterBouteilleCellier':
-		
+					$this->verificationUtilisateurConnecter();
 					$this->ajouterBouteilleCellier();
 					break;
 				case 'boireBouteilleCellier':
-
+					$this->verificationUtilisateurConnecter();
 					$this->boireBouteilleCellier();
 					break;
 				case 'modifierBouteilleCellier':
+					$this->verificationUtilisateurConnecter();
 					$this->modifierBouteilleCellier();
 					break;
 				case 'authentification':
 					$this->authentification();
 					break;
 				case 'enregistrement':
+					
 					$this->enregistrement();
 					break;
 				default:
+					$this->verificationUtilisateurConnecter();
 					$this->accueil();
 					break;
 			}
@@ -63,7 +66,7 @@ class Controler
 			$_SESSION['users_id']  = $user['users_id'];
 			$_SESSION['users_login']  = $user['users_login'];
 			$_SESSION['users_type']  = $user['users_type'];
-			//var_dump($_SESSION);
+			header('location:' . BASEURL . '?requete=accueil');
 		}
 
 
@@ -107,21 +110,22 @@ class Controler
 
 					if($utilisateurConnecte) {
 						$this->createSessionUtilisateur($utilisateurConnecte);
-						//var_dump($_SESSION);
-						$this->accueil();
-						//$this->verificationUtilisateurConnecter();
 					}else{
 						$data['motDePasseErreur'] = "Identifiant ou mot de passe incorect";
-	
 					}
 
 				}
 
+			} else {
+				$data = [
+					'identifiant' => "",
+					'motDePasse' =>  "",
+					'identifiantErreur' => "",
+					'motDePasseErreur' => ""
+				];
 			}
-
 			//Load la vue pour authentification
 			include("vues/authentification.php");
-
 		}
 
 		//Fonction permetant enregistrer des utilisateurs
@@ -176,11 +180,9 @@ class Controler
 				if(empty($data['identifiantErreur']) && empty($data['motDePasseErreur']) && empty($data['confirmMotDePasseErreur'])){
 					$utilisateur = new Utilisateurs();
 					//Insere l'utilisateur dans la DB
-
 					if($utilisateur->enregistrementUtilisateur($data)){
-						$utilisateur->enregistrementUtilisateur($data);
 						//Redirige vers le login
-						$this->authentification();
+						header('location:' . BASEURL . '?requete=authentification');
 					}
 					
 				}
@@ -194,11 +196,9 @@ class Controler
 
 		//Fonction permetant de verifier si un utilisateur est connecter
 		private function verificationUtilisateurConnecter(){
-			
+			session_start();
 			//verifie si un utlisateur est connecter
-			if(!isset($_SESSION['users_id'])){
-				echo "Jesuis entrer";
-				var_dump($_SESSION);
+			if(empty($_SESSION['users_id'])){
 				header('Location: http://localhost/vino_etu/?requete=authentification');
 			}
 		}
