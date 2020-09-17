@@ -42,6 +42,8 @@ class Utilisateurs extends Modele {
 
     /**
 	 * Fonction: Permetant d'ajouter un utilisateur a la DB
+     * 
+     * @param $data array[] contenant les donnees de l"utilisateur
 	 * 
 	 * @throws Exception Erreur de requête sur la base de données 
 	 * 
@@ -49,19 +51,76 @@ class Utilisateurs extends Modele {
 	 */
     public function enregistrementUtilisateur($data){
 
-        //Créer la requete
-        $this->stmt = $this->_db->prepare("INSERT INTO users (users_login, users_mpd, users_type)
-        VALUES (?, SHA2(?,256), 'utilisateur')
-        ");
+        try {
+            // First of all, let's begin a transaction
+            $this->_db->begin_transaction() ;
+            
+            //Créer la 1er requete
+            $this->stmt = $this->_db->prepare("INSERT INTO users (users_login, users_mpd, users_type)
+            VALUES (?, SHA2(?,256), 'utilisateur')");
+            //Bind les params
+            $this->stmt->bind_param('ss', $data['identifiant'], $data['motDePasse']);
+            $this->stmt->execute();
 
-        //Bind les params
-        $this->stmt->bind_param('ss', $data['identifiant'], $data['motDePasse']);
 
-        //Execute la requete à la DB
-        if($this->stmt->execute()){
+            //Créer la 2e requete
+            $this->stmt = $this->_db->prepare("INSERT INTO  vino__cellier(fk__users_id) VALUES (?);");
+
+            //Permet d'aller chercher le id de l'utilisateur
+            $idUtilisateur = $this->controleUtilisateur($data);
+
+            //Bind le param
+            $this->stmt->bind_param('i', $idUtilisateur['users_id'] );
+            $this->stmt->execute();
+
+            
+            // Commit de la transaction si aucune erreur
+            $this->_db->commit();
             return true;
-        }else{
-            return false;
+        } catch (\Throwable $e) {
+            
+            //Une erreur est survenue donc, on doit rollbacck
+            $this->_db->rollback();
+            throw $e; 
         }
+    }
+
+    /**
+	 * Fonction: Permetant d'aller chercher les cellier de l'utilisateur
+     * 
+     * @param $idUtilisateur : Id de l'utilisateur rechercher
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est trouve
+	 */
+    public function getCellierUtilisateur($idUtilisateur){
+
+        //Initialise l'array rows
+        $rows = Array();
+
+        //Créer la requete
+        $requete="SELECT id, cellier__nom FROM vino__cellier AS C
+        INNER JOIN users AS U ON C.fk__users_id=U.users_id
+        WHERE C.fk__users_id=" . $idUtilisateur;
+
+        if(($res = $this->_db->query($requete)) ==	 true)
+        {
+            if($res->num_rows)
+            {
+                while($row = $res->fetch_assoc())
+                {
+                    $row['id'] = trim(utf8_encode($row['id']));
+                    $rows[] = $row;
+                }
+            }
+        }
+        else 
+        {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+            //$this->_db->error;
+        }
+
+        return $rows;
     }
 }

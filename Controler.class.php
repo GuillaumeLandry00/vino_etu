@@ -50,23 +50,42 @@ class Controler
 					$this->authentification();
 					break;
 				case 'enregistrement':
-					
 					$this->enregistrement();
 					break;
+				case 'ajouterNouveauCellier':
+					$this->verificationUtilisateurConnecter();
+					$this->ajouterNouveauCellier();
+					break;
+					case 'cellier':
+						$this->verificationUtilisateurConnecter();
+						$this->cellier();
+						break;
 				default:
 					$this->verificationUtilisateurConnecter();
-					$this->accueil();
+					$this->cellier();
 					break;
 			}
 		}
 
 		//Fonction permetant de creer une session d"utilisateur
 		private function createSessionUtilisateur($user){
+
+			//Permet de demarrer une session et inserer des valeurs
 			session_start();
 			$_SESSION['users_id']  = $user['users_id'];
 			$_SESSION['users_login']  = $user['users_login'];
 			$_SESSION['users_type']  = $user['users_type'];
-			header('location:' . BASEURL . '?requete=accueil');
+
+			//Execute une requete au modele pour avoir
+			//le data de l'utilisateur
+			$utilisateur = new Utilisateurs();
+			$dataUtilisateur = $utilisateur->getCellierUtilisateur($user['users_id']);
+			
+			//Insere le id du cellier dans une varaible session
+			$_SESSION['cellier_id'] = $dataUtilisateur[0]['id'];
+			
+			//Redirige vers l'accueil
+			header('location:' . BASEURL . '?requete=cellier');
 		}
 
 
@@ -180,7 +199,7 @@ class Controler
 				if(empty($data['identifiantErreur']) && empty($data['motDePasseErreur']) && empty($data['confirmMotDePasseErreur'])){
 					$utilisateur = new Utilisateurs();
 					//Insere l'utilisateur dans la DB
-					if($utilisateur->enregistrementUtilisateur($data)){
+					if($utilisateur->enregistrementUtilisateur($data) == true){
 						//Redirige vers le login
 						header('location:' . BASEURL . '?requete=authentification');
 					}
@@ -199,15 +218,41 @@ class Controler
 			session_start();
 			//verifie si un utlisateur est connecter
 			if(empty($_SESSION['users_id'])){
-				header('Location: http://localhost/vino_etu/?requete=authentification');
+				header('Location: '. BASEURL.'?requete=authentification');
 			}
 		}
 
+		//Fonction permetant de verifier si un utilisateur est connecter
+		private function deconnexionUtilisateur(){
 
-		private function accueil()
+			//Unset les donnees de la variable $_SESSION
+			unset($_SESSION['users_id']);
+			unset($_SESSION['users_login']);
+			unset($_SESSION['users_type']);
+			session_destroy();
+
+			//Redirige vers l'authentification
+			header('Location: '. BASEURL .'?requete=authentification');
+		}
+
+
+		private function cellier()
 		{
 			$bte = new Bouteille();
-            $data = $bte->getListeBouteilleCellier();
+			if(isset($_GET['id'])){
+				$data = $bte->getListeBouteilleCellier($_SESSION['users_id'], $_GET['id']);
+			}else{
+				$data = $bte->getListeBouteilleCellier($_SESSION['users_id']);
+			}
+			
+
+			//Créer un objet utilisateur pour aller chercher les celliers qui possede
+			$utilisateur = new Utilisateurs();
+			$celliers = $utilisateur->getCellierUtilisateur($_SESSION['users_id']);
+
+			//initialise une variable $i
+			$i = 1;
+
 			include("vues/entete.php");
 			include("vues/cellier.php");
 			include("vues/pied.php");
@@ -242,10 +287,16 @@ class Controler
 			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
-				$resultat = $bte->ajouterBouteilleCellier($body);
+				$resultat = $bte->ajouterBouteilleCellier($body, $_SESSION['cellier_id']);
 				echo json_encode($resultat);
 			}
 			else{
+				//Créer un objet utilisateur pour aller chercher les celliers qui possede
+				$utilisateur = new Utilisateurs();
+				$celliers = $utilisateur->getCellierUtilisateur($_SESSION['users_id']);
+
+				//initialise une variable $i
+				$i = 1;
 				include("vues/entete.php");
 				include("vues/ajouter.php");
 				include("vues/pied.php");
@@ -261,7 +312,7 @@ class Controler
 			
 			if(!empty($body)){
 				$bte = new Bouteille();
-				$resultat = $bte->modifierBouteilleCellier($body);
+				$resultat = $bte->modifierBouteilleCellier($body, $_SESSION['cellier_id']);
 				echo json_encode($resultat);
 			}
 			else{
@@ -292,6 +343,21 @@ class Controler
 			$resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
 			echo json_encode($resultat);
 			
+		}
+
+		//Fonction permetant d'ajouter un nouveau cellier a l'utilisateur
+		private function ajouterNouveauCellier(){
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$cellier = new Cellier();
+				if($cellier->ajouterCellier($_SESSION['users_id'])){
+					//Redirige vers l'authentification
+					header('Location: '. BASEURL .'?requete=cellier');
+					echo "Bien ajouter";
+				}
+			}
+			include("vues/entete.php");
+			include("vues/ajouterCellier.php");
+			include("vues/pied.php");
 		}
 		
 }

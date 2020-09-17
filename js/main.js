@@ -146,6 +146,9 @@ window.addEventListener("load", function () {
         document.getElementById("errDate").innerHTML = "";
         document.getElementById("errQt").innerHTML = "";
         document.getElementById("confirmation").innerHTML = "";
+
+        var select = document.getElementById("cellier");
+
         //Permet d'aller chercher les valeurs des inputs
         var param = {
           id_bouteille: bouteille.nom.dataset.id,
@@ -155,9 +158,10 @@ window.addEventListener("load", function () {
           prix: bouteille.prix.value,
           quantite: bouteille.quantite.value,
           millesime: bouteille.millesime.value,
+          cellier: select.options[select.selectedIndex].value,
         };
 
-        console.log(JSON.stringify(param));
+        console.log(param);
 
         //Permet de creer un objet options pour les requete
         let requete = new Request(

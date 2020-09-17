@@ -4,6 +4,7 @@
         Recherche : <input type="text" name="nom_bouteille">
         <ul class="listeAutoComplete">
 
+
         </ul>
             <div >
                 
@@ -17,6 +18,12 @@
                 
                 
                 <p>Notes <input name="notes"></p>
+                <label for="cellier">Veuillez choisir un cellier :</label>
+                <select name="cellier" id="cellier" required>
+                <?php foreach($celliers as $cellier):?>
+                    <option value="<?=$cellier['id']?>">Cellier: <?=(isset($cellier['cellier__nom'])) ? $cellier['cellier__nom'] : $i ?></option>
+                <?php $i++; endforeach; ?>
+                </select>
             </div>
             <button name="ajouterBouteilleCellier">Ajouter la bouteille</button>
             <span id="confirmation"></span>
