@@ -35,14 +35,17 @@ class Bouteille extends Modele {
 	 * TODO:: Ajouter un WHERE losrqu'on nous allons avoir les USER et ajouter param
 	 * 
 	 * @throws Exception Erreur de requête sur la base de données 
-	 * 
+	 * @param $critere  le critere de recherche 
+	 * @param  $sens le sens du tri ascendant ou descendant
+	 * @param $mot_recherche  le mot cle recherche
 	 * @return array de tous les bouteilles du cellier
 	 */
-	public function getListeBouteilleCellier($idUtilisateur, $idCellier= "")
+	public function getListeBouteilleCellier($idUtilisateur, $idCellier= "",$critere="vino__bouteille_id",$sens="ASC",$mot_recherche="")
+	//public function getListeBouteilleCellier($idUtilisateur, $idCellier= "")
 	{
 		
 		$rows = Array();
-		$requete ='SELECT
+		$requete ="SELECT
 		B.nom,
 		B.format,
 		B.image,
@@ -63,16 +66,22 @@ class Bouteille extends Modele {
 		VC.id,
 		VC.cellier__nom
 		FROM cellier__bouteille AS C
+		INNER JOIN vino__cellier AS VC ON C.vino__cellier_id = VC.id
 		INNER JOIN vino__bouteille AS B ON C.vino__bouteille_id = B.id
-		INNER JOIN vino__type AS T ON B.fk__vino__type_id =T.id
-        INNER JOIN vino__cellier AS VC ON C.vino__cellier_id = VC.id
-		WHERE VC.fk__users_id = ' . $idUtilisateur; 
+		INNER JOIN vino__type AS T ON B.fk__vino__type_id =T.id 
+		WHERE VC.fk__users_id =".$idUtilisateur; 
+
 
 		//Permet de vérifier si recherche un cellier précis
-		if(!empty($idCellier)) {
-			$requete .= " AND C.vino__cellier_id = " . $idCellier;
+		if($idCellier != "") {
+			$requete .= " AND C.vino__cellier_id = " .$idCellier;
 		}
-		
+
+		// //Continue la requete
+		$requete .=" AND  (LOWER(T.type)like LOWER('%$mot_recherche%') OR  LOWER(B.nom) like  LOWER('%$mot_recherche%') 
+	    OR  LOWER(B.pays) like  LOWER('%$mot_recherche%') OR  LOWER(C.millesime) like  LOWER('%$mot_recherche%')
+		OR  LOWER(C.prix) like  LOWER('%$mot_recherche%') OR  LOWER(C.quantite) like  LOWER('%$mot_recherche%'))
+		ORDER BY B." .$critere. " " .$sens;
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
 			if($res->num_rows)
@@ -90,7 +99,7 @@ class Bouteille extends Modele {
 			 //$this->_db->error;
 		}
 		return $rows;
-	}
+	  }
 
 	/**
 	 * Fonction: Permetant de montrer tous les bouteilles qui sont dans des celliers
@@ -373,7 +382,6 @@ class Bouteille extends Modele {
 		}
 
 		//Permet de construire la requete
-		//TODO: Aller chercher le $id du cellier avec $_SESSION
 		$requete .= " WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=" . $data->cellier_id;
 
 		//Verifie si il y a des erreurs

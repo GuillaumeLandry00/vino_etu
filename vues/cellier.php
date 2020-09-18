@@ -1,4 +1,23 @@
 <div class="cellier">
+
+<form id="tri" name="formTri" action="<?php echo BASEURL?>?requete=cellier" method="post">
+             mot clé :<input type="text" value ="" name="recherche_bouteille">
+            <label>Trier par</label>
+            <select name="typeTri" id="idType">
+                <option value="nom" <?php echo $critere === "nom" ? "selected" : "" ?>>nom</option>
+                <option value="type"<?php echo $critere === "type" ? "selected" : "" ?> >type</option>
+				<option value="quantite" <?php echo $critere === "quantite" ? "selected" : "" ?>>quantité</option> 
+                <option value="pays"<?php echo $critere === "pays" ? "selected" : "" ?>>pays</option>   
+                <option value="millesime"<?php echo $critere === "millesime" ? "selected" : "" ?>>millésime</option>             
+            </select>
+
+            <label>Ordre</label>
+            <select name="ordre" id ="idOrdre">
+                <option value="DESC"<?php echo $sens === "DESC" ? "selected" : "" ?>>Decroissant</option>
+                <option value="ASC"<?php echo $sens === "ASC" ? "selected" : "" ?>>Croissant</option>
+            </select> 
+            <input type="submit" name="tri" value="Executer"> 
+</form>
 <label for="selectCellier">Choisir par cellier</label>
 <a href="?requete=cellier">Tous les celliers</a>
 <?php foreach($celliers as $cellier):?>

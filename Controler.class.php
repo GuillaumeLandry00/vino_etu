@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 /**
  * Class Controler
  * Gère les requêtes HTTP
@@ -243,10 +244,14 @@ class Controler
 		private function cellier()
 		{
 			$bte = new Bouteille();
+			$recherche = isset($_POST['tri']) ? trim($_POST['recherche_bouteille']) : "";
+		    $critere    = isset($_POST['tri']) ? trim($_POST['typeTri']) : "nom";
+			$sens       = isset($_POST['tri']) ? trim($_POST['ordre']) : "ASC";
 			if(isset($_GET['id'])){
-				$data = $bte->getListeBouteilleCellier($_SESSION['users_id'], $_GET['id']);
+				$data = $bte->getListeBouteilleCellier($_SESSION['users_id'], $_GET['id'], $critere ,$sens,$recherche);
 			}else{
-				$data = $bte->getListeBouteilleCellier($_SESSION['users_id']);
+				$idCellier = "";
+				$data = $bte->getListeBouteilleCellier($_SESSION['users_id'],$idCellier,$critere ,$sens,$recherche);
 			}
 			
 
@@ -260,7 +265,7 @@ class Controler
 			include("vues/entete.php");
 			include("vues/cellier.php");
 			include("vues/pied.php");
-                  
+				
 		}
 		
 
@@ -277,9 +282,7 @@ class Controler
 		private function autocompleteBouteille()
 		{
 			$bte = new Bouteille();
-			//var_dump(file_get_contents('php://input'));
 			$body = json_decode(file_get_contents('php://input'));
-			//var_dump($body);
             $listeBouteille = $bte->autocomplete($body->nom);
             
             echo json_encode($listeBouteille);
@@ -288,7 +291,6 @@ class Controler
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
-			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
 				$resultat = $bte->ajouterBouteilleCellier($body);
@@ -308,7 +310,10 @@ class Controler
 			
             
 		}
-
+        /**
+		 * fonction de modification des  bouteilles dans le cellier
+		 * 
+		 */
 
 		private function modifierBouteilleCellier()
 		{
@@ -344,7 +349,10 @@ class Controler
 			
 			
 		}
-		
+		/**
+		 * fonction de boire une bouteiile
+		 * STRATEGIE:retire un bouiteille dans le cellier
+		 */
 		private function boireBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
@@ -377,8 +385,7 @@ class Controler
 			include("vues/entete.php");
 			include("vues/ajouterCellier.php");
 			include("vues/pied.php");
-		}
-		
+		}		
 }
 ?>
 
