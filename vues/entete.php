@@ -21,10 +21,19 @@
 			<h1>Un petit verre de vino ?</h1>
 			<nav>
 				<ul>
-					<li><a href="?requete=accueil">Mon cellier</a></li>
+					<li><a href="?requete=cellier">Mon cellier</a></li>
 					<li><a href="?requete=ajouterNouvelleBouteilleCellier">Ajouter une bouteille au cellier</a></li>
+					<li><a href="?requete=ajouterNouveauCellier">Ajouter un cellier</a></li>
 				</ul>
 			</nav>
+			<?php if(isset($_SESSION['users_id'])):?>
+				<span>Bonjour, <strong><?= $_SESSION['users_login']?></strong></span>
+			<?php endif;?>
+			<div class="deconnexion">
+			<?php if(isset($_SESSION['users_id'])):?>
+				<a href="?requete=authentification">Deconnexion</a>
+			<?php endif;?>
+			</div>
 		</header>
 		<main>
 			

@@ -146,6 +146,9 @@ window.addEventListener("load", function () {
         document.getElementById("errDate").innerHTML = "";
         document.getElementById("errQt").innerHTML = "";
         document.getElementById("confirmation").innerHTML = "";
+
+        var select = document.getElementById("cellier");
+
         //Permet d'aller chercher les valeurs des inputs
         var param = {
           id_bouteille: bouteille.nom.dataset.id,
@@ -155,9 +158,10 @@ window.addEventListener("load", function () {
           prix: bouteille.prix.value,
           quantite: bouteille.quantite.value,
           millesime: bouteille.millesime.value,
+          cellier: select.options[select.selectedIndex].value,
         };
 
-        console.log(JSON.stringify(param));
+        console.log(param);
 
         //Permet de creer un objet options pour les requete
         let requete = new Request(
@@ -230,15 +234,19 @@ window.addEventListener("load", function () {
       document.getElementById("errQt").innerHTML = "";
       document.getElementById("confirmation").innerHTML = "";
 
+      //Creer un objet qui permet d'aller chercher le GET dans le url
+      const urlParams = new URLSearchParams(window.location.search);
+
       //Permet d'aller chercher les valeurs des inputs
       var param = {
-        id: document.getElementById("titre").dataset.id,
+        id: urlParams.get("id"),
         date_achat: document.querySelector("[name='date_achat']").value,
         garde_jusqua: document.querySelector("[name='garde_jusqua']").value,
         notes: document.querySelector("[name='notes']").value,
         prix: document.querySelector("[name='prix']").value,
         quantite: document.querySelector("[name='quantite']").value,
         millesime: document.querySelector("[name='millesime']").value,
+        cellier_id: urlParams.get("cellier_id"),
       };
       console.log(param);
 
@@ -300,60 +308,56 @@ window.addEventListener("load", function () {
         });
     });
   }
-   /**
-   * tri 
-   */
-   //les tri des bouteille dans le cellier
-   
-  //  let btnRecherche = document.querySelector("[name='recherche']");
-  //  if (btnRecherche) {
-  //   let inputNomRecherche = document.querySelector("[name='recherche_bouteille']");
-  //   btnRecherche.addEventListener("click", function (evt) {
-  //    // let elC = document.getElementById('idType').options[document.getElementById('idType').selectedIndex];
-  //     //let elO = document.getElementById('idOrdre').options[document.getElementById('idOrdre').selectedIndex];
-    
-  //     //Permet d'aller chercher les valeurs des inputs
-  //     let elR =inputNomRecherche.value;
-  //     if(elR ){
-  //       // var param = {
-  //       //  // tri: elC.value,
-  //       //  // ordre :elO.value,
-  //       //  recherche:elR,
-  //       //  };
 
-  //     //Permet de creer un objet options pour les requete
-  //     let requete = new Request(
-  //       BaseURL + "index.php?requete=rechercher",
-  //       {
-  //         method: "POST",
-  //         body:  '{"recherche": "' + elR  + '"}',
-  //         headers: { "Content-Type": "application/json" },
-  //       }
-  //     );
-  //    // console.log(JSON.stringify(param));
-  //     fetch(requete)
-  //       .then((response) => {
-  //         if (response.status === 200) {
-  //           return response.json();
-  //         } else {
-  //           throw new Error("Erreur");
-  //         }
-  //       })
-  //       .then((response) => {
-  //          console.log(response);
-  //         response.forEach(function(element) {
-  //           console.log(response);
-  //         });
-        
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
+  //Supprimer une  bouteille
+  let btnSupprimer = document.querySelector("[name='supprimerBouteille']");
+  if (btnSupprimer) {
+    btnSupprimer.addEventListener("click", function (evt) {
+      //Creer un objet qui permet d'aller chercher le GET dans le url
+      const urlParams = new URLSearchParams(window.location.search);
 
-  //     }
-       
-  //   });
-  //  }
+      //Permet d'aller chercher les valeurs des inputs
+      var param = {
+        id: urlParams.get("id"),
+        cellier_id: urlParams.get("cellier_id"),
+      };
+      console.log(param);
 
-  
+      //Permet de creer un objet options pour les requete
+      let requete = new Request(
+        BaseURL + "index.php?requete=supprimerBouteilleCellier",
+        {
+          method: "DELETE",
+          body: JSON.stringify(param),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      console.log(JSON.stringify(param));
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          console.log(response);
+          //Permet de confirmer si le modifier à eu lieu
+          if (response == true) {
+            document.getElementById("confirmation").innerHTML =
+              "Suppression effectuée!";
+            document.getElementById("confirmation").style.color = "green";
+          } else if (response == false) {
+            document.getElementById("confirmation").innerHTML =
+              "Suppression non effectuée";
+            document.getElementById("confirmation").style.color = "red";
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  }
 });
