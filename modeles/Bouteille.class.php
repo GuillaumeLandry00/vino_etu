@@ -38,7 +38,7 @@ class Bouteille extends Modele {
 	 * 
 	 * @return array de tous les bouteilles du cellier
 	 */
-	public function getListeBouteilleCellier()
+	public function getListeBouteilleCellier($idUtilisateur, $idCellier= "")
 	{
 		
 		$rows = Array();
@@ -59,11 +59,20 @@ class Bouteille extends Modele {
 		C.garde_jusqua,
 		C.millesime,
 		T.type,
-		C.vino__bouteille_id
+		C.vino__bouteille_id,
+		VC.id,
+		VC.cellier__nom
 		FROM cellier__bouteille AS C
 		INNER JOIN vino__bouteille AS B ON C.vino__bouteille_id = B.id
 		INNER JOIN vino__type AS T ON B.fk__vino__type_id =T.id
-		'; 
+        INNER JOIN vino__cellier AS VC ON C.vino__cellier_id = VC.id
+		WHERE VC.fk__users_id = ' . $idUtilisateur; 
+
+		//Permet de vérifier si recherche un cellier précis
+		if(!empty($idCellier)) {
+			$requete .= " AND C.vino__cellier_id = " . $idCellier;
+		}
+		
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
 			if($res->num_rows)
@@ -206,8 +215,7 @@ class Bouteille extends Modele {
 		}
 
 		//Permet de coonstruire la deuxieme partie de la requete
-		//Todo aller chercher le cellier de l'user je l'ai mi a 1 pour des fins pratique
-		$requete2="VALUES ("."'".$data->id_bouteille."',"."'". 1 ."',"."'". $data->quantite ."'";
+		$requete2="VALUES ("."'".$data->id_bouteille."',"."'".$data->cellier ."',"."'". $data->quantite ."'";
 
 		//Verification bon format de date YYYY-MM-DD seulement si une valeur est entr/
 		if($data->date_achat !== ""){
@@ -366,7 +374,7 @@ class Bouteille extends Modele {
 
 		//Permet de construire la requete
 		//TODO: Aller chercher le $id du cellier avec $_SESSION
-		$requete .= " WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=1;";
+		$requete .= " WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=" . $data->cellier_id;
 
 		//Verifie si il y a des erreurs
 		if(count($erreur) == 0){
@@ -397,6 +405,14 @@ class Bouteille extends Modele {
         $res = $this->_db->query($requete);
         
 		return $res;
+	}
+
+	public function supprimerBouteilleCellier($data){
+		
+		$this->stmt = $this->_db->prepare("DELETE FROM cellier__bouteille WHERE vino__bouteille_id = ? AND vino__cellier_id = ?");
+		//Bind les params
+		$this->stmt->bind_param('ii', $data->id, $data->cellier_id);
+		return $this->stmt->execute();	
 	}
 }
 
