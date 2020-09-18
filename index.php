@@ -21,7 +21,8 @@
    /***************************************************/
     /** Initialisation des variables **/
     /***************************************************/
-	require_once("./var.init.php");
+    require_once("./var.init.php");
+    require_once("./modeles/Utilisateur.class.php");
    
    /***************************************************/
     /** Démarrage du controleur **/

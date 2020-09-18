@@ -37,7 +37,7 @@ class SAQ extends Modele {
 		error_reporting(-1);
 		ini_set("display_errors", 1);
 		$s = curl_init();
-		$article_url = 'https://www.saq.com/fr/produits/vin/vin-rouge?p=1&product_list_limit=24&product_list_order=name_asc';
+		$article_url = 'https://www.saq.com/fr/produits/vin/vin-blanc?p=1&product_list_limit=24&product_list_order=name_asc';
 		//verifier que l url existe 
 		if (isset($article_url)){
 		  $str = @file_get_contents($article_url);
@@ -76,11 +76,17 @@ class SAQ extends Modele {
 			foreach($elementList as $key =>$noeud) {
 			 if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 				
+				
 				$info = self::recupereInfo($noeud);
-			      
-			     //netoyer le lien
+		
+
+				
+				 //netoyer le lien
+				 
 			     $pattern = '/https:/i';
-	             $info -> img=preg_replace($pattern, '',$info->img);
+				 $info -> img=preg_replace($pattern, '',$info->img);
+				 
+
 			    //affichage  des infos par necessaire 
 				echo "<p>".$info->nom;
 				echo "<p>".$info->img;
@@ -196,7 +202,11 @@ private function nettoyerEspace($chaine)
 		$aElements = $noeud -> getElementsByTagName("span");
 		foreach ($aElements as $node) {
 			if ($node -> getAttribute('class') == 'price') {
+				//Permet de convertir le prix en float
 				$info -> prix = trim($node -> textContent);
+				$info -> prix = preg_replace('/,/i', '.',$info->prix);
+				$info -> prix = preg_replace('/\$/i', '',$info->prix);
+				$info -> prix = floatval($info->prix);
 			}
 		}
 		//var_dump($info);
@@ -218,10 +228,10 @@ private function nettoyerEspace($chaine)
 			$type = $rows -> fetch_assoc();
 			//var_dump($type);
 			$type = $type['id'];
-
+			
 			$rows = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
 			if ($rows -> num_rows < 1) {
-				$this -> stmt -> bind_param("sssssisssi", $bte -> nom,  $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> type, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format,$type);
+				$this -> stmt -> bind_param("sssssdsssi", $bte -> nom,  $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> type, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format,$type);
 				$retour -> succes = $this -> stmt -> execute();
 				$retour -> raison = self::INSERE;
 				//var_dump($this->stmt);
