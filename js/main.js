@@ -234,15 +234,19 @@ window.addEventListener("load", function () {
       document.getElementById("errQt").innerHTML = "";
       document.getElementById("confirmation").innerHTML = "";
 
+      //Creer un objet qui permet d'aller chercher le GET dans le url
+      const urlParams = new URLSearchParams(window.location.search);
+
       //Permet d'aller chercher les valeurs des inputs
       var param = {
-        id: document.getElementById("titre").dataset.id,
+        id: urlParams.get("id"),
         date_achat: document.querySelector("[name='date_achat']").value,
         garde_jusqua: document.querySelector("[name='garde_jusqua']").value,
         notes: document.querySelector("[name='notes']").value,
         prix: document.querySelector("[name='prix']").value,
         quantite: document.querySelector("[name='quantite']").value,
         millesime: document.querySelector("[name='millesime']").value,
+        cellier_id: urlParams.get("cellier_id"),
       };
       console.log(param);
 
@@ -296,6 +300,58 @@ window.addEventListener("load", function () {
           } else if (response == false) {
             document.getElementById("confirmation").innerHTML =
               "Modication non effectuée";
+            document.getElementById("confirmation").style.color = "red";
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  }
+
+  //Supprimer une  bouteille
+  let btnSupprimer = document.querySelector("[name='supprimerBouteille']");
+  if (btnSupprimer) {
+    btnSupprimer.addEventListener("click", function (evt) {
+      //Creer un objet qui permet d'aller chercher le GET dans le url
+      const urlParams = new URLSearchParams(window.location.search);
+
+      //Permet d'aller chercher les valeurs des inputs
+      var param = {
+        id: urlParams.get("id"),
+        cellier_id: urlParams.get("cellier_id"),
+      };
+      console.log(param);
+
+      //Permet de creer un objet options pour les requete
+      let requete = new Request(
+        BaseURL + "index.php?requete=supprimerBouteilleCellier",
+        {
+          method: "DELETE",
+          body: JSON.stringify(param),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      console.log(JSON.stringify(param));
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          console.log(response);
+          //Permet de confirmer si le modifier à eu lieu
+          if (response == true) {
+            document.getElementById("confirmation").innerHTML =
+              "Suppression effectuée!";
+            document.getElementById("confirmation").style.color = "green";
+          } else if (response == false) {
+            document.getElementById("confirmation").innerHTML =
+              "Suppression non effectuée";
             document.getElementById("confirmation").style.color = "red";
           }
         })

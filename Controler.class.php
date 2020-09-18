@@ -46,6 +46,10 @@ class Controler
 					$this->verificationUtilisateurConnecter();
 					$this->modifierBouteilleCellier();
 					break;
+				case 'supprimerBouteilleCellier':
+					$this->verificationUtilisateurConnecter();
+					$this->supprimerBouteilleCellier();
+					break;
 				case 'authentification':
 					$this->authentification();
 					break;
@@ -56,10 +60,10 @@ class Controler
 					$this->verificationUtilisateurConnecter();
 					$this->ajouterNouveauCellier();
 					break;
-					case 'cellier':
-						$this->verificationUtilisateurConnecter();
-						$this->cellier();
-						break;
+				case 'cellier':
+					$this->verificationUtilisateurConnecter();
+					$this->cellier();
+					break;
 				default:
 					$this->verificationUtilisateurConnecter();
 					$this->cellier();
@@ -287,7 +291,7 @@ class Controler
 			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
-				$resultat = $bte->ajouterBouteilleCellier($body, $_SESSION['cellier_id']);
+				$resultat = $bte->ajouterBouteilleCellier($body);
 				echo json_encode($resultat);
 			}
 			else{
@@ -309,21 +313,36 @@ class Controler
 		private function modifierBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
-			
 			if(!empty($body)){
 				$bte = new Bouteille();
-				$resultat = $bte->modifierBouteilleCellier($body, $_SESSION['cellier_id']);
+				$resultat = $bte->modifierBouteilleCellier($body);
 				echo json_encode($resultat);
 			}
 			else{
 				$bte = new Bouteille();
-            	$data = $bte->getUneBouteilleCellier($_GET['id']);
+				$data = $bte->getUneBouteilleCellier($_GET['id']);
 				include("vues/entete.php");
 				include("vues/modifier.php");
 				include("vues/pied.php");
+			} 
+		}
+
+		private function supprimerBouteilleCellier()
+		{
+			$body = json_decode(file_get_contents('php://input'));
+			if(!empty($body)){
+				$bte = new Bouteille();
+				$resultat = $bte->supprimerBouteilleCellier($body);
+				echo json_encode($resultat);
+			}else{
+				$bte = new Bouteille();
+				$donnee = $bte->getUneBouteilleCellier($_GET['id']);
+				include("vues/entete.php");
+				include("vues/supprimer.php");
+				include("vues/pied.php");
 			}
 			
-            
+			
 		}
 		
 		private function boireBouteilleCellier()

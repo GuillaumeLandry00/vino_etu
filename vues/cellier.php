@@ -16,6 +16,7 @@ if(!empty($data)):
                 <img src="https:<?php echo $bouteille['image'] ?> " width="100" height="100">
             </div>
             <div class="description">
+                <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? $bouteille['cellier__nom'] : $i ?> </p>
                 <p class="nom">Nom : <?php echo $bouteille['nom'] ?></p>
                 <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
                 <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
@@ -26,7 +27,8 @@ if(!empty($data)):
                 <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
             </div>
             <div class="options" data-id="<?php echo $bouteille['vino__bouteille_id'] ?>">
-                <button ><a href="?requete=modifierBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>">Modifier</a></button>
+                <button ><a href="?requete=modifierBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Modifier</a></button>
+                <button ><a href="?requete=supprimerBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Supprimer</a></button>
                 <button class='btnAjouter'>Ajouter</button>
                 <button class='btnBoire'>Boire</button>
                 

@@ -59,7 +59,9 @@ class Bouteille extends Modele {
 		C.garde_jusqua,
 		C.millesime,
 		T.type,
-		C.vino__bouteille_id
+		C.vino__bouteille_id,
+		VC.id,
+		VC.cellier__nom
 		FROM cellier__bouteille AS C
 		INNER JOIN vino__bouteille AS B ON C.vino__bouteille_id = B.id
 		INNER JOIN vino__type AS T ON B.fk__vino__type_id =T.id
@@ -197,7 +199,7 @@ class Bouteille extends Modele {
 	 * 
 	 * @return Boolean Succès ou échec de l'ajout.
 	 */
-	public function ajouterBouteilleCellier($data, $idCellier)
+	public function ajouterBouteilleCellier($data)
 	{
 
 		//Debut creation de la premiere partie de la requete
@@ -213,7 +215,7 @@ class Bouteille extends Modele {
 		}
 
 		//Permet de coonstruire la deuxieme partie de la requete
-		$requete2="VALUES ("."'".$data->id_bouteille."',"."'".$idCellier ."',"."'". $data->quantite ."'";
+		$requete2="VALUES ("."'".$data->id_bouteille."',"."'".$data->cellier ."',"."'". $data->quantite ."'";
 
 		//Verification bon format de date YYYY-MM-DD seulement si une valeur est entr/
 		if($data->date_achat !== ""){
@@ -296,7 +298,7 @@ class Bouteille extends Modele {
 	 * 
 	 * @return Boolean Succès ou échec de l'ajout.
 	 */
-	public function modifierBouteilleCellier($data, $idCellier)
+	public function modifierBouteilleCellier($data)
 	{
 		
 		//Debut creation de la requete
@@ -372,7 +374,7 @@ class Bouteille extends Modele {
 
 		//Permet de construire la requete
 		//TODO: Aller chercher le $id du cellier avec $_SESSION
-		$requete .= " WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=" . $idCellier;
+		$requete .= " WHERE vino__bouteille_id = " . $data->id . " AND vino__cellier_id=" . $data->cellier_id;
 
 		//Verifie si il y a des erreurs
 		if(count($erreur) == 0){
@@ -403,6 +405,14 @@ class Bouteille extends Modele {
         $res = $this->_db->query($requete);
         
 		return $res;
+	}
+
+	public function supprimerBouteilleCellier($data){
+		
+		$this->stmt = $this->_db->prepare("DELETE FROM cellier__bouteille WHERE vino__bouteille_id = ? AND vino__cellier_id = ?");
+		//Bind les params
+		$this->stmt->bind_param('ii', $data->id, $data->cellier_id);
+		return $this->stmt->execute();	
 	}
 }
 
