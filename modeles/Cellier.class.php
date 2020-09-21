@@ -21,9 +21,9 @@ class Cellier extends Modele {
 	 * 
 	 * @return boo de tous les bouteilles du cellier
 	 */
-    public function ajouterCellier($idUtilisateur){
-        $this->stmt = $this->_db->prepare("INSERT INTO  vino__cellier(fk__users_id) VALUES (?);");
-        $this->stmt->bind_param('i', $idUtilisateur);
+    public function ajouterCellier($idUtilisateur, $cellier__nom){
+        $this->stmt = $this->_db->prepare("INSERT INTO  vino__cellier(fk__users_id,cellier__nom) VALUES (?,?);");
+        $this->stmt->bind_param('is', $idUtilisateur, $cellier__nom);
         if($this->stmt->execute()){
             return true;
         }

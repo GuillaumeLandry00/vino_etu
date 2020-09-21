@@ -23,9 +23,13 @@
 <?php foreach($celliers as $cellier):?>
     <a href="?requete=cellier&id=<?= $cellier['id']?>">Cellier: <?=(isset($cellier['cellier__nom'])) ? $cellier['cellier__nom'] : $i ?></a>
 <?php $i++; endforeach; ?>
-
 <?php
-
+if(isset($_GET['id'])):
+?>
+<br>
+<a href="?requete=cellier&id=<?= $cellier['id']?>">Supprimer Cellier: <?=(isset($cellier['cellier__nom'])) ? $cellier['cellier__nom'] : $i ?></a>
+<?php
+endif;
 if(!empty($data)):
     foreach ($data as $cle => $bouteille) :
         
@@ -50,7 +54,6 @@ if(!empty($data)):
                 <button ><a href="?requete=supprimerBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Supprimer</a></button>
                 <button class='btnAjouter'>Ajouter</button>
                 <button class='btnBoire'>Boire</button>
-                
             </div>
         </div>
     <?php

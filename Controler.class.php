@@ -376,7 +376,7 @@ class Controler
 		private function ajouterNouveauCellier(){
 			if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				$cellier = new Cellier();
-				if($cellier->ajouterCellier($_SESSION['users_id'])){
+				if($cellier->ajouterCellier($_SESSION['users_id'],$_POST['cellier__nom'])){
 					//Redirige vers l'authentification
 					header('Location: '. BASEURL .'?requete=cellier');
 					echo "Bien ajouter";
