@@ -123,4 +123,6 @@ class Utilisateurs extends Modele {
 
         return $rows;
     }
+
+    
 }

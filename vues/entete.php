@@ -21,6 +21,7 @@
 			<h1>Un petit verre de vino ?</h1>
 			<nav>
 				<ul>
+				<li><a href="?requete=monCompte">Gerer mon compte</a></li>
 					<li><a href="?requete=cellier">Mon cellier</a></li>
 					<li><a href="?requete=ajouterNouvelleBouteilleCellier">Ajouter une bouteille au cellier</a></li>
 					<li><a href="?requete=ajouterNouveauCellier">Ajouter un cellier</a></li>

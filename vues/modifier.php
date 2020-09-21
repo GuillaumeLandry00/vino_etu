@@ -1,11 +1,7 @@
 <div class="modifier">
 
     <div class="modifierBouteille" vertical layout>
-<<<<<<< HEAD
-    <h3 data-id="<?= $data[0]['vino__bouteille_id']?>" id="titre">Modifier: <?= $data[0]['nom']?></h3>
-=======
     <h3 id="titre">Modifier: <?= $data[0]['nom']?></h3>
->>>>>>> da03a937f81d4f32f2981dc189d5c158fc749a21
         <div >
                 <p>Millesime : <input value="<?= $data[0]['millesime']?>" min="1" name="millesime"><span style="color:red"id="errMillesime"></span></p>
                 <p>Quantite : <input  value="<?= $data[0]['quantite']?>" name="quantite" value="1"><span style="color:red"id="errQt"></span></p>
