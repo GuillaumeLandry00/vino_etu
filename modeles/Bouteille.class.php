@@ -71,17 +71,17 @@ class Bouteille extends Modele {
 		INNER JOIN vino__type AS T ON B.fk__vino__type_id =T.id 
 		WHERE VC.fk__users_id =".$idUtilisateur; 
 
-
 		//Permet de vérifier si recherche un cellier précis
 		if($idCellier != "") {
 			$requete .= " AND C.vino__cellier_id = " .$idCellier;
 		}
-
+        if(!empty($mot_recherche)){
 		// //Continue la requete
-		$requete .=" AND  (LOWER(T.type)like LOWER('%$mot_recherche%') OR  LOWER(B.nom) like  LOWER('%$mot_recherche%') 
+		$requete .=" AND ( LOWER(T.type)like LOWER('%$mot_recherche%') OR  LOWER(B.nom) like  LOWER('%$mot_recherche%') 
 	    OR  LOWER(B.pays) like  LOWER('%$mot_recherche%') OR  LOWER(C.millesime) like  LOWER('%$mot_recherche%')
 		OR  LOWER(C.prix) like  LOWER('%$mot_recherche%') OR  LOWER(C.quantite) like  LOWER('%$mot_recherche%'))
 		ORDER BY B." .$critere. " " .$sens;
+		}
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
 			if($res->num_rows)

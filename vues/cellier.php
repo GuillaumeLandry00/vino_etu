@@ -1,6 +1,6 @@
 <div class="cellier">
 
-<form id="tri" name="formTri" action="<?php echo BASEURL?>?requete=cellier" method="post">
+<form id="tri" name="formTri" action="" method="post">
              mot clé :<input type="text" value ="" name="recherche_bouteille">
             <label>Trier par</label>
             <select name="typeTri" id="idType">
