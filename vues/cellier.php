@@ -27,7 +27,8 @@
 if(isset($_GET['id'])):
 ?>
 <br>
-<a href="?requete=cellier&id=<?= $cellier['id']?>">Supprimer Cellier: <?=(isset($cellier['cellier__nom'])) ? $cellier['cellier__nom'] : $i ?></a>
+<a href="?requete=supprimerCellier&id=<?= $cellierUnique[0]['id']?>">Supprimer Cellier: <?=(isset($cellierUnique[0]['cellier__nom'])) ? $cellierUnique[0]['cellier__nom'] : $i ?></a>
+<a href="?requete=modifierCellier&id=<?= $cellierUnique[0]['id']?>">Modifier Cellier: <?=(isset($cellierUnique[0]['cellier__nom'])) ? $cellierUnique[0]['cellier__nom'] : $i ?></a>
 <?php
 endif;
 if(!empty($data)):

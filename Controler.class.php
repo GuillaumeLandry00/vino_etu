@@ -61,9 +61,21 @@ class Controler
 					$this->verificationUtilisateurConnecter();
 					$this->ajouterNouveauCellier();
 					break;
+				case 'supprimerCellier':
+					$this->verificationUtilisateurConnecter();
+					$this->supprimerCellier();
+					break;
+				case 'modifierCellier':
+					$this->verificationUtilisateurConnecter();
+					$this->modifierCellier();
+					break;
 				case 'cellier':
 					$this->verificationUtilisateurConnecter();
 					$this->cellier();
+					break;
+				case 'monCompte':
+					$this->verificationUtilisateurConnecter();
+					$this->monCompte();
 					break;
 				default:
 					$this->verificationUtilisateurConnecter();
@@ -240,15 +252,31 @@ class Controler
 			header('Location: '. BASEURL .'?requete=authentification');
 		}
 
+		//Fonction qui permet a l'utlisateur de gerer son compte
+		private function monCompte(){
+
+
+			
+			include("vues/entete.php");
+			include("vues/monCompte.php");
+			include("vues/pied.php");
+		}
+
 
 		private function cellier()
 		{
 			$bte = new Bouteille();
+			$utilisateur = new Utilisateurs();
+			$cellier = new Cellier();
+
 			$recherche = isset($_POST['tri']) ? trim($_POST['recherche_bouteille']) : "";
 		    $critere    = isset($_POST['tri']) ? trim($_POST['typeTri']) : "nom";
 			$sens       = isset($_POST['tri']) ? trim($_POST['ordre']) : "ASC";
 			if(isset($_GET['id'])){
 				$data = $bte->getListeBouteilleCellier($_SESSION['users_id'], $_GET['id'], $critere ,$sens,$recherche);
+				
+				//Permet d'aller chercher les infos du cellier du GET
+				$cellierUnique = $cellier->getUnCellier($_GET['id']);
 			}else{
 				$idCellier = "";
 				$data = $bte->getListeBouteilleCellier($_SESSION['users_id'],$idCellier,$critere ,$sens,$recherche);
@@ -256,7 +284,7 @@ class Controler
 			
 
 			//Créer un objet utilisateur pour aller chercher les celliers qui possede
-			$utilisateur = new Utilisateurs();
+		
 			$celliers = $utilisateur->getCellierUtilisateur($_SESSION['users_id']);
 
 			//initialise une variable $i
@@ -386,6 +414,37 @@ class Controler
 			include("vues/ajouterCellier.php");
 			include("vues/pied.php");
 		}		
+
+		//Fonction permetant d'ajouter un nouveau cellier a l'utilisateur
+		private function supprimerCellier(){
+			$cellier = new Cellier();
+			$donnee = $cellier->getUnCellier($_GET['id']);
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				if($cellier->supprimerCellier($_GET['id'],$_SESSION['users_id'])){
+					//Redirige vers l'authentification
+					echo "Suppression Bien effectue";
+				}
+			}
+			include("vues/entete.php");
+			include("vues/supprimerCellier.php");
+			include("vues/pied.php");
+		}	
+
+		//Fonction permetant d'ajouter un nouveau cellier a l'utilisateur
+		private function modifierCellier(){
+			$cellier = new Cellier();
+			$donnee = $cellier->getUnCellier($_GET['id']);
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				if($cellier->modifierCellier($_GET['id'], $_SESSION['users_id'], $_POST['cellier__nom'])){
+					//Redirige vers l'authentification
+
+					echo "Suppression effectuée";
+				}
+			}
+			include("vues/entete.php");
+			include("vues/modifierCellier.php");
+			include("vues/pied.php");
+		}	
 }
 ?>
 
