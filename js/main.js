@@ -321,8 +321,6 @@ window.addEventListener("load", function () {
         id: urlParams.get("id"),
         cellier_id: urlParams.get("cellier_id"),
       };
-      console.log(param);
-
       //Permet de creer un objet options pour les requete
       let requete = new Request(
         BaseURL + "index.php?requete=supprimerBouteilleCellier",
