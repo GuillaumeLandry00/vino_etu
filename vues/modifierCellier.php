@@ -8,7 +8,7 @@
         </form>
         <br>
         <span id="confirmation">
-        <?php ($confirmation == true) ? "Supprission effectuée" :"Supprission non effectuée" ?>
+            <?= $data['retour']?>
         </span>
     </div>
 </div>
