@@ -8,5 +8,8 @@
         <input type="text" name='cellier__nom'placeholder="Voulez-vous ajouter un nom à votre cellier ?">
         <button id="submit" type="submit" value="submit">Oui</button>
     </form>
+    <span class='confirmation'>
+        <?= $data['retourAjouter']?>
+    </span>
     </div>
 </div>
