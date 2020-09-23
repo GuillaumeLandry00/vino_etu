@@ -21,14 +21,14 @@
 <label for="selectCellier">Choisir par cellier</label>
 <a href="?requete=cellier">Tous les celliers</a>
 <?php foreach($celliers as $cellier):?>
-    <a href="?requete=cellier&id=<?= $cellier['id']?>">Cellier: <?=(isset($cellier['cellier__nom'])) ? $cellier['cellier__nom'] : $i ?></a>
+    <a href="?requete=cellier&id=<?= $cellier['id']?>">Cellier: <?=($cellier['cellier__nom'] !== '') ? $cellier['cellier__nom'] : $i ?></a>
 <?php $i++; endforeach; ?>
 <?php
 if(isset($_GET['id'])):
 ?>
 <br>
-<a href="?requete=supprimerCellier&id=<?= $cellierUnique[0]['id']?>">Supprimer Cellier: <?=(isset($cellierUnique[0]['cellier__nom'])) ? $cellierUnique[0]['cellier__nom'] : $i ?></a>
-<a href="?requete=modifierCellier&id=<?= $cellierUnique[0]['id']?>">Modifier Cellier: <?=(isset($cellierUnique[0]['cellier__nom'])) ? $cellierUnique[0]['cellier__nom'] : $i ?></a>
+<a href="?requete=supprimerCellier&id=<?= $cellierUnique[0]['id']?>">Supprimer Cellier: <?=($cellierUnique[0]['cellier__nom'] !== '') ? $cellierUnique[0]['cellier__nom'] : 'Selectioné' ?></a>
+<a href="?requete=modifierCellier&id=<?= $cellierUnique[0]['id']?>">Modifier Cellier: <?=($cellierUnique[0]['cellier__nom']!== '') ? $cellierUnique[0]['cellier__nom'] :'Selectioné' ?></a>
 <?php
 endif;
 if(!empty($data)):
