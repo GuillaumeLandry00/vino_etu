@@ -8,7 +8,7 @@
             <span class="retourErreur">
                 <?php echo $data['identifiantErreur']?>
             </span>
-            <input type="text" placeholder="Mot de passe *" name="motDePasse">
+            <input type="password" placeholder="Mot de passe *" name="motDePasse">
             <span class="retourErreur">
                 <?php echo $data['motDePasseErreur']?>
             </span>

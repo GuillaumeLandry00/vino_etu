@@ -43,7 +43,7 @@
 		
             <div class="menuLogo">
                 <div class="logoHd">
-                    <a href="?requete=accueil"><img id="logoCellier" src="./image/logo.png"></a>
+                    <a href="?requete=cellier"><img id="logoCellier" src="./image/logo.png"></a>
                 </div>
 				
                 <div class="menuHd">

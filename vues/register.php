@@ -9,12 +9,12 @@
                 <?php echo $data['identifiantErreur']?>
             </span>
             <br>
-            <input type="text" placeholder="Mot de passe *" name="motDePasse">
+            <input type="password" placeholder="Mot de passe *" name="motDePasse">
             <span class="retourErreur">
                 <?php echo $data['motDePasseErreur']?>
             </span>
             <br>
-            <input type="text" placeholder="Confirmer votre Mot de passe *" name="confirmMotDePasse">
+            <input type="password" placeholder="Confirmer votre Mot de passe *" name="confirmMotDePasse">
             <span class="retourErreur">
                 <?php echo $data['confirmMotDePasseErreur']?>
             </span>

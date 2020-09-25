@@ -8,19 +8,19 @@
                 <input type="text" name="nom" value="<?= $_SESSION['users_login']?>" placeholder="Veuillez entrer un nom">
                 <br>
                 <label for="motDePasse">Veuillez entrer votre mot de passe: </label>
-                <input type="text" name="motDePasse" placeholder="Veuillez entrer un mot de passe">
+                <input type="password" name="motDePasse" placeholder="Veuillez entrer un mot de passe">
                 <span class="retourErreur">
                 <?php echo $data['motDePasseErreur']?>
                 </span>
                 <br>
                 <label for="motDePasseConf">Veuillez confirmer votre mot de passe: </label>
-                <input type="text" name="motDePasseConf" placeholder="Veuillez confirmer votre mot de passe">
+                <input type="password" name="motDePasseConf" placeholder="Veuillez confirmer votre mot de passe">
                 <span class="retourErreur">
                 <?php echo $data['confirmMotDePasseErreur']?>
                 </span>
                 <br>
                 <label for="ancienMotDePasse">Veuillez entrer votre ancien mot de passe: </label>
-                <input type="text" name="ancienMotDePasse" placeholder="Veuillez entrer votre ancien mot de passe">
+                <input type="password" name="ancienMotDePasse" placeholder="Veuillez entrer votre ancien mot de passe">
                 <span class="retourErreur">
                 <?php echo $array['ancienMotDePasseErreur']?>
                  </span>
@@ -35,7 +35,7 @@
                  vous allez perdre tous vos bouteilles enregistrées et vos cellier</strong>
                  <br>
                 <label for="ancienMotDePasse">Veuillez entrer votre ancien mot de passe: </label>
-                <input type="text" name="ancienMotDePasseSupp" placeholder="Veuillez entrer votre ancien mot de passe">
+                <input type="password" name="ancienMotDePasseSupp" placeholder="Veuillez entrer votre ancien mot de passe">
                 <span class="retourErreur">
                 <?php echo $array['ancienMotDePasseErreurSupp']?>
                 <button id="submit" type="submit" value="submit" name="supprimerUtilisateur">Oui</button>

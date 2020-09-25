@@ -32,9 +32,12 @@
  </div> 
  
  </div>
- 
+ <?php if(isset($_GET['id'])):?>
+    <br>
+    <a href="?requete=supprimerCellier&id=<?= $cellierUnique[0]['id']?>">Supprimer Cellier: <?=($cellierUnique[0]['cellier__nom'] !== '') ? $cellierUnique[0]['cellier__nom'] : 'Selectioné' ?></a>
+    <a href="?requete=modifierCellier&id=<?= $cellierUnique[0]['id']?>">Modifier Cellier: <?=($cellierUnique[0]['cellier__nom']!== '') ? $cellierUnique[0]['cellier__nom'] :'Selectioné' ?></a>
+<?php endif; ?>
  </div> 
-
 <section class="liste_cellier">
                   
 <?php
