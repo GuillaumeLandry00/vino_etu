@@ -1,19 +1,21 @@
 <div class="authentification">
-    <div class="authentification-container" vertical layout>
-        <h2>Sign in</h2>
-        <form action="<?php echo BASEURL?>?requete=authentification" method = "POST">
+    <div class="authentification-contenu">
+       
+        <form class="form" action="<?php echo BASEURL?>?requete=authentification" method = "POST">
+             <h1 class="titre">Connexion</h1>
+             <hr>
             <input type="text" placeholder="Identifiant *" name="identifiant">
             <span class="retourErreur">
                 <?php echo $data['identifiantErreur']?>
             </span>
-            <input type="text" placeholder="motDePasse *" name="motDePasse">
+            <input type="text" placeholder="Mot de passe *" name="motDePasse">
             <span class="retourErreur">
                 <?php echo $data['motDePasseErreur']?>
             </span>
 
-            <button id="submit" type="submit" value="submit">Submit</button>
+            <button id="submit" type="submit" value="submit">Se connecter</button>
 
-            <p class="options">Not registred yet? <a href="<?php echo BASEURL?>?requete=enregistrement">Create an account</a></p>
+            <p class="options"><a href="<?php echo BASEURL?>?requete=enregistrement"><b>Créer un compte</b></a></p>
         </form>
     </div>
 </div>

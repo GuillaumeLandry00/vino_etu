@@ -360,4 +360,26 @@ window.addEventListener("load", function () {
         });
     });
   }
+  
+  /////////fonction partage facebook/////////////
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+     /////////////fonctio pour afficher ou cacher Filtre du cellier///////////////
+    let btnFiltre = document.getElementById("btnFiltre");
+    let filtre = document.getElementById("filtre");
+    
+    btnFiltre.addEventListener("click", () => {
+      if(getComputedStyle(filtre).display != "none"){
+       filtre.style.display = "none";
+      } else {
+       filtre.style.display = "block";
+      }
+    });
 });

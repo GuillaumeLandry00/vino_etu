@@ -23,6 +23,9 @@ class Controler
 		{
 			
 			switch ($_GET['requete']) {
+				case 'accueil':
+                $this->accueil();
+                break;
 				case 'listeBouteille':
 					$this->verificationUtilisateurConnecter();
 					$this->listeBouteille();
@@ -78,8 +81,7 @@ class Controler
 					$this->monCompte();
 					break;
 				default:
-					$this->verificationUtilisateurConnecter();
-					$this->cellier();
+					$this->accueil();
 					break;
 			}
 		}
@@ -105,7 +107,15 @@ class Controler
 			header('location:' . BASEURL . '?requete=cellier');
 		}
 
-
+			private function accueil()
+		{
+			
+			include("vues/enteteAcceuil.php");
+			////////////////////modif hind//////////////
+			include("vues/acceuil.php");
+			include("vues/pied.php");
+                  
+		}
 		//Fonction permetant d'authentifier les utilisateur
 		private function authentification(){
 
@@ -161,7 +171,10 @@ class Controler
 				];
 			}
 			//Load la vue pour authentification
+			//Load la vue pour authentification
+			include("vues/enteteAcceuil.php");
 			include("vues/authentification.php");
+			include("vues/pied.php");
 		}
 
 		//Fonction permetant enregistrer des utilisateur
@@ -193,7 +206,9 @@ class Controler
 			}
 
 			//Load la vue pour register
+			include("vues/enteteAcceuil.php");
 			include("vues/register.php");
+			include("vues/pied.php");
 
 		}
 		
