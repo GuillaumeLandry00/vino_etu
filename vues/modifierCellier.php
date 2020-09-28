@@ -1,5 +1,5 @@
-<div class="supprimer">
-    <div class="container-supprimer">
+<div class="modifier">
+    <div class="container-modifier">
         <h3>Modifier le cellier: <strong style="text-decoration: underline;"><?=(isset($donnee[0]['cellier__nom'])) ? $donnee[0]['cellier__nom'] :"" ?></strong></h3>
         <br>
         <form action="?requete=modifierCellier&id=<?=$donnee[0]['id']?>" method = "POST">

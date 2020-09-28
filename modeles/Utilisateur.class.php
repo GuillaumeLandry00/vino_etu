@@ -12,6 +12,30 @@
 class Utilisateur extends Modele {
     const TABLE = 'users';
 
+     /**
+	 * Fonction: Permetant de voir la liste de tous les utilisateurs
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est trouve
+	 */
+    public function getListeUtilisateur()
+	{
+		
+		$rows = Array();
+		$res = $this->_db->query('Select * from '. self::TABLE);
+		if($res->num_rows)
+		{
+			while($row = $res->fetch_assoc())
+			{
+				$rows[] = $row;
+			}
+		}
+		
+		return $rows;
+    }
+    
+
     /**
 	 * Fonction: Permetant de faire l'authentification des utilisateurs
 	 * 

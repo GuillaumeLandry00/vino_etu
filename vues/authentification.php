@@ -4,7 +4,7 @@
         <form class="form" action="<?php echo BASEURL?>?requete=authentification" method = "POST">
              <h1 class="titre">Connexion</h1>
              <hr>
-            <input type="text" placeholder="Identifiant *" name="identifiant">
+            <input type="text" value ="<?= $data['dernierIdentifiant'] ?>"placeholder="Identifiant *" name="identifiant">
             <span class="retourErreur">
                 <?php echo $data['identifiantErreur']?>
             </span>

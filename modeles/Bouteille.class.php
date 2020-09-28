@@ -422,9 +422,104 @@ class Bouteille extends Modele {
 		$this->stmt->bind_param('ii', $data->id, $data->cellier_id);
 		return $this->stmt->execute();	
 	}
+
+	public function getUneBouteilleCatalogue($id){
+		
+		$rows = Array();
+		$requete ='SELECT * FROM vino__bouteille WHERE id = '. $id; 
+		if(($res = $this->_db->query($requete)) ==	 true)
+		{
+			if($res->num_rows)
+			{
+				while($row = $res->fetch_assoc())
+				{
+					$row['nom'] = trim(utf8_encode($row['nom']));
+					$rows[] = $row;
+				}
+			}
+		}
+		else 
+		{
+			throw new Exception("Erreur de requête sur la base de donnée", 1);
+			 //$this->_db->error;
+		}
+		return $rows;
+	}
+
+	public function modifierBouteilleCatalogue($data){
+
+		//Debut creation de la requete
+		$requete ="UPDATE vino__bouteille
+		SET fk__vino__type_id = $data->type" ;
+
+		//Initialise un tableau pour inserer des erreurs
+		$erreur = array();
+
+		//Verification du nom
+		if($data->nom == "" ){
+			$erreur["nom"] = true;
+		}else{
+			//Permet de construire la requete
+			$requete .= ", nom = '" . $data->nom ."'";
+		}
+
+		//Verification du code de la SAQ ne doit pas etre vide contenir que des chiffres
+		$regExp = "/^\d+$/i";
+		if($data->code_saq == "" || !preg_match($regExp, $data->code_saq)){
+			$erreur["code_saq"] = true;
+		}else{
+			//Permet de construire la requete
+			$requete .= ", code_saq = '" . $data->code_saq ."'";
+		}
+		
+
+		//Verification bon format de pays
+		$regExp = "/^[a-zA-Z]+$/i";
+		if($data->pays == "" || !preg_match($regExp, $data->pays)){
+			$erreur["pays"] = true;
+		}else{
+			$requete .= ", pays = '" . $data->pays ."'";
+		}
+
+		//Verification prix
+		$regExp = "/^[1-9]\d*(\.\d{1,2})?$/i";
+		if($data->prix !== ""){
+			//Permet de construire la requete
+			$requete .= ", prix_saq = " . $data->prix ;
+			if(!preg_match($regExp, $data->prix)){
+				$erreur["prix"] = true;
+			}
+		}
+
+		
+		//Verification du code de la SAQ ne doit pas etre vide contenir que des chiffres
+		if($data->format == "" ){
+			$erreur["format"] = true;
+		}else{
+			//Permet de construire la requete
+			$requete .= ", format = '" . $data->format ."'";
+		}
+
+
+		//Verification  du millesime
+		if($data->description !== ""){
+			//Permet de construire la requete
+			$requete .= ", description = '".$data->description . "'";
+		}
+
+		//Permet de construire la requete
+		$requete .= " WHERE id = " . $data->id;
+
+		//Verifie si il y a des erreurs
+		if(count($erreur) == 0){
+			$res = $this->_db->query($requete);
+		}else{
+			//Si contient erreur envoie quelle sont les erreurs
+			$res = $erreur;
+
+		}
+        
+		return $res;
+	}
 }
-
-
-
-
 ?>
