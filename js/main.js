@@ -360,26 +360,100 @@ window.addEventListener("load", function () {
         });
     });
   }
-  
+
   /////////fonction partage facebook/////////////
-    (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
+  (function (d, s, id) {
+    var js,
+      fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
+    js = d.createElement(s);
+    js.id = id;
     js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
     fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+  })(document, "script", "facebook-jssdk");
 
+  /////////////fonctio pour afficher ou cacher Filtre du cellier///////////////
+  // let btnFiltre = document.getElementById("btnFiltre");
+  // let filtre = document.getElementById("filtre");
 
-     /////////////fonctio pour afficher ou cacher Filtre du cellier///////////////
-    let btnFiltre = document.getElementById("btnFiltre");
-    let filtre = document.getElementById("filtre");
-    
-    btnFiltre.addEventListener("click", () => {
-      if(getComputedStyle(filtre).display != "none"){
-       filtre.style.display = "none";
-      } else {
-       filtre.style.display = "block";
-      }
+  // btnFiltre.addEventListener("click", () => {
+  //   if (getComputedStyle(filtre).display != "none") {
+  //     filtre.style.display = "none";
+  //   } else {
+  //     filtre.style.display = "block";
+  //   }
+  // });
+
+  //Modifier une  bouteille
+  let btnModifierAdmin = document.querySelector(
+    "[name='modifierBouteilleCatalogue']"
+  );
+  if (btnModifierAdmin) {
+    btnModifierAdmin.addEventListener("click", function (evt) {
+      //Permet de reinitaliser rles donnees
+      document.getElementById("errNom").innerHTML = "";
+      document.getElementById("errSaq").innerHTML = "";
+      document.getElementById("errPays").innerHTML = "";
+      document.getElementById("errPrix").innerHTML = "";
+      document.getElementById("errFormat").innerHTML = "";
+      document.getElementById("confirmation").innerHTML = "";
+
+      //Creer un objet qui permet d'aller chercher le GET dans le url
+      const urlParams = new URLSearchParams(window.location.search);
+
+      //Permet d'aller chercher le slect
+      var type = document.querySelector("[name='type']");
+
+      //Permet d'aller chercher les valeurs des inputs
+      var param = {
+        id: urlParams.get("id"),
+        nom: document.querySelector("[name='nom']").value,
+        code_saq: document.querySelector("[name='code_saq']").value,
+        pays: document.querySelector("[name='pays']").value,
+        description: document.querySelector("[name='desc']").value,
+        prix: document.querySelector("[name='prix']").value,
+        format: document.querySelector("[name='format']").value,
+        type: type.options[type.selectedIndex].value,
+      };
+      console.log(param);
+
+      //Permet de creer un objet options pour les requete
+      let requete = new Request(
+        BaseURL + "index.php?requete=admin/modifierBouteille",
+        {
+          method: "PUT",
+          body: JSON.stringify(param),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      console.log(JSON.stringify(param));
+
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          console.log(response);
+
+          //Permet de confirmer si le modifier à eu lieu
+          if (response == true) {
+            document.getElementById("confirmation").innerHTML =
+              "Modfication effectuée!";
+            document.getElementById("confirmation").style.color = "green";
+          } else if (response == false) {
+            document.getElementById("confirmation").innerHTML =
+              "Modication non effectuée";
+            document.getElementById("confirmation").style.color = "red";
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     });
+  }
 });

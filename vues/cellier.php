@@ -25,17 +25,19 @@
 <div class="filtreCell">
 <a href="?requete=cellier">Tous les celliers</a>
 <?php foreach($celliers as $cellier):?>
-    <a href="?requete=cellier&id=<?= $cellier['id']?>">Cellier: <?=(isset($cellier['cellier__nom'])) ? $cellier['cellier__nom'] : $i ?></a>
-
-
+    <a href="?requete=cellier&id=<?= $cellier['id']?>">Cellier: <?=($cellier['cellier__nom'] !== "") ? $cellier['cellier__nom'] : "Mon cellier" ?></a>
 <?php $i++; endforeach; ?>
  </div> 
  
  </div>
- <?php if(isset($_GET['id'])):?>
+ <?php if(isset($_GET['id'])): ?>
     <br>
-    <a href="?requete=supprimerCellier&id=<?= $cellierUnique[0]['id']?>">Supprimer Cellier: <?=($cellierUnique[0]['cellier__nom'] !== '') ? $cellierUnique[0]['cellier__nom'] : 'Selectioné' ?></a>
-    <a href="?requete=modifierCellier&id=<?= $cellierUnique[0]['id']?>">Modifier Cellier: <?=($cellierUnique[0]['cellier__nom']!== '') ? $cellierUnique[0]['cellier__nom'] :'Selectioné' ?></a>
+    <p>Cellier selectionne: <?=($cellierUnique[0]['cellier__nom'] !== '') ? $cellierUnique[0]['cellier__nom'] : "Mon Cellier" ?> </p>
+    <a href="?requete=supprimerCellier&id=<?= $cellierUnique[0]['id']?>">Supprimer Cellier: <?=($cellierUnique[0]['cellier__nom'] !== '') ? $cellierUnique[0]['cellier__nom'] : "Mon Cellier" ?></a>
+    <a href="?requete=modifierCellier&id=<?= $cellierUnique[0]['id']?>">Modifier Cellier: <?=($cellierUnique[0]['cellier__nom']!== '') ? $cellierUnique[0]['cellier__nom'] :"Mon Cellier" ?></a>
+
+ <?php else:?>
+    <p>Vue sur tous les celliers</p>
 <?php endif; ?>
  </div> 
 <section class="liste_cellier">
@@ -44,7 +46,6 @@
 
 if(!empty($data)):
     foreach ($data as $cle => $bouteille) :
-        
         ?>
 		
             <div class="bouteille" data-quantite="">
@@ -53,7 +54,8 @@ if(!empty($data)):
             </div>
 			<div class="bouteille_info">
             <div class="description">
-                <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? $bouteille['cellier__nom'] : $i ?> </p>
+            
+                <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? $bouteille['cellier__nom'] : $bouteille['id'] ?> </p>
                 <p class="nom">Nom : <?php echo $bouteille['nom'] ?></p>
                 <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
                 <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>

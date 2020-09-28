@@ -14,7 +14,9 @@ error_reporting(0);
 
 class Controler 
 {
-	
+
+		private $donneeUtilisateur;
+
 		/**
 		 * Traite la requête
 		 * @return void
@@ -80,6 +82,21 @@ class Controler
 					$this->verificationUtilisateurConnecter();
 					$this->monCompte();
 					break;
+				case 'admin':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->admin();
+					break;
+				case 'admin/utilisateur':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->adminUtilisateur();
+					break;
+				case 'admin/modifierBouteille':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->adminModifierBouteille();
+					break;
 				default:
 					$this->accueil();
 					break;
@@ -103,8 +120,13 @@ class Controler
 			//Insere le id du cellier dans une varaible session
 			$_SESSION['cellier_id'] = $dataUtilisateur[0]['id'];
 			
-			//Redirige vers l'accueil
-			header('location:' . BASEURL . '?requete=cellier');
+			//Redirige vers l'accueil de l'utilisateur
+			if($user['users_type'] == "admin"){
+				header('location:' . BASEURL . '?requete=admin');
+			}else{
+				header('location:' . BASEURL . '?requete=cellier');
+			}
+			
 		}
 
 			private function accueil()
@@ -118,6 +140,13 @@ class Controler
 		}
 		//Fonction permetant d'authentifier les utilisateur
 		private function authentification(){
+
+			
+			if($this->$donneeUtilisateur !== ""){
+				$data['dernierIdentifiant'] = $this->$donneeUtilisateur;
+			}else{
+				$dataUtilisateur['dernierIdentifiant'] = "";
+			}
 
 			$data = [
 				'identifiant' => "",
@@ -199,6 +228,7 @@ class Controler
 					//Insere l'utilisateur dans la DB
 					if($utilisateur->enregistrementUtilisateur($data) == true){
 						//Redirige vers le login
+						$this->$donneeUtilissateur =  $_POST['identifiant'];
 						header('location:' . BASEURL . '?requete=authentification');
 					}
 					
@@ -480,7 +510,8 @@ class Controler
 			if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				$cellier = new Cellier();
 				if($cellier->ajouterCellier($_SESSION['users_id'],$_POST['cellier__nom'])){
-					$data['retourAjouter'] = "Ajout effectuée";
+					//Redirige vers cellier
+					header('Location: '. BASEURL .'?requete=cellier');
 				}else{
 					$data['retourAjouter'] = "Ajout non effectuée";
 				}
@@ -504,6 +535,7 @@ class Controler
 				if($cellier->supprimerCellier($_GET['id'],$_SESSION['users_id'])){
 					//Affiche un retour
 					$data['retour'] = "Suppression effectuée";
+					header('Location: '. BASEURL .'?requete=cellier');
 				}else{
 					//Affiche un retour erreur
 					$data['retour'] = "Suppression non effectuée";
@@ -537,6 +569,64 @@ class Controler
 			include("vues/modifierCellier.php");
 			include("vues/pied.php");
 		}	
+
+		
+		/*===================================SECTION ADMIN=============================================*/ 
+
+		
+		//Fonction permetant de verifier si l'utilisateur est un admin
+		private function verificationAdmin(){
+
+			//Permet de verifier si il est admin
+			if($_SESSION['users_type'] !== "admin"){
+				//Rederige vers la vue pour admin
+				header('Location: '. BASEURL.'?requete=cellier');
+			}
+		}
+
+		//Fonction permetant d'afficher la page d'accueil d'un admin
+		private function admin(){
+
+			//Permet d'avoir la liste des bouteilles
+			$bte = new Bouteille();
+			$data = $bte->getListeBouteille();
+
+			//Permet d'avoir la liste des utilisateurs
+			$utilisateur = new Utilisateur();
+			$dataUtilisateur = $utilisateur->getListeUtilisateur();
+			include("vues/admin/entete.php");
+			include("vues/admin/acceuil.php");
+			include("vues/admin/pied.php");
+		}
+
+		//Fontion permetant a l'admin d"avoir la liste des utilisateurs
+		private function adminUtilisateur(){
+			//Permet d'avoir la liste des utilisateurs
+			$utilisateur = new Utilisateur();
+			$data = $utilisateur->getListeUtilisateur();
+
+			include("vues/admin/entete.php");
+			include("vues/admin/listeUtilisateur.php");
+			include("vues/admin/pied.php");
+		}
+
+		//Fonction permetant de modifier une bouteille du catalogue
+		private function adminModifierBouteille(){
+			$body = json_decode(file_get_contents('php://input'));
+			if(!empty($body)){
+				$bte = new Bouteille();
+				$resultat = $bte->modifierBouteilleCatalogue($body);
+				echo json_encode($resultat);
+			}
+			else{
+				$bte = new Bouteille();
+				$data = $bte->getUneBouteilleCatalogue($_GET['id']);
+				include("vues/admin/entete.php");
+				include("vues/admin/modifierBouteille.php");
+				include("vues/admin/pied.php");
+			} 
+			
+		}
 }
 ?>
 

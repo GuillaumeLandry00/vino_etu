@@ -281,7 +281,7 @@ button .seConnecter .sinscrire img{
 
 
 
-.container-supprimer p, .nouveauCellier p, .nouvelleBouteille h3, .modifierBouteille h3, .container-monCompte h2, .suppression-compte h3, .suppression-compte strong{
+.container-supprimer p, .nouveauCellier p, .nouvelleBouteille h3, .modifierBouteille h3, .container-monCompte h2, .suppression-compte h3, .suppression-compte strong, .container-modifier h3, .container-supprimer h3{
 	
 margin: 0;
 text-align: center;
@@ -384,11 +384,21 @@ footer p{
 }
 form h1 .titre{
 font-size: 24px;
-	
-
-	
+		
 }
-.authentification-contenu button, .enregistrement-contenu  button, .nouveauCellier form button, .nouvelleBouteille button, .modifierBouteille button, .modification-compte button{
+
+.cellier a{
+	text-decoration: none;
+	Color: black;
+	border-bottom: 1px solid #af0e3e;
+	font-size: 16px;
+	margin-right: 5px;
+}
+.container-supprimer button a{
+	text-decoration: none;
+	color: white;
+}
+.authentification-contenu button, .enregistrement-contenu  button, .nouveauCellier form button, .nouvelleBouteille button, .modifierBouteille button, .modification-compte button, .container-modifier button, .container-supprimer button{
 	background-color: #af0e3e;
 	border: none;
 	width: 250px;
@@ -423,11 +433,11 @@ input{
 
 
 
-.enregistrement-contenu form{
+.enregistrement-contenu form, .container-modifier form, .container-supprimer form{
 	color: white;
 	font-family:'Nanum Gothic', sans-serif;
 	
-	margin-top: 170px;
+	margin-top: 70px;
 	display: flex;
   	flex-direction: column; 
   	align-items: center;
@@ -498,7 +508,7 @@ form p .options{
 }
 
 .liste_cellier{
-	margin: 50px auto;
+	margin: 0px auto;
 }
 
 #filtre{

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 14 sep. 2020 à 20:31
+-- Généré le :  lun. 21 sep. 2020 à 22:36
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -48,13 +48,8 @@ CREATE TABLE IF NOT EXISTS `cellier__bouteille` (
 --
 
 INSERT INTO `cellier__bouteille` (`vino__bouteille_id`, `vino__cellier_id`, `quantite`, `prix`, `date_achat`, `notes`, `garde_jusqua`, `millesime`) VALUES
-(1, 1, 6, '40.00', '2002', '', 2020, 1001),
-(3, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(6, 1, 1, '40.00', '2020-09-12', '', 1001, 1001),
-(9, 1, 1, NULL, NULL, NULL, NULL, 100),
-(14, 1, 1, NULL, NULL, 'Testttt', NULL, NULL),
-(17, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(20, 1, 1, NULL, NULL, '', NULL, NULL);
+(8, 7, 6, NULL, NULL, '', NULL, NULL),
+(10, 11, 4, NULL, NULL, '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -69,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `users_login` varchar(45) DEFAULT NULL,
   `users_type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`users_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
@@ -77,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`users_id`, `users_mpd`, `users_login`, `users_type`) VALUES
 (1, 'user1', 'user1', 'utilisateur'),
-(3, '126be26daf73fbcbd28ee77712296687c9e1052146e2774dad55c4d8f06c8495', 'e1995614', 'utilisateur'),
-(4, '126be26daf73fbcbd28ee77712296687c9e1052146e2774dad55c4d8f06c8495', 'e1995614', 'utilisateur');
+(23, '126be26daf73fbcbd28ee77712296687c9e1052146e2774dad55c4d8f06c8495', 'e1995614', 'utilisateur'),
+(24, '126be26daf73fbcbd28ee77712296687c9e1052146e2774dad55c4d8f06c8495', 'e1', 'utilisateur');
 
 -- --------------------------------------------------------
 
@@ -177,16 +172,19 @@ DROP TABLE IF EXISTS `vino__cellier`;
 CREATE TABLE IF NOT EXISTS `vino__cellier` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk__users_id` int(11) NOT NULL,
+  `cellier__nom` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_vino__cellier_users1_idx` (`fk__users_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `vino__cellier`
 --
 
-INSERT INTO `vino__cellier` (`id`, `fk__users_id`) VALUES
-(1, 1);
+INSERT INTO `vino__cellier` (`id`, `fk__users_id`, `cellier__nom`) VALUES
+(1, 1, 'YESTERDAY IS DEAD YEAH MOMENT OF SILENCE'),
+(7, 24, 'Boff ouin'),
+(11, 23, 'Les best');
 
 -- --------------------------------------------------------
 
