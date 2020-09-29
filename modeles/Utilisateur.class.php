@@ -219,4 +219,25 @@ class Utilisateur extends Modele {
         }
             
     }
+
+    /**
+	 * Fonction: Permetant d'ajouter un utilisateur a la DB
+     * 
+     * @param $data array[] contenant les donnees de l"utilisateur
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est upgrade
+	 */
+    public function ajouterDroitAdmin($id, $droit){
+        $this->stmt = $this->_db->prepare("UPDATE users SET users_type = ? WHERE users_id = ?");
+        $this->stmt->bind_param('si', $droit, $id);
+        if($this->stmt->execute()){
+            return true;
+        }else{
+
+            return false;
+        }
+            
+    }
 }
