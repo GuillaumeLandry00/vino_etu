@@ -456,4 +456,74 @@ window.addEventListener("load", function () {
         });
     });
   }
+
+  //Permet de donner des droits de admin au user
+  document.querySelectorAll(".droitAdmin").forEach(function (element) {
+    console.log(element);
+
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet d'aller chercher le id et créer la requête
+      let id = evt.target.dataset.id;
+      let requete = new Request(
+        BaseURL + "index.php?requete=admin/ajouterDroit",
+        {
+          method: "PUT",
+          body: '{"id": ' + id + ', "droit": "admin"}',
+          header: "Content-Type: application/json",
+        }
+      );
+
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          location.reload();
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  });
+
+  //Permet de donner des droits de utilisateur au user
+  document.querySelectorAll(".droitUtilisateur").forEach(function (element) {
+    console.log(element);
+
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet d'aller chercher le id et créer la requête
+      let id = evt.target.dataset.id;
+      let requete = new Request(
+        BaseURL + "index.php?requete=admin/ajouterDroit",
+        {
+          method: "PUT",
+          body: '{"id": ' + id + ', "droit": "utilisateur"}',
+          header: "Content-Type: application/json",
+        }
+      );
+      console.log('{"id": ' + id + ', "droit": "utilisateur"}');
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          location.reload();
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  });
 });

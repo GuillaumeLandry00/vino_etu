@@ -1,7 +1,6 @@
 
 <div class="catalogue-admin">
 <?php if(!empty($data)):?>
-    <form action="" method="post">
     <?php foreach ($data as $cle => $utilisateur) : ?>
         <div class="utilisateur" data-quantite="">
             <div class="img"> 
@@ -12,10 +11,12 @@
                 <p class="quantite">Username : <?php echo $utilisateur['users_login'] ?></p>
                 <p class="pays">Type d'utilisateur : <?php echo $utilisateur['users_type'] ?></p>
             </div>
-            <button id="submit" type="submit" value="submit" name="ajouterdroit">Ajouter droit admin</button>
+            <button class='droitAdmin'  data-id="<?php echo $utilisateur['users_id'] ?>">Ajouter droit admin</button>
+            <button class='droitUtilisateur'  data-id="<?php echo $utilisateur['users_id'] ?>">Retirer droit admin</button>
+            <button class='supprimerUtilisateur'><a href="?requete=admin/supprimerUtilisateur&id=<?= $utilisateur['users_id'] ?>">Supprimer Utilisateur</a></button>
+        
         </div>
         <?php endforeach;?>
-    </form>
 <?php else: ?>	
     <div>
         <p>Vous n'avez pas de bouteille dans ce cellier pour le moment</p>

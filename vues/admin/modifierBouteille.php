@@ -8,7 +8,7 @@
                 <label for="pays">Pays</label>
                 <p> <input value="<?= $data[0]['pays']?>" type="text" name="pays" placeholder="Pays :"><span style="color:red"id="errPays"></span></p>
                 <label for="desc">Description</label>
-                <p> <textarea name="desc" placeholder="desc :" ><?= $data[0]['description']?></textarea></p>
+                <p> <textarea name="desc" placeholder="desc :" ><?= utf8_encode($data[0]['description'])?></textarea></p>
                 <label for="format">Prix Saq</label>
                 <p> <input value="<?= utf8_encode($data[0]['prix_saq'])?>" name="prix" placeholder="format :"><span style="color:red"id="errPrix"></span></p>
                 <label for="format">Format</label>

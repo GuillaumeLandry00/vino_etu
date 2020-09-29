@@ -97,6 +97,18 @@ class Controler
 					$this->verificationAdmin();
 					$this->adminModifierBouteille();
 					break;
+				case 'admin/ajouterDroit':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->ajouterDroitAdmin();
+					break;
+				case 'admin/supprimerUtilisateur':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->supprimerUtilisateur();
+					break;
+					
+					
 				default:
 					$this->accueil();
 					break;
@@ -625,6 +637,23 @@ class Controler
 				include("vues/admin/modifierBouteille.php");
 				include("vues/admin/pied.php");
 			} 
+			
+		}
+
+		private function ajouterDroitAdmin(){
+			$body = json_decode(file_get_contents('php://input'));
+			$utilisateur = new Utilisateur();
+			$resultat = $utilisateur->ajouterDroitAdmin($body->id, $body->droit);
+			echo json_encode($resultat);
+			
+		}
+
+		//Fonction qui permet de supprimer un utilisateur
+		private function supprimerUtilisateur(){
+			$body = json_decode(file_get_contents('php://input'));
+			$utilisateur = new Utilisateur();
+			$resultat = $utilisateur->ajouterDroitAdmin($body->id, $body->droit);
+			echo json_encode($resultat);
 			
 		}
 }

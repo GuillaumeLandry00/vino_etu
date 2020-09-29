@@ -460,7 +460,7 @@ class Bouteille extends Modele {
 			$erreur["nom"] = true;
 		}else{
 			//Permet de construire la requete
-			$requete .= ", nom = '" . $data->nom ."'";
+			$requete .= ", nom = '" .utf8_encode($data->nom) ."'";
 		}
 
 		//Verification du code de la SAQ ne doit pas etre vide contenir que des chiffres
@@ -478,7 +478,7 @@ class Bouteille extends Modele {
 		if($data->pays == "" || !preg_match($regExp, $data->pays)){
 			$erreur["pays"] = true;
 		}else{
-			$requete .= ", pays = '" . $data->pays ."'";
+			$requete .= ", pays = '" . utf8_encode($data->pays) ."'";
 		}
 
 		//Verification prix
@@ -497,14 +497,14 @@ class Bouteille extends Modele {
 			$erreur["format"] = true;
 		}else{
 			//Permet de construire la requete
-			$requete .= ", format = '" . $data->format ."'";
+			$requete .= ", format = '" . utf8_encode($data->format) ."'";
 		}
 
 
 		//Verification  du millesime
 		if($data->description !== ""){
 			//Permet de construire la requete
-			$requete .= ", description = '".$data->description . "'";
+			$requete .= ", description = '".utf8_encode($data->description) . "'";
 		}
 
 		//Permet de construire la requete
@@ -521,5 +521,6 @@ class Bouteille extends Modele {
         
 		return $res;
 	}
+	
 }
 ?>
