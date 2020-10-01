@@ -14,9 +14,6 @@ error_reporting(0);
 
 class Controler 
 {
-
-		private $donneeUtilisateur;
-
 		/**
 		 * Traite la requête
 		 * @return void
@@ -107,8 +104,16 @@ class Controler
 					$this->verificationAdmin();
 					$this->supprimerUtilisateur();
 					break;
-					
-					
+				case 'admin/importation':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->importationBouteille();
+					break;
+				case 'admin/statistique':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->statistiqueUtilisateur();
+					break;
 				default:
 					$this->accueil();
 					break;
@@ -152,14 +157,11 @@ class Controler
 		}
 		//Fonction permetant d'authentifier les utilisateur
 		private function authentification(){
-
-			
-			if($this->$donneeUtilisateur !== ""){
-				$data['dernierIdentifiant'] = $this->$donneeUtilisateur;
+			if(isset($_GET['user'])){
+				$lastUser= $_GET['user'];
 			}else{
-				$dataUtilisateur['dernierIdentifiant'] = "";
+				$lastUser = "";
 			}
-
 			$data = [
 				'identifiant' => "",
 				'motDePasse' =>  "",
@@ -240,8 +242,8 @@ class Controler
 					//Insere l'utilisateur dans la DB
 					if($utilisateur->enregistrementUtilisateur($data) == true){
 						//Redirige vers le login
-						$this->$donneeUtilissateur =  $_POST['identifiant'];
-						header('location:' . BASEURL . '?requete=authentification');
+						//$this->authentification();
+						header('location:' . BASEURL . '?requete=authentification&user='.$_POST['identifiant'].'');
 					}
 					
 				}
@@ -650,11 +652,75 @@ class Controler
 
 		//Fonction qui permet de supprimer un utilisateur
 		private function supprimerUtilisateur(){
-			$body = json_decode(file_get_contents('php://input'));
 			$utilisateur = new Utilisateur();
-			$resultat = $utilisateur->ajouterDroitAdmin($body->id, $body->droit);
-			echo json_encode($resultat);
-			
+			$data = $utilisateur->getUnUtilisateur($_GET['id']);
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				//Verifie si l'utilisateur veut supprimer
+				if(isset($_POST['supprimerUtilisateur'])){
+					$array = [
+						'identifiant' => $_SESSION['users_login'],
+						'motDePasse' => trim($_POST['ancienMotDePasseSupp']),
+						'ancienMotDePasseErreurSupp'=>""
+					];
+					//Permet de confirmer le mot de passe de l'utilisateur avant la suppression
+					if($utilisateur->controleUtilisateur($array)){
+						if($utilisateur->supprimerUtilisateur($_GET['id'])){
+							header('Location: '. BASEURL .'?requete=admin/utilisateur');
+						}else{
+							//Une erreur est sruvenue
+						}
+					}else{
+						//Mauvais mot de passe
+						$array['ancienMotDePasseErreurSupp'] = "Vous n'avez pas entrée le bon mot de passe";
+					}
+				}
+			}
+			include("vues/admin/entete.php");
+			include("vues/admin/supprimerUtilisateur.php");
+			include("vues/admin/pied.php");
+		}
+
+		//Fonction qui permet d'importer des bouteilles de la SAQ
+		private function importationBouteille(){
+
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$saq = new SAQ();
+				$page = $_POST['page'];
+				$nombreProduit = $_POST['produit'];
+				$type = $_POST['type'];
+
+				for($i=0; $i<$page;$i++)	//permet d'importer séquentiellement plusieurs pages.
+				{
+					$data = $saq->getProduits($nombreProduit,$i, $type);
+				}
+
+				//Permet de servir de compteur
+				$i = 1;
+			}
+			include("vues/admin/entete.php");
+			include("vues/admin/importation.php");
+			include("vues/admin/pied.php");
+		}
+
+		//Fonction permetant de modifier une bouteille du catalogue
+		private function statistiqueUtilisateur(){
+
+			$utilisateur = new Utilisateur();
+			$data = $utilisateur->getStatisiqueUtilisateur();
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$tri = $_POST['tri'];
+				$ordre =  $_POST['ordre'];
+				if(isset($_POST['date'])){
+					$date = $_POST['date'];
+					$data = $utilisateur->getStatisiqueUtilisateur($tri, $ordre, $date);
+				}else{
+					$data = $utilisateur->getStatisiqueUtilisateur($tri, $ordre);
+				}
+				
+			}
+			include("vues/admin/entete.php");
+			include("vues/admin/statistique.php");
+			include("vues/admin/pied.php");
 		}
 }
 ?>

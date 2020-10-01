@@ -32,12 +32,12 @@ class SAQ extends Modele {
 	 * @param int $nombre
 	 * @param int $debut
 	 */
-	public function getProduits($nombre = 24, $page = 1) {
+	public function getProduits($nombre = 24, $page = 1, $type = "blanc") {
 	//gestion des alertes
 		error_reporting(-1);
 		ini_set("display_errors", 1);
 		$s = curl_init();
-		$article_url = 'https://www.saq.com/fr/produits/vin/vin-blanc?p=1&product_list_limit=24&product_list_order=name_asc';
+		$article_url = 'https://www.saq.com/fr/produits/vin/vin-'.$type.'?p='.$page.'&product_list_limit='.$nombre.'&product_list_order=name_asc';
 		//verifier que l url existe 
 		if (isset($article_url)){
 		  $str = @file_get_contents($article_url);
@@ -88,33 +88,27 @@ class SAQ extends Modele {
 				 
 
 			    //affichage  des infos par necessaire 
-				echo "<p>".$info->nom;
-				echo "<p>".$info->img;
-				echo "<p>".$info->url;
-				echo "<p>".$info -> desc -> type;
-				echo "<p>".$info -> desc -> format;
-				echo "<p>".$info -> desc -> code_SAQ;
-				echo "<p>".$info -> desc -> pays;
-				echo "<p>".$info -> desc -> texte;
-				echo "<p>".$info->prix;
+				$data[$i]['nom'] = $info->nom;
+				$data[$i]['img'] = $info->img;
+				$data[$i]['url'] =$info->url;
+				$data[$i]['type'] =$info ->desc->type;
+				$data[$i]['format'] =$info ->desc->format;
+				$data[$i]['code_SAQ'] =$info->desc ->code_SAQ;
+				$data[$i]['pays'] =$info->desc->pays;
+				$data[$i]['texte'] =$info->desc->texte;
+				$data[$i]['prix'] =$info->prix;
 			
 				 $retour = self::ajouteProduit($info);
-				echo "<br>Code de retour : " . $retour -> raison . "<br>";
-				if ($retour -> succes == false) {
-				    echo "<pre>"; 
-				    echo "</pre>";
-				    echo "<br>";
-				} else {
-				    $i++;
-				}
-				echo "</p>";
+				$data[$i]['raison'] = $retour->raison;
+				$i++;
 			}
 			}
 		   
 		  }
 		  
 		}
-		return $i;
+		
+		return $data;
 	}
 
 	/**

@@ -474,7 +474,7 @@ class Bouteille extends Modele {
 		
 
 		//Verification bon format de pays
-		$regExp = "/^[a-zA-Z]+$/i";
+		$regExp = "/^[ÉÈÀéèàa-zA-Z-]+$/i";
 		if($data->pays == "" || !preg_match($regExp, $data->pays)){
 			$erreur["pays"] = true;
 		}else{
