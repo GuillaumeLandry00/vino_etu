@@ -70,6 +70,7 @@ if(!empty($data)):
                 <button ><a href="?requete=supprimerBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Supprimer</a></button>
                 <button class='btnAjouter'>Ajouter</button>
                 <button class='btnBoire'>Boire</button>
+                <button data-nom="<?php echo $bouteille['nom'] ?>" class="btnSignaler">Singaler erreur</button>
 
                 <!--bouton partage facebook-->
               

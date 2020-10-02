@@ -526,4 +526,95 @@ window.addEventListener("load", function () {
         });
     });
   });
+
+  //Permet d'afficher la boite au lettre ou nn
+  let btnMail = document.querySelector(".btnmailbox");
+  let conteneur = document.querySelector(".message");
+  console.log(btnMail);
+  if (btnMail) {
+    btnMail.addEventListener("click", function (evt) {
+      if (conteneur.style.display === "none") {
+        conteneur.style.display = "block";
+      } else {
+        conteneur.style.display = "none";
+      }
+    });
+  }
+
+  //Permet de supprimer un message de la messagerie
+  document.querySelectorAll(".supprimerMail").forEach(function (element) {
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet d'aller chercher le id et créer la requête
+      let id = evt.target.dataset.id;
+
+      let requete = new Request(
+        BaseURL + "index.php?requete=admin/supprimerMessage",
+        {
+          method: "DELETE",
+          body: '{"id": ' + id + "}",
+          header: "Content-Type: application/json",
+        }
+      );
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  });
+
+  //Modifier une  bouteille
+  let btnSignaler = document.querySelector(".btnSignaler");
+  if (btnSignaler) {
+    btnSignaler.addEventListener("click", function (evt) {
+      //Permet d'aller chercher les valeurs des inputs
+      var param = {
+        id: urlParams.get("id"),
+        date_achat: document.querySelector("[name='date_achat']").value,
+        garde_jusqua: document.querySelector("[name='garde_jusqua']").value,
+        notes: document.querySelector("[name='notes']").value,
+        prix: document.querySelector("[name='prix']").value,
+        quantite: document.querySelector("[name='quantite']").value,
+        millesime: document.querySelector("[name='millesime']").value,
+        cellier_id: urlParams.get("cellier_id"),
+      };
+      console.log(param);
+
+      //Permet de creer un objet options pour les requete
+      let requete = new Request(
+        BaseURL + "index.php?requete=modifierBouteilleCellier",
+        {
+          method: "PUT",
+          body: JSON.stringify(param),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      console.log(JSON.stringify(param));
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  }
 });

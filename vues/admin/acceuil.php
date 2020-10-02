@@ -1,4 +1,23 @@
 <div class="catalogue-admin">
+<button class="btnmailbox">Click for mailbox</button>
+<div class="mailbox">
+<!-- LE mail a l'administateur -->
+<?php if(!empty($dataMsg)): ?>
+<div class="message"  style="display: none">
+    <?php foreach($dataMsg as $msg):?>
+        <div class="container-message">
+            <p>Mail #<?= $i ?></p>
+            <p>De: <?= $msg['users_login']?></p>
+            <p>Message: <?= $msg['message']?></p>
+            <p>Date d'envoie: <?= $msg['date_envoie']?></p>
+            <button data-id="<?= $msg['id']?>"class="supprimerMail">Supprimer le Mail</button>
+        </div>
+    <?php $i++;endforeach;
+        else:?>
+        <p>Vous n'avez aucun mail</p>
+    <?php endif;?>
+</div>
+</div>
 <?php if(!empty($data)):?>
     <form action="" method="post">
     <?php foreach ($data as $cle => $bouteille) : ?>

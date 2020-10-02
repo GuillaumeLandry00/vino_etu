@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 01 oct. 2020 à 19:01
+-- Généré le :  ven. 02 oct. 2020 à 01:11
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -65,6 +65,29 @@ INSERT INTO `cellier__bouteille` (`vino__bouteille_id`, `vino__cellier_id`, `qua
 (361, 60, 1, '122.00', NULL, '', NULL, NULL),
 (373, 60, 1, NULL, NULL, '', NULL, NULL),
 (386, 58, 1, NULL, NULL, '', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `messagerie`
+--
+
+DROP TABLE IF EXISTS `messagerie`;
+CREATE TABLE IF NOT EXISTS `messagerie` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_users_id` int(10) UNSIGNED NOT NULL,
+  `message` text NOT NULL,
+  `date_envoie` date NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `fk_users_id` (`fk_users_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `messagerie`
+--
+
+INSERT INTO `messagerie` (`id`, `fk_users_id`, `message`, `date_envoie`) VALUES
+(2, 40, 'Erreur sur vino Etu', '2020-10-01');
 
 -- --------------------------------------------------------
 

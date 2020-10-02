@@ -114,6 +114,11 @@ class Controler
 					$this->verificationAdmin();
 					$this->statistiqueUtilisateur();
 					break;
+				case 'admin/supprimerMessage':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->supprimerMessage();
+					break;
 				default:
 					$this->accueil();
 					break;
@@ -605,9 +610,13 @@ class Controler
 			$bte = new Bouteille();
 			$data = $bte->getListeBouteille();
 
-			//Permet d'avoir la liste des utilisateurs
-			$utilisateur = new Utilisateur();
-			$dataUtilisateur = $utilisateur->getListeUtilisateur();
+			//Permet d'avoir la liste des messages
+			$msg = new Messagerie();
+			$dataMsg = $msg->getListeMessage();
+			
+			//Permet d'initialiser un compteur
+			$i = 1;
+
 			include("vues/admin/entete.php");
 			include("vues/admin/acceuil.php");
 			include("vues/admin/pied.php");
@@ -722,6 +731,16 @@ class Controler
 			include("vues/admin/statistique.php");
 			include("vues/admin/pied.php");
 		}
+
+		//Fonction permetant de supprimer un message
+		private function supprimerMessage(){
+			$body = json_decode(file_get_contents('php://input'));
+			$msg = new Messagerie();
+			$resultat = $msg->supprimerUnMessage($body->id);
+			echo json_encode($resultat);
+			
+		}
+
 }
 ?>
 
