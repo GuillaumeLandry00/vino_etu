@@ -40,66 +40,81 @@
     <p>Vue sur tous les celliers</p>
 <?php endif; ?>
  </div> 
-<section class="liste_cellier">
-                  
-<?php
+    <section class="liste_cellier">
+                    
+    <?php
 
-if(!empty($data)):
-    foreach ($data as $cle => $bouteille) :
-        ?>
-		
-            <div class="bouteille" data-quantite="">
-            <div class="img"> 
-                <img src="https:<?php echo $bouteille['image'] ?> " width="100" height="100">
-            </div>
-			<div class="bouteille_info">
-            <div class="description">
+    if(!empty($data)):
+        foreach ($data as $cle => $bouteille) :
+            ?>
             
-                <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? $bouteille['cellier__nom'] : $bouteille['id'] ?> </p>
-                <p class="nom">Nom : <?php echo $bouteille['nom'] ?></p>
-                <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
-                <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
-                <p class="type">Type : <?php echo $bouteille['type'] ?></p>
-                <p class="millesime">Millesime : <?php echo $bouteille['millesime'] ?></p>
-                <p class="prix">Prix : <?php echo $bouteille['prix'] ?></p>
-                <p class="notes">Notes : <?php echo $bouteille['notes'] ?></p>
-                <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
-            </div>
-            <div class="options" data-id="<?php echo $bouteille['vino__bouteille_id'] ?>">
-                <button ><a href="?requete=modifierBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Modifier</a></button>
-                <button ><a href="?requete=supprimerBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Supprimer</a></button>
-                <button class='btnAjouter'>Ajouter</button>
-                <button class='btnBoire'>Boire</button>
-                <button data-nom="<?php echo $bouteille['nom'] ?>" class="btnSignaler">Singaler erreur</button>
+                <div class="bouteille" data-quantite="">
+                <div class="img"> 
+                    <img src="https:<?php echo $bouteille['image'] ?> " width="100" height="100">
+                </div>
+                <div class="bouteille_info">
+                <div class="description">
+                
+                    <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? $bouteille['cellier__nom'] : $bouteille['id'] ?> </p>
+                    <p class="nom">Nom : <?php echo $bouteille['nom'] ?></p>
+                    <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
+                    <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
+                    <p class="type">Type : <?php echo $bouteille['type'] ?></p>
+                    <p class="millesime">Millesime : <?php echo $bouteille['millesime'] ?></p>
+                    <p class="prix">Prix : <?php echo $bouteille['prix'] ?></p>
+                    <p class="notes">Notes : <?php echo $bouteille['notes'] ?></p>
+                    <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
+                </div>
+                <div class="options" data-id="<?php echo $bouteille['vino__bouteille_id'] ?>">
+                    <button ><a href="?requete=modifierBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Modifier</a></button>
+                    <button ><a href="?requete=supprimerBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Supprimer</a></button>
+                    <button class='btnAjouter'>Ajouter</button>
+                    <button class='btnBoire'>Boire</button>
+                    <button data-nom="<?php echo $bouteille['nom'] ?>" class="btnSignaler">Singaler erreur</button>
+                   
 
-                <!--bouton partage facebook-->
-              
-                <div class="fb-share-button" 
-                 data-href="https:<?php echo $bouteille['image'] ?>" 
-                 data-layout="button_count">
+                    <!--bouton partage facebook-->
+                
+                    <div class="fb-share-button" 
+                    data-href="https:<?php echo $bouteille['image'] ?>" 
+                    data-layout="button_count">
+                    </div>
+
+
+                    
+
+
+                    
+                </div>
                 </div>
 
-
-                
-
-
-                
             </div>
+
+
+        <?php
+        endforeach;
+    else:
+    ?>	
+        <div>
+            <p>Vous n'avez pas de bouteille dans ce cellier pour le moment</p>
+        </div>
+    <?php endif;?>
+     
+        <!-- The Modal -->
+        <div id="monModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close" id="close">&times;</span>
+                <h4>Singaler erreur</h4>
+                <textarea id="erreurTxt"></textarea>
+                <button class="envoyerErreur">Envoyer</button>
+                <span id="confirmation"></span>
             </div>
 
         </div>
 
-
-    <?php
-    endforeach;
-else:
-?>	
-    <div>
-        <p>Vous n'avez pas de bouteille dans ce cellier pour le moment</p>
-    </div>
-<?php endif;?>
-
-</section>
+    </section>
 </div>
 
 

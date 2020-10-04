@@ -79,6 +79,10 @@ class Controler
 					$this->verificationUtilisateurConnecter();
 					$this->monCompte();
 					break;
+				case 'signalerErreur':
+					$this->verificationUtilisateurConnecter();
+					$this->signalerErreur();
+					break;
 				case 'admin':
 					$this->verificationUtilisateurConnecter();
 					$this->verificationAdmin();
@@ -589,6 +593,14 @@ class Controler
 			include("vues/pied.php");
 		}	
 
+		//Fonction permetant de signaler une erreur
+		private function signalerErreur(){
+			$body = json_decode(file_get_contents('php://input'));
+			$msg = new Messagerie();
+			$resultat = $msg->ajouterMessage($body->texte, $_SESSION['users_id']);
+			echo json_encode($resultat);
+		}
+
 		
 		/*===================================SECTION ADMIN=============================================*/ 
 
@@ -606,6 +618,8 @@ class Controler
 		//Fonction permetant d'afficher la page d'accueil d'un admin
 		private function admin(){
 
+		
+
 			//Permet d'avoir la liste des bouteilles
 			$bte = new Bouteille();
 			$data = $bte->getListeBouteille();
@@ -614,8 +628,16 @@ class Controler
 			$msg = new Messagerie();
 			$dataMsg = $msg->getListeMessage();
 			
+			
 			//Permet d'initialiser un compteur
 			$i = 1;
+
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$mot = $_POST['recherche_bouteille'];
+				$critere = $_POST['typeTri'];
+				$ordre = $_POST['ordre'];
+				$data = $bte->getListeBouteille($mot, $critere, $ordre);
+			}
 
 			include("vues/admin/entete.php");
 			include("vues/admin/acceuil.php");
@@ -627,6 +649,13 @@ class Controler
 			//Permet d'avoir la liste des utilisateurs
 			$utilisateur = new Utilisateur();
 			$data = $utilisateur->getListeUtilisateur();
+
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$mot = $_POST['recherche_utilisateur'];
+				$critere = $_POST['typeTri'];
+				$ordre = $_POST['ordre'];
+				$data =  $utilisateur->getListeUtilisateur($mot, $critere, $ordre);
+			}
 
 			include("vues/admin/entete.php");
 			include("vues/admin/listeUtilisateur.php");

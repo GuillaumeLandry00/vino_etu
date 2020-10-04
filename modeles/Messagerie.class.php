@@ -52,4 +52,19 @@ class Messagerie extends Modele {
         return $this->stmt->execute();	
     }
 
+    /**
+    * Fonction: Permetant de supprimer un message de la messagerie
+    * 
+    * @throws Exception Erreur de requête sur la base de données 
+    * 
+    * @return Boolean 
+    */
+   public function ajouterMessage($texte, $idUtilisateur){
+		
+    $this->stmt = $this->_db->prepare("INSERT INTO messagerie (message, fk_users_id) VALUES(?,?)");
+    //Bind les params
+    $this->stmt->bind_param('si', $texte, $idUtilisateur);
+    return $this->stmt->execute();	
+}
+
 }

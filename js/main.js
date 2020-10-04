@@ -18,7 +18,7 @@ console.log(BaseURL);
 window.addEventListener("load", function () {
   console.log("load");
   document.querySelectorAll(".btnBoire").forEach(function (element) {
-    console.log(element);
+    // console.log(element);
     element.addEventListener("click", function (evt) {
       let id = evt.target.parentElement.dataset.id;
       let requete = new Request(
@@ -46,7 +46,7 @@ window.addEventListener("load", function () {
 
   //Permet de selectionner tous les éléments avec la classe .btnAjouter
   document.querySelectorAll(".btnAjouter").forEach(function (element) {
-    console.log(element);
+    // console.log(element);
 
     //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
     element.addEventListener("click", function (evt) {
@@ -527,17 +527,23 @@ window.addEventListener("load", function () {
     });
   });
 
-  //Permet d'afficher la boite au lettre ou nn
-  let btnMail = document.querySelector(".btnmailbox");
-  let conteneur = document.querySelector(".message");
-  console.log(btnMail);
-  if (btnMail) {
-    btnMail.addEventListener("click", function (evt) {
-      if (conteneur.style.display === "none") {
-        conteneur.style.display = "block";
-      } else {
-        conteneur.style.display = "none";
-      }
+  //Modal pour envoyer un message
+  let btnSignaler = document.querySelector(".btnSignaler");
+  let modal = document.getElementById("monModal");
+
+  if (document.querySelector(".btnmailbox")) {
+    //Permet de faire apparaitre le modal
+    document.querySelector(".btnmailbox").addEventListener("click", () => {
+      //Permet de faire apparaitre le modal
+      modal.style.display = "block";
+    });
+  }
+
+  //Permet de fermer le  modal
+  let spanClose = document.getElementById("close");
+  if (spanClose) {
+    spanClose.addEventListener("click", () => {
+      modal.style.display = "none";
     });
   }
 
@@ -573,48 +579,55 @@ window.addEventListener("load", function () {
     });
   });
 
-  //Modifier une  bouteille
-  let btnSignaler = document.querySelector(".btnSignaler");
-  if (btnSignaler) {
-    btnSignaler.addEventListener("click", function (evt) {
-      //Permet d'aller chercher les valeurs des inputs
-      var param = {
-        id: urlParams.get("id"),
-        date_achat: document.querySelector("[name='date_achat']").value,
-        garde_jusqua: document.querySelector("[name='garde_jusqua']").value,
-        notes: document.querySelector("[name='notes']").value,
-        prix: document.querySelector("[name='prix']").value,
-        quantite: document.querySelector("[name='quantite']").value,
-        millesime: document.querySelector("[name='millesime']").value,
-        cellier_id: urlParams.get("cellier_id"),
-      };
-      console.log(param);
+  document.querySelectorAll(".btnSignaler").forEach(function (element) {
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet de faire apparaitre le modal
+      modal.style.display = "block";
 
-      //Permet de creer un objet options pour les requete
-      let requete = new Request(
-        BaseURL + "index.php?requete=modifierBouteilleCellier",
-        {
-          method: "PUT",
-          body: JSON.stringify(param),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      //Permet d'aller mettre un texte par defaut
+      let nom = evt.target.dataset.nom;
+      document.getElementById("erreurTxt").value = "Erreur sur " + nom + ": ";
 
-      console.log(JSON.stringify(param));
-      fetch(requete)
-        .then((response) => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            throw new Error("Erreur");
+      //Permer d'executer la requete
+      document.querySelector(".envoyerErreur").addEventListener("click", () => {
+        let texte = document.getElementById("erreurTxt").value;
+
+        let requete = new Request(
+          BaseURL + "index.php?requete=signalerErreur",
+          {
+            method: "POST",
+            body: '{"texte":  "' + texte + '"}',
+            header: "Content-Type: application/json",
           }
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+        );
+        console.log('{"texte":  "' + texte + '"}');
+        fetch(requete)
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              throw new Error("Erreur");
+            }
+          })
+          .then((response) => {
+            //location.reload();
+            //Permet de confirmer si le modifier à eu lieu
+            if (response == true) {
+              document.getElementById("confirmation").innerHTML =
+                "Envoie effectuée!";
+              document.getElementById("confirmation").style.color = "green";
+            } else if (response == false) {
+              document.getElementById("confirmation").innerHTML =
+                "Envoie non effectuée";
+              document.getElementById("confirmation").style.color = "red";
+            }
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
     });
-  }
+  });
 });

@@ -19,11 +19,14 @@ class Utilisateur extends Modele {
 	 * 
 	 * @return 1 si l'utilisateur est trouve
 	 */
-    public function getListeUtilisateur()
+    public function getListeUtilisateur($mot_recherche ="", $critere ="users_login", $sens ="ASC")
 	{
 		
-		$rows = Array();
-		$res = $this->_db->query('Select * from '. self::TABLE);
+        $rows = Array();
+        
+        $requete ="Select * from ". self::TABLE . " WHERE users_login LIKE '%".$mot_recherche."%' ORDER BY " .$critere. " " .$sens;
+
+		$res = $this->_db->query($requete);
 		if($res->num_rows)
 		{
 			while($row = $res->fetch_assoc())

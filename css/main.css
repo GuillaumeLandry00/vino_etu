@@ -2,56 +2,48 @@
  * Votre CSS
  ********/
 
-html, body {
-	height: 100%;
-	margin: 0;
-/*	background-color: black;
-*/	
-	font-family: 'Roboto', 'RobotoDraft', sans-serif;
-	font-size: 95%;
-	
-	
-	
+html,
+body {
+  height: 100%;
+  margin: 0;
+  /*	background-color: black;
+*/
+  font-family: "Roboto", "RobotoDraft", sans-serif;
+  font-size: 95%;
 }
 .liste {
-	display: block;
-	border-top: 1px solid #ccc;
-	border-bottom: none;
-	/*background: #666;*/
-	/*color: #03a9f4;*/
-	list-style: none;
-	margin: 0;
-	padding: 0;
+  display: block;
+  border-top: 1px solid #ccc;
+  border-bottom: none;
+  /*background: #666;*/
+  /*color: #03a9f4;*/
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .liste > div {
-	height: 40px;
-	line-height: 40px;
-	padding: 0 20px;
-	border-bottom: 1px solid #ccc;
-	/*background: #666;*/
-	cursor: pointer;
-	transition: color 200ms ease-in-out;
-	/*background-color: #003777;*/
-	background-color:#e85e30;
-	color:#FFFFFF;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  border-bottom: 1px solid #ccc;
+  /*background: #666;*/
+  cursor: pointer;
+  transition: color 200ms ease-in-out;
+  /*background-color: #003777;*/
+  background-color: #e85e30;
+  color: #ffffff;
 }
 .liste > div:hover {
-	color:#000000;
-	transition: color 200ms ease-in-out;
-	
+  color: #000000;
+  transition: color 200ms ease-in-out;
 }
-
-
-
-
 
 /*///////////////////////Web////////////////////*/
 
 /*///////////////////// PAGE D'Accueil /////////////////////////*/
 
-.accueilContent{
-	
+.accueilContent {
   background-image: url("/vino_etu/image/bg1.jpg");
   background-position: center;
   background-repeat: no-repeat;
@@ -62,132 +54,121 @@ html, body {
   width: 100%;
   top: 0;
   position: absolute;
-  font-family: 'Roboto', sans-serif;
-   
+  font-family: "Roboto", sans-serif;
 }
- #enteteAcceuil{
-	position: absolute;
-	background-color: rgba(0,0,0,0.6);
-	z-index: 5;
-	width: 100%;
-	height: 20%;
-	border-bottom: 1px solid #af0e3e;
-
+#enteteAcceuil {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 5;
+  width: 100%;
+  height: 20%;
+  border-bottom: 1px solid #af0e3e;
 }
 
- #enteteCellier{
-	position: relative;
-	background-color: rgba(0,0,0,0.6);
-	z-index: 5;
-	width: 100%;
-	height: 50%;
-	border-bottom: 1px solid #af0e3e;
-
+#enteteCellier {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 5;
+  width: 100%;
+  height: 50%;
+  border-bottom: 1px solid #af0e3e;
 }
 
 #logoAceuil {
-
-	width:250px;
-	display: block;
- 	margin-left: auto;
-  	margin-right: auto;
-  	margin-top: 15px;
+  width: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
 }
 
 #logoCellier {
-	width:200px;
-	display: block;
-  	margin-top: 15px;
+  width: 200px;
+  display: block;
+  margin-top: 15px;
 }
 
-button .seConnecter .sinscrire img{
-	width: 10px;
-
+button .seConnecter .sinscrire img {
+  width: 10px;
 }
-.btnsAcceuil button{
-	width: 150px;
-	height: 40px;
-	border-radius: 10px;
-	margin: 10px;
-	color: white;
-	font-size: 16px;
-	
-	
-
+.btnsAcceuil button {
+  width: 150px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 10px;
+  color: white;
+  font-size: 16px;
 }
 
-.btnsAcceuil{
-	display: flex;
-	margin-left: 60px;
-/*	align-items: flex-start;
-*/	} 
-
-.seConnecter{
-	background-color: #af0e3e;
-	font-size: 16px; 
+.btnsAcceuil {
+  display: flex;
+  margin-left: 60px;
+  /*	align-items: flex-start;
+*/
 }
 
-.sinscrire{
-	background-color: rgba(0,0,0,0); 
-	border: 2px  solid white;
+.seConnecter {
+  background-color: #af0e3e;
+  font-size: 16px;
 }
 
-.monTitre h1{
-
-	color: white;
-	font-family: 'Nanum Gothic', sans-serif;
-	font-size: 30px;
-	text-transform: uppercase;
-	margin-left: 70px;
-	margin-top: 20%;
-
+.sinscrire {
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid white;
 }
 
-
+.monTitre h1 {
+  color: white;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+  margin-left: 70px;
+  margin-top: 20%;
+}
 
 /*//////////////////////////  entete pour page cellier/ajouter/modifier bouteille et les autre  ///////////////////////////////////////////********/
 
 /*header entete*/
 #cellierBg {
-	background-image: url("/vino_etu/image/bgCellier.jpg");
-	z-index: 100;
-	width: 100%;
-	height: 30%;
-	background-repeat: no-repeat;
-    background-size: cover;	
+  background-image: url("/vino_etu/image/bgCellier.jpg");
+  z-index: 100;
+  width: 100%;
+  height: 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
 
 /***************** menu - navigaion du site ****************/
 
 #menuMobile #menu_principal {
-    clear: none;
-    float: right;
-    max-height: none;
-  }
-
-/*cacher menu mobile deroulant pour web*/
-#menuMobile .menu-icon, #menuMobile .menu-btn{
-	display: none;
+  clear: none;
+  float: right;
+  max-height: none;
 }
 
-/****************** cacher le bouton pour filtre version mobile*******************/
-#btnFiltre{
+/*cacher menu mobile deroulant pour web*/
+#menuMobile .menu-icon,
+#menuMobile .menu-btn {
   display: none;
 }
 
-#filtre label, #fitltreForm{
+/****************** cacher le bouton pour filtre version mobile*******************/
+#btnFiltre {
+  display: none;
+}
 
+#filtre label,
+#fitltreForm {
   font-size: 22px;
   margin: 10px;
 }
 
-.filtreCell a{
-	color:#af0e3e;
-	text-decoration: none;
-	background-color: #f5f6f7;
-	font-size: 18px;
-	margin: 10px; 
+.filtreCell a {
+  color: #af0e3e;
+  text-decoration: none;
+  background-color: #f5f6f7;
+  font-size: 18px;
+  margin: 10px;
 }
 
 /****  menu principal ***/
@@ -197,12 +178,10 @@ button .seConnecter .sinscrire img{
   margin-right: 100px;
   margin-top: 15px;
   padding: 0;
-
 }
 /* menu principal */
 #enteteCellier li {
   float: right;
-
 }
 
 #enteteCellier li a {
@@ -215,147 +194,144 @@ button .seConnecter .sinscrire img{
 
 /* ajouter couleur different */
 #enteteCellier li a:hover:not(.active) {
- color: #af0e3e;
+  color: #af0e3e;
 }
 
 /* positionnement du menu*/
- .menuLogo {
-	display: flex;
-	align-items: stretch;
-} 
+.menuLogo {
+  display: flex;
+  align-items: stretch;
+}
 
 /* positionnement d'image logo*/
-.logoHd{
-	flex-grow: 3;
-	} 
+.logoHd {
+  flex-grow: 3;
+}
 
-.menuHd{
-	flex-grow:7;
-	padding-top: 50px;
-} 
- /* affichagre information à propos du compte d'utilisateur*/ 
-.headerConnex{
-	width: 100%;
-	height: 30px;
-	background-color: black;
-	color: white;
-	display: flex;
-	justify-content: flex-end;
-	padding-top: 8px;
-	
-	} 
+.menuHd {
+  flex-grow: 7;
+  padding-top: 50px;
+}
+/* affichagre information à propos du compte d'utilisateur*/
+.headerConnex {
+  width: 100%;
+  height: 30px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
 
-.headerConnex a{
-	padding: 20px;
-	text-decoration: none;
-	margin-right: 100px;
-	margin-top: 5px;
-	color: #af0e3e;
-} 
+.headerConnex a {
+  padding: 20px;
+  text-decoration: none;
+  margin-right: 100px;
+  margin-top: 5px;
+  color: #af0e3e;
+}
 
+#cellierBg h1 {
+  text-align: center;
+  color: white;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px black;
+}
 
-#cellierBg h1{
-	text-align: center;
-	color: white;
-	font-family: 'Nanum Gothic', sans-serif;
-	font-size: 30px;
-	text-transform: uppercase;
-	text-shadow: 2px 2px 2px black;
-	} 
-
-	
 /********************* boutton du site ajouter/supprimer/modifier etc ****************************/
 
-.cellier, .supprimer, .ajouter, .modifier, .ajouterCellier{
-	background-color: white;
-    min-height: 100vh;
-    z-index:0;
+.cellier,
+.supprimer,
+.ajouter,
+.modifier,
+.ajouterCellier {
+  background-color: white;
+  min-height: 100vh;
+  z-index: 0;
 }
-.cellier form{
-  font-family: 'Roboto', sans-serif;
+.cellier form {
+  font-family: "Roboto", sans-serif;
 }
-
-
 
 /*///////////////////////////////////////  page supprimer   ///////////////////////////////////*/
 
-
-
-.container-supprimer p, .nouveauCellier p, .nouvelleBouteille h3, .modifierBouteille h3, .container-monCompte h2, .suppression-compte h3, .suppression-compte strong, .container-modifier h3, .container-supprimer h3{
-	
-margin: 0;
-text-align: center;
-color: grey;
-font-family: 'Roboto', sans-serif;
-font-size: 20px;
-padding-top: 80px;
-   
-	
+.container-supprimer p,
+.nouveauCellier p,
+.nouvelleBouteille h3,
+.modifierBouteille h3,
+.container-monCompte h2,
+.suppression-compte h3,
+.suppression-compte strong,
+.container-modifier h3,
+.container-supprimer h3 {
+  margin: 0;
+  text-align: center;
+  color: grey;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  padding-top: 80px;
 }
 
-.suppression-compte strong, .container-monCompte h2{
-	padding-top: 10px;
+.suppression-compte strong,
+.container-monCompte h2 {
+  padding-top: 10px;
 }
-.container-supprimer p em{
-
-color: #af0e3e;
-}
-
-.btnSup button{
-width: 50px;
-height: 20px;
-color: white;
-background-color: #af0e3e;
-margin: 5px;
-border:0;
-text-decoration: none;
-font-size: 16px;
+.container-supprimer p em {
+  color: #af0e3e;
 }
 
-.btnSup button a{
-text-decoration: none;
-color: white;
-}
-.btnSup{
-    display: flex;
-    justify-content: center;
-}
-.nouveauCellier form{
-	margin-top: 30px;
-    display: flex;
-  	flex-direction: column; 
-  	align-items: center;
+.btnSup button {
+  width: 50px;
+  height: 20px;
+  color: white;
+  background-color: #af0e3e;
+  margin: 5px;
+  border: 0;
+  text-decoration: none;
+  font-size: 16px;
 }
 
-
+.btnSup button a {
+  text-decoration: none;
+  color: white;
+}
+.btnSup {
+  display: flex;
+  justify-content: center;
+}
+.nouveauCellier form {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 /*//////////////////////////////////////// pied de la page ////////////////////////////////////////*/
-footer{
-	position: fixed;
-	bottom:0px;
-	width: 100%;
-	background-color: black;
-	height: 7%;
-	color: lightgrey;
-	font-family: 'Nanum Gothic', sans-serif;
-	font-size: 11px;
-	margin: auto;
-	z-index: 5;
-	text-align: center;
-	border-top: 1px solid #af0e3e;
+footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  background-color: black;
+  height: 7%;
+  color: lightgrey;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 11px;
+  margin: auto;
+  z-index: 5;
+  text-align: center;
+  border-top: 1px solid #af0e3e;
 }
 
-footer p{
-
-	font-family: 'Roboto', 'RobotoDraft', sans-serif;
-	font-size: 11px;
-	
+footer p {
+  font-family: "Roboto", "RobotoDraft", sans-serif;
+  font-size: 11px;
 }
-
 
 /*///////////////////////////////////////////  authentification ////////////////////////////////////////////// */
-.authentification, .enregistrement {
-	
+.authentification,
+.enregistrement {
   background-image: url("/vino_etu/image/bg3.jpg");
   background-position: center;
   background-repeat: no-repeat;
@@ -365,912 +341,857 @@ footer p{
   width: 100%;
   top: 0;
   position: absolute;
-  font-family: 'Roboto', sans-serif;
-
-   
+  font-family: "Roboto", sans-serif;
 }
 
-.authentification-contenu form{
-	color: white;
-	font-family:'Nanum Gothic', sans-serif;
+.authentification-contenu form {
+  color: white;
+  font-family: "Nanum Gothic", sans-serif;
 
-	text-transform: uppercase;
-	margin-top: 180px;
+  text-transform: uppercase;
+  margin-top: 180px;
 
-	display: flex;
-   flex-direction: column; 
-   align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-form h1 .titre{
-font-size: 24px;
-		
+form h1 .titre {
+  font-size: 24px;
 }
 
-.cellier a{
-	text-decoration: none;
-	Color: black;
-	border-bottom: 1px solid #af0e3e;
-	font-size: 16px;
-	margin-right: 5px;
+.cellier a {
+  text-decoration: none;
+  color: black;
+  border-bottom: 1px solid #af0e3e;
+  font-size: 16px;
+  margin-right: 5px;
 }
-.container-supprimer button a{
-	text-decoration: none;
-	color: white;
+.container-supprimer button a {
+  text-decoration: none;
+  color: white;
 }
-.authentification-contenu button, .enregistrement-contenu  button, .nouveauCellier form button, .nouvelleBouteille button, .modifierBouteille button, .modification-compte button, .container-modifier button, .container-supprimer button{
-	background-color: #af0e3e;
-	border: none;
-	width: 250px;
-	height: 40px;
-	color: white;
-	font-size: 24px; 
-	margin-top: 10px;
+.authentification-contenu button,
+.enregistrement-contenu button,
+.nouveauCellier form button,
+.nouvelleBouteille button,
+.modifierBouteille button,
+.modification-compte button,
+.container-modifier button,
+.container-supprimer button {
+  background-color: #af0e3e;
+  border: none;
+  width: 250px;
+  height: 40px;
+  color: white;
+  font-size: 24px;
+  margin-top: 10px;
 }
-hr{
-	width: 65px;
-	margin-top: 0px;
-    border-top: 2px solid #af0e3e ;
-
-	
+hr {
+  width: 65px;
+  margin-top: 0px;
+  border-top: 2px solid #af0e3e;
 }
-input{
-	width: 250px;
-	height: 30px;
-	color: grey;
-	margin:10px;
-	border: 1px solid #af0e3e;
+input {
+  width: 250px;
+  height: 30px;
+  color: grey;
+  margin: 10px;
+  border: 1px solid #af0e3e;
 }
-.options a{
-	text-decoration: none;
-	margin-right: 0px;
-	font-size: 13px;
-	color:white;
-	text-decoration: underline;
-	text-transform: none;
-
-}
-
-
-
-.enregistrement-contenu form, .container-modifier form, .container-supprimer form{
-	color: white;
-	font-family:'Nanum Gothic', sans-serif;
-	
-	margin-top: 70px;
-	display: flex;
-  	flex-direction: column; 
-  	align-items: center;
-
+.options a {
+  text-decoration: none;
+  margin-right: 0px;
+  font-size: 13px;
+  color: white;
+  text-decoration: underline;
+  text-transform: none;
 }
 
-form p .options{
-	text-transform: none;
+.enregistrement-contenu form,
+.container-modifier form,
+.container-supprimer form {
+  color: white;
+  font-family: "Nanum Gothic", sans-serif;
+
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form p .options {
+  text-transform: none;
 }
 
 /*************************** page cellier ***********************************/
 /*/////////////////////////////////////////// PAGE CELLIER /////////////////////////////////////*/
 
-.cellier{
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: flex-start;
-    padding: 50px;
-	
+.cellier {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  padding: 50px;
 }
 
-.liste_cellier{
-	width: 100%;
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: flex-start;
+.liste_cellier {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
 }
 
-.cellier form{
-    width: 100%;
-    margin: 25px 20px 50px 20px;
-    padding: 10px;
-    font-size: 16px; 
+.cellier form {
+  width: 100%;
+  margin: 25px 20px 50px 20px;
+  padding: 10px;
+  font-size: 16px;
 }
 
-.cellier form input{
-   width: 200px;
-    font-size: 16px;
-    margin: 5px 15px;
+.cellier form input {
+  width: 200px;
+  font-size: 16px;
+  margin: 5px 15px;
 }
 /****  page cellier form select ******/
-#idType, #idOrdre{
-    width: 200px;
-   font-size: 16px;
-    padding: 6px;
-    margin: 5px 15px;
-    border-color: #a73249; 
+#idType,
+#idOrdre {
+  width: 200px;
+  font-size: 16px;
+  padding: 6px;
+  margin: 5px 15px;
+  border-color: #a73249;
 }
 
 /* bouton eéxuter*/
-#executer{
-    width: 200px;
-   background-color: #a73249;
-    color: white;
-    font-size: 16px;
-    padding: 6px;
-    margin: 5px 15px;
+#executer {
+  width: 200px;
+  background-color: #a73249;
+  color: white;
+  font-size: 16px;
+  padding: 6px;
+  margin: 5px 15px;
 }
 
-
-
-.cellier form a{
-    text-decoration: none; 
-    color: black;
-    margin: 5px 10px;
-     font-size: 16px;
-    border-bottom: 1px solid #a73249;
+.cellier form a {
+  text-decoration: none;
+  color: black;
+  margin: 5px 10px;
+  font-size: 16px;
+  border-bottom: 1px solid #a73249;
 }
 
-.liste_cellier{
-	margin: 0px auto;
+.liste_cellier {
+  margin: 0px auto;
 }
 
-#filtre{
-	margin: 0px auto;
+#filtre {
+  margin: 0px auto;
 }
 
-#choix_cellier{
-    width: 100%;
-    margin: 30px 0px;
- }
- 
-.cellier .bouteille{
-    
-    width: 20%;
-    /*margin: 25px 40px 50px 20px;*/
-	margin: 50px auto;
-    padding: 10px;
-    border: 1px solid #a73249;
-    line-height: 15px;
-    font-size: 16px;
+#choix_cellier {
+  width: 100%;
+  margin: 30px 0px;
 }
 
-.bouteille .img{
-    padding: 5px;
-    text-align: center;
-}
-.bouteille .img img{
-    height: 150px;
-    width: auto;
-}
-
-.bouteille .description{
-   padding: 10px;  
+.cellier .bouteille {
+  width: 20%;
+  /*margin: 25px 40px 50px 20px;*/
+  margin: 50px auto;
+  padding: 10px;
+  border: 1px solid #a73249;
+  line-height: 15px;
+  font-size: 16px;
 }
 
-.bouteille .description .nom{
-    border-bottom: 0.1em solid #a73249;
-    height: 3em;
-    line-height: 25px;
-   
+.bouteille .img {
+  padding: 5px;
+  text-align: center;
+}
+.bouteille .img img {
+  height: 150px;
+  width: auto;
+}
+
+.bouteille .description {
+  padding: 10px;
+}
+
+.bouteille .description .nom {
+  border-bottom: 0.1em solid #a73249;
+  height: 3em;
+  line-height: 25px;
 }
 
 .bouteille .options {
-    text-align: center;
-    
-    
+  text-align: center;
 }
 
-.bouteille .options button{
-    
-    margin: 5px;
-    padding: 5px 15px;
-    width: 150px;
-    background-color: #a73249;
-    color: white;
-    text-align: center;
-    border-style: none;
+.bouteille .options button {
+  margin: 5px;
+  padding: 5px 15px;
+  width: 150px;
+  background-color: #a73249;
+  color: white;
+  text-align: center;
+  border-style: none;
 }
 
-.bouteille .options button a, .suppression-compte button a{
-    color: white;
-    text-decoration: none;
+.bouteille .options button a,
+.suppression-compte button a {
+  color: white;
+  text-decoration: none;
 }
 
-.bouteille .options .btnBoire{
-    
-    background-color: #5a5858;
-    
+.bouteille .options .btnBoire {
+  background-color: #5a5858;
 }
-
-
 
 /*/////////////////// PAGE AJOUTER BOUTEILLE/  /////////////////////*/
 
-/******* ajouter bouteille ********/ 
+/******* ajouter bouteille ********/
 
-.nouvelleBouteille, .modifierBouteille{
-    text-align: center;
-    margin: 0px;
-    padding-bottom: 100px;
+.nouvelleBouteille,
+.modifierBouteille {
+  text-align: center;
+  margin: 0px;
+  padding-bottom: 100px;
 }
 
-.nouvelleBouteille h3{
-    padding-bottom: 50px;
+.nouvelleBouteille h3 {
+  padding-bottom: 50px;
 }
 
-.nouvelleBouteille select{
-    width: 250px;
-	height: 30px;
-	color: grey;
-	margin:10px;
-	border: 1px solid #af0e3e;
+.nouvelleBouteille select {
+  width: 250px;
+  height: 30px;
+  color: grey;
+  margin: 10px;
+  border: 1px solid #af0e3e;
 }
-
 
 /*//////////////////////////  page mon compte  ///////////////////////////*/
-.monCompte{
-	width: 100%;
-	background-color: white;
-	margin: 0px;
-	padding: 30px;
-	
-	
+.monCompte {
+  width: 100%;
+  background-color: white;
+  margin: 0px;
+  padding: 30px;
 }
-.container-monCompte{
-	margin-bottom: 100px;
-	
+.container-monCompte {
+  margin-bottom: 100px;
 }
 
-.modification-compte, .suppression-compte{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin-top: 0px;
-	
-	
+.modification-compte,
+.suppression-compte {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
 }
 
-.modification-compte button{
-	width: 250px;
+.modification-compte button {
+  width: 250px;
 }
 
-.suppression-compte button{
-	background-color: #af0e3e;
-	border: none;
-	width: 125px;
-	height: 40px;
-	color: white;
-	font-size: 24px; 
-	margin-top: 10px;
+.suppression-compte button {
+  background-color: #af0e3e;
+  border: none;
+  width: 125px;
+  height: 40px;
+  color: white;
+  font-size: 24px;
+  margin-top: 10px;
 }
 
+/*Pour le modal*/
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
 
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 /*//////////////////tablette/////////////*/
 
+@media all and (max-width: 1024px) and (min-width: 640px) {
+  .monCompte {
+    padding: 10px;
+    font-size: 20px;
+  }
 
-@media all and (max-width: 1024px) and (min-width: 640px)
-{
- .monCompte{
-	padding: 10px;
-	font-size: 20px;	
-}
+  .container-monCompte {
+    margin-bottom: 100px;
+  }
 
-.container-monCompte{
-	margin-bottom: 100px;
-}
+  .suppression-compte {
+    margin-bottom: 50px;
+  }
+  .suppression-compte strong {
+    padding: 20px;
+  }
+  /*///////////////////////////// TABLETTE entete cellier  ///////////////////////////////*/
+  #cellierBg {
+    height: 30%;
+  }
 
-.suppression-compte{
-	margin-bottom: 50px;
-}
-  .suppression-compte strong{
-	padding: 20px;
-}   
-       /*///////////////////////////// TABLETTE entete cellier  ///////////////////////////////*/
-    #cellierBg{
-       height: 30%
-    }
-    
-    
-    
-    #cellierBg h1{
-        font-size: 30px;
-    }
-  
-     /*////////  tablette page cellier //////////*/
-    .cellier{
-    
-    padding: 10px 10px;   
-}
+  #cellierBg h1 {
+    font-size: 30px;
+  }
 
-.cellier form{
+  /*////////  tablette page cellier //////////*/
+  .cellier {
+    padding: 10px 10px;
+  }
+
+  .cellier form {
     display: none;
-    
+
     margin: 25px 20px 30px 20px;
     padding: 8px;
-    
-} 
+  }
 
-
-
-
-
- #choix_cellier{
+  #choix_cellier {
     width: 100%;
     margin: 30px 0px;
- }
-    
-    /****  page cellier form select ******/
-#idType, #idOrdre{
-   width: 200px;
+  }
+
+  /****  page cellier form select ******/
+  #idType,
+  #idOrdre {
+    width: 200px;
     height: 40px;
     padding: 4px;
     margin: 10px 0px;
-}
+  }
 
-#executer{
+  #executer {
     width: 200px;
     margin: 10px 0px;
     height: 40px;
-}
-
-.cellier form a{
-    margin: 5px 10px;   
-}
-    
- .cellier form input{
-	width: 195px;
-	height: 35px;
-	margin: 20px 0px;
-}
-    
-    .cellier .bouteille{
-    width: 40%;
-   /* margin: 5px 15px 80px 25px;*/
-	margin: 50px auto;
-    padding: 5px;
-    font-size: 20px;
-}
-
-
-.bouteille .description .nom{
-    height: 80px;
-    line-height: 25px; 
-}
-
-.bouteille .options button{
-    width: 140px;
-    font-size: 22px;
-}
-    .bouteille .options button a{
-    font-size: 22px;
-}
-    
-    
- /*/////////////Filtre////////////*/
-
-  #btnFiltre{
-    display:initial;
   }
 
- #filtre{
-  display: none;
+  .cellier form a {
+    margin: 5px 10px;
+  }
+
+  .cellier form input {
+    width: 195px;
+    height: 35px;
+    margin: 20px 0px;
+  }
+
+  .cellier .bouteille {
+    width: 40%;
+    /* margin: 5px 15px 80px 25px;*/
+    margin: 50px auto;
+    padding: 5px;
+    font-size: 20px;
+  }
+
+  .bouteille .description .nom {
+    height: 80px;
+    line-height: 25px;
+  }
+
+  .bouteille .options button {
+    width: 140px;
+    font-size: 22px;
+  }
+  .bouteille .options button a {
+    font-size: 22px;
+  }
+
+  /*/////////////Filtre////////////*/
+
+  #btnFiltre {
+    display: initial;
+  }
+
+  #filtre {
+    display: none;
+  }
+
+  #btnFiltre {
+    width: 100px;
+    height: 40px;
+    background-color: white;
+    color: #af0e3e;
+    border: 2px solid #af0e3e;
+    margin: 10px;
+    font-size: 18px;
+  }
+  #fitltreForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    border-bottom: 1px solid lightgrey;
+  }
+
+  #fitltreForm select {
+    width: 250px;
+    height: 30px;
+    color: grey;
+    margin: 10px;
+    border: 1px solid #af0e3e;
+    background-color: white;
+  }
+  .subFiltre {
+    background-color: #af0e3e !important;
+    color: white;
+  }
+
+  #filtre label {
+    font-size: 22px;
+    margin: 10px;
+  }
+
+  .filtreCell a {
+    color: #af0e3e;
+    text-decoration: none;
+    background-color: #f5f6f7;
+    font-size: 18px;
+    margin: 10px;
+  }
+
+  .filtreCell {
+    border-bottom: 1px solid lightgrey;
+  }
+
+  /*////////////////page acceuil//////////*/
+
+  .monTitre h1 {
+    color: white;
+    font-family: "Nanum Gothic", sans-serif;
+    font-size: 45px;
+    margin-left: 70px;
+    margin-top: 50%;
+  }
+
+  #logoAceuil {
+    width: 400px;
+    margin-top: 20px;
+  }
+
+  .btnsAcceuil button {
+    width: 150px;
+    height: 40px;
+
+    font-size: 16px;
+  }
+  input {
+    width: 400px;
+    height: 60px;
+    color: grey;
+    margin: 10px;
+    border: 1px solid #af0e3e;
+    font-size: 20px;
+  }
+  .authentification-contenu form,
+  .enregistrement-contenu form {
+    margin-top: 350px;
+  }
+
+  .authentification-contenu button,
+  .enregistrement-contenu button,
+  .nouveauCellier form button {
+    width: 410px;
+    height: 60px;
+    color: white;
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  footer p {
+    font-size: 16px;
+  }
+  .options a {
+    font-size: 24px;
+  }
+  .options {
+    font-size: 24px;
+  }
+
+  .container-supprimer p,
+  .nouveauCellier p {
+    font-size: 30px;
+  }
+
+  .btnSup button {
+    width: 70px;
+    height: 40px;
+    font-size: 30px;
+  }
 }
-
-#btnFiltre{
-  width: 100px;
-  height: 40px;
-  background-color: white;
-  color:#af0e3e;
-  border: 2px solid #af0e3e;
-  margin:10px;
-  font-size: 18px;
-}
-#fitltreForm{
-	display: flex;
-  	flex-direction: column; 
-  	align-items: center;
-  	font-size: 16px;
-  	border-bottom: 1px solid lightgrey;
-
-}
-
-#fitltreForm select{
-	width: 250px;
-	height: 30px;
-	color: grey;
-	margin:10px;
-	border: 1px solid #af0e3e;
-	background-color: white;
-  	
-}
-.subFiltre{
-	
-	background-color: #af0e3e !important;
-  	color: white;
-}
-
-#filtre label{
-
-  font-size: 22px;
-  margin: 10px;
-}
-
-.filtreCell a{
-	color:#af0e3e;
-	text-decoration: none;
-	background-color: #f5f6f7;
-	font-size: 18px;
-	margin: 10px; 
-}
-
-.filtreCell{
-  	border-bottom: 1px solid lightgrey;
-
-}		
-   
-    
-    
-    
-    /*////////////////page acceuil//////////*/
-    
-.monTitre h1{
-
-	color: white;
-	font-family: 'Nanum Gothic', sans-serif;
-	font-size: 45px;
-	margin-left: 70px;
-	margin-top: 50%;
-}
-
-#logoAceuil {
-
-	width:400px;
-  	margin-top: 20px;
-}
-
-.btnsAcceuil button{
-	width: 150px;
-	height: 40px;
-	
-	font-size: 16px;
-	
-}   
-input{
-	width: 400px;
-	height: 60px;
-	color: grey;
-	margin:10px;
-	border: 1px solid #af0e3e;
-	font-size: 20px;
-}
-.authentification-contenu form, .enregistrement-contenu form{
-	
-	margin-top: 350px;
-
-
-}
-
-.authentification-contenu button, .enregistrement-contenu  button, .nouveauCellier form button{
-	
-	width: 410px;
-	height: 60px;
-	color: white;
-	font-size: 24px; 
-	margin-top: 10px;
-}
-footer p{
-
-	font-size: 16px;
-	
-}
-.options a{
-	
-	font-size: 24px;
-}
-.options{
-	
-	font-size: 24px;
-}
-
-.container-supprimer p, .nouveauCellier p{
-
-font-size: 30px;
-
-	
-}
-
-
-.btnSup button{
-width: 70px;
-height: 40px;
-font-size:30px;
-
-}
-
-}
-
-
-
 
 /*//////////////////////Mobile/////////////////*/
-@media all and (max-width:640px)
-{
-	
-.monCompte{
-	padding: 2px;
-	font-size: 14px;	
-}
+@media all and (max-width: 640px) {
+  .monCompte {
+    padding: 2px;
+    font-size: 14px;
+  }
 
-.container-monCompte{
-	margin-bottom: 60px;
-}
+  .container-monCompte {
+    margin-bottom: 60px;
+  }
 
-.suppression-compte{
-	margin-bottom: 10px;
-}
-   .suppression-compte strong{
-	padding: 15px;
-	font-size: 16px;
-}
+  .suppression-compte {
+    margin-bottom: 10px;
+  }
+  .suppression-compte strong {
+    padding: 15px;
+    font-size: 16px;
+  }
 
-.modification-compte button{
-	font-size: 20px;
-}
+  .modification-compte button {
+    font-size: 20px;
+  }
 
-.suppression-compte button{
-	
-	width: 125px;
-	height: 30px;
-	font-size: 20px; 
-	margin-top: 5px;
-}
+  .suppression-compte button {
+    width: 125px;
+    height: 30px;
+    font-size: 20px;
+    margin-top: 5px;
+  }
 
-#cellierBg h1{
-	
-	font-size: 24px;
-	margin-top: 0px;
-	}
-#logoCellier {
+  #cellierBg h1 {
+    font-size: 24px;
+    margin-top: 0px;
+  }
+  #logoCellier {
+    width: 120px;
+    margin-top: 0px;
+    margin-left: 70px;
+  }
+  #enteteCellier {
+    height: 45%;
+  }
+  #cellierBg {
+    height: 20%;
+  }
 
-	width:120px;
-  	margin-top:0px;
-  	margin-left: 70px;
-}
-#enteteCellier{
+  .menuHd {
+    padding-top: 5px;
+  }
 
-	height: 45%;
-}
-#cellierBg{
+  .headerConnex {
+    height: 23px;
+    margin-top: 3px;
+  }
+  .headerConnex a {
+    margin-right: 0px;
+  }
+  #logoCellier {
+    margin-left: 0px;
+  }
 
-	height: 20%;
+  .menuHd {
+    padding-top: 0px;
+  }
 
-}
+  #menuMobile {
+    background-color: black;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
 
-.menuHd{
-		padding-top: 5px;
-	}
-	
-	.headerConnex{
-height: 23px;
-	margin-top:3px;
-}
-.headerConnex a{
+    width: 100%;
+    z-index: 3;
+  }
 
-	margin-right:0px;
-}
-#logoCellier{
+  #menuMobile ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-	margin-left:0px;
-}
+    overflow: hidden;
+    background-color: black;
+  }
 
-.menuHd{
-  padding-top: 0px;
-}
-    
+  #menuMobile li a {
+    display: block;
+    text-align: right;
+    padding: 20px 20px;
+    border-right: 1px solid #f4f4f4;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  #menuMobile li {
+    border-bottom: 1px solid #af0e3e;
+    width: 100%;
+  }
 
-	
-	
-#menuMobile {
-  background-color: black;
-  box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
-
-  width: 100%;
-  z-index: 3;
-}
-
-#menuMobile ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  overflow: hidden;
-  background-color: black;
-}
-
-#menuMobile li a {
-  display: block;
-  text-align: right;
-  padding: 20px 20px;
-  border-right: 1px solid #f4f4f4;
-  text-decoration: none;
-  font-size: 18px;
-  
-}
-#menuMobile li {
- 
-  border-bottom: 1px solid #af0e3e;
-  width: 100%;
-}
-	
   #menuMobile input {
     clear: none;
   }
 
-/* menu */
+  /* menu */
 
-#menuMobile #menu_principal {
-  clear: both;
-  max-height: 0;
-  transition: max-height .2s ease-out;
-}
-
-#menuMobile .menu-icon {
-  cursor: pointer;
-  display: inline-block;
-  float: right;
-  padding: 28px 20px;
-  position: relative;
-  user-select: none;
-}
-
-#menuMobile .menu-icon .navicon {
-  background: #333;
-  display: block;
-  height: 3px;
-  position: relative;
-  transition: background .2s ease-out;
-  width: 30px;
-}
-
-#menuMobile .menu-icon .navicon:before,
-#menuMobile .menu-icon .navicon:after {
-  background: white;
-  content: '';
-  display: block;
-  height: 100%;
-  position: absolute;
-  transition: all .2s ease-out;
-  width: 100%;
-}
-
-#menuMobile .menu-icon .navicon:before {
-  top: 5px;
-}
-
-#menuMobile .menu-icon .navicon:after {
-  top: -5px;
-}
-
-/* menu btn */
-
-#menuMobile .menu-btn {
-  display: none;
-}
-
-#menuMobile .menu-btn:checked ~ #menu_principal {
-  max-height: 300px;
-}
-
-#menuMobile .menu-btn:checked ~ .menu-icon .navicon {
-  background: transparent;
-}
-
-#menuMobile .menu-btn:checked ~ .menu-icon .navicon:before {
-  transform: rotate(-45deg);
-}
-
-#menuMobile .menu-btn:checked ~ .menu-icon .navicon:after {
-  transform: rotate(45deg);
-}
-
-#menuMobile .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
-#menuMobile .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
-  top: 0;
-}
-	
-/*/////////////Filtre////////////*/
-
-  #btnFiltre{
-    display:initial;
+  #menuMobile #menu_principal {
+    clear: both;
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
   }
 
- #filtre{
-  display: none;
-}
+  #menuMobile .menu-icon {
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    padding: 28px 20px;
+    position: relative;
+    user-select: none;
+  }
 
-#btnFiltre{
-  width: 100px;
-  height: 40px;
-  background-color: white;
-  color:#af0e3e;
-  border: 2px solid #af0e3e;
-  margin:5px;
-  font-size: 18px;
-}
-#fitltreForm{
-	display: flex;
-  	flex-direction: column; 
-  	align-items: center;
-  	font-size: 16px;
-  	border-bottom: 1px solid lightgrey;
-	margin-left: 0px;
+  #menuMobile .menu-icon .navicon {
+    background: #333;
+    display: block;
+    height: 3px;
+    position: relative;
+    transition: background 0.2s ease-out;
+    width: 30px;
+  }
 
-}
+  #menuMobile .menu-icon .navicon:before,
+  #menuMobile .menu-icon .navicon:after {
+    background: white;
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all 0.2s ease-out;
+    width: 100%;
+  }
 
-#fitltreForm select{
-	width: 250px;
-	height: 30px;
-	color: grey;
-	margin:10px;
-	border: 1px solid #af0e3e;
-	background-color: white;
-  	
-}
-.subFiltre{
-	
-	background-color: #af0e3e !important;
-  	color: white;
-}
+  #menuMobile .menu-icon .navicon:before {
+    top: 5px;
+  }
 
-#filtre label{
+  #menuMobile .menu-icon .navicon:after {
+    top: -5px;
+  }
 
-  font-size: 22px;
-  margin: 10px;
-}
+  /* menu btn */
 
-.filtreCell a{
-	color:#af0e3e;
-	text-decoration: none;
-	background-color: #f5f6f7;
-	font-size: 18px;
-	margin: 10px; 
-}
+  #menuMobile .menu-btn {
+    display: none;
+  }
 
-.filtreCell{
-  	border-bottom: 1px solid lightgrey;
+  #menuMobile .menu-btn:checked ~ #menu_principal {
+    max-height: 300px;
+  }
 
-}		
+  #menuMobile .menu-btn:checked ~ .menu-icon .navicon {
+    background: transparent;
+  }
 
+  #menuMobile .menu-btn:checked ~ .menu-icon .navicon:before {
+    transform: rotate(-45deg);
+  }
 
-    
-   
-  /* cellier liste*/  
-    
-    .cellier{
-        padding: 15px;
-        
-    }
-    
-    .cellier form{
+  #menuMobile .menu-btn:checked ~ .menu-icon .navicon:after {
+    transform: rotate(45deg);
+  }
+
+  #menuMobile .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+  #menuMobile .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+    top: 0;
+  }
+
+  /*/////////////Filtre////////////*/
+
+  #btnFiltre {
+    display: initial;
+  }
+
+  #filtre {
+    display: none;
+  }
+
+  #btnFiltre {
+    width: 100px;
+    height: 40px;
+    background-color: white;
+    color: #af0e3e;
+    border: 2px solid #af0e3e;
+    margin: 5px;
+    font-size: 18px;
+  }
+  #fitltreForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    border-bottom: 1px solid lightgrey;
+    margin-left: 0px;
+  }
+
+  #fitltreForm select {
+    width: 250px;
+    height: 30px;
+    color: grey;
+    margin: 10px;
+    border: 1px solid #af0e3e;
+    background-color: white;
+  }
+  .subFiltre {
+    background-color: #af0e3e !important;
+    color: white;
+  }
+
+  #filtre label {
+    font-size: 22px;
+    margin: 10px;
+  }
+
+  .filtreCell a {
+    color: #af0e3e;
+    text-decoration: none;
+    background-color: #f5f6f7;
+    font-size: 18px;
+    margin: 10px;
+  }
+
+  .filtreCell {
+    border-bottom: 1px solid lightgrey;
+  }
+
+  /* cellier liste*/
+
+  .cellier {
+    padding: 15px;
+  }
+
+  .cellier form {
     display: none;
     margin: 1px 1px 1px 20px;
     padding: 8px;
-    
-} 
- #choix_cellier{
+  }
+  #choix_cellier {
     width: 100%;
     margin: 10px 5px;
- }
-      /****  page cellier form select ******/
-#idType, #idOrdre{
-   width: 200px;
+  }
+  /****  page cellier form select ******/
+  #idType,
+  #idOrdre {
+    width: 200px;
     height: 30px;
     padding: 4px;
     margin: 5px 0px;
-}
+  }
 
-#executer{
+  #executer {
     width: 200px;
     margin: 10px 0px;
     height: 30px;
-}
+  }
 
-.cellier form a{
-    margin: 5px 10px;   
-}
-    
- .cellier form input{
-	width: 195px;
-	height: 30px;
-	margin: 10px 0px;
-}
-    
-    .cellier .bouteille{
+  .cellier form a {
+    margin: 5px 10px;
+  }
+
+  .cellier form input {
+    width: 195px;
+    height: 30px;
+    margin: 10px 0px;
+  }
+
+  .cellier .bouteille {
     width: 100%;
     /*margin: 5px 15px 60px 25px;*/
-	margin: 40px 0;
+    margin: 40px 0;
     padding: 3px;
     font-size: 14px;
-	line-height: 10px; 
-	display: flex;
-	flex-direction: row;
-	border-style: none;
-	border-bottom: 1px solid #a73249;
-	
-}
+    line-height: 10px;
+    display: flex;
+    flex-direction: row;
+    border-style: none;
+    border-bottom: 1px solid #a73249;
+  }
 
-
-.bouteille .description .nom{
+  .bouteille .description .nom {
     height: 10%;
-    line-height: 20px; 
-}
-.bouteille .options{
-    
-	margin:  0px;
-	
-	text-align: start;
-	
-}
-.bouteille .options button {
+    line-height: 20px;
+  }
+  .bouteille .options {
+    margin: 0px;
+
+    text-align: start;
+  }
+  .bouteille .options button {
     width: 100px;
     font-size: 14px;
-	margin: 2px 0px 2px 0px;
-	
-	text-align: center;
-	
-}
-    .bouteille .options button a{
+    margin: 2px 0px 2px 0px;
+
+    text-align: center;
+  }
+  .bouteille .options button a {
     font-size: 14px;
-}  
-   .bouteille .img{
-	   
+  }
+  .bouteille .img {
     padding: 1px;
     text-align: start;
-}
-.bouteille .img img{
+  }
+  .bouteille .img img {
     height: 130px;
     width: auto;
-} 
-    
-    
-    /*******/
+  }
 
-#logoAceuil {
+  /*******/
 
-	width:250px;
-  	margin-top: 2px;
+  #logoAceuil {
+    width: 250px;
+    margin-top: 2px;
+  }
+  .monTitre h1 {
+    margin-left: 70px;
+    margin-top: 30%;
+  }
+  .btnsAcceuil {
+    display: inline-block;
+    margin-left: 30px;
+  }
+  .monTitre h1 {
+    margin-left: 40px;
+    font-size: 25px;
+    margin-top: 45%;
+  }
+
+  .container-supprimer p,
+  .nouveauCellier p {
+    font-size: 26px;
+  }
+
+  .btnSup button {
+    width: 70px;
+    height: 40px;
+    font-size: 24px;
+  }
 }
-	.monTitre h1{
-
-
-	margin-left: 70px;
-	margin-top: 30%;
-
-}
-	.btnsAcceuil{
-	display:inline-block;		
-	margin-left: 30px;	
-	
-	} 
-	.monTitre h1{
-	margin-left: 40px;
-	font-size: 25px;
-	margin-top: 45%;
-	}
-
-.container-supprimer p, .nouveauCellier p{
-
-font-size: 26px;
-
-	
-}
-
-
-.btnSup button{
-width: 70px;
-height: 40px;
-font-size:24px;
-
-}
-   
-
-} */
