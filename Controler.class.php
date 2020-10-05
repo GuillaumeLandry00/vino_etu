@@ -23,8 +23,8 @@ class Controler
 			
 			switch ($_GET['requete']) {
 				case 'accueil':
-                $this->accueil();
-                break;
+					$this->accueil();
+					break;
 				case 'listeBouteille':
 					$this->verificationUtilisateurConnecter();
 					$this->listeBouteille();
@@ -155,8 +155,7 @@ class Controler
 			
 		}
 
-			private function accueil()
-		{
+		private function accueil(){
 			
 			include("vues/enteteAcceuil.php");
 			////////////////////modif hind//////////////
@@ -164,6 +163,7 @@ class Controler
 			include("vues/pied.php");
                   
 		}
+
 		//Fonction permetant d'authentifier les utilisateur
 		private function authentification(){
 			if(isset($_GET['user'])){
@@ -636,7 +636,8 @@ class Controler
 				$mot = $_POST['recherche_bouteille'];
 				$critere = $_POST['typeTri'];
 				$ordre = $_POST['ordre'];
-				$data = $bte->getListeBouteille($mot, $critere, $ordre);
+				$limit = $_POST['limit'];
+				$data = $bte->getListeBouteille($mot, $critere, $ordre, $limit);
 			}
 
 			include("vues/admin/entete.php");
@@ -723,13 +724,14 @@ class Controler
 
 			if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				$saq = new SAQ();
+				$data = Array();
 				$page = $_POST['page'];
 				$nombreProduit = $_POST['produit'];
 				$type = $_POST['type'];
 
 				for($i=0; $i<$page;$i++)	//permet d'importer séquentiellement plusieurs pages.
 				{
-					$data = $saq->getProduits($nombreProduit,$i, $type);
+					$data = array_merge($data, $saq->getProduits($nombreProduit,$i, $type));
 				}
 
 				//Permet de servir de compteur

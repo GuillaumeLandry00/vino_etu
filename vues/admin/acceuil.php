@@ -7,7 +7,7 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close" id="close">&times;</span>
-            <div class="message"  style="display: none">
+            <div class="message">
             <?php if(!empty($dataMsg)): ?>
                 <?php foreach($dataMsg as $msg):?>
                     <div class="container-message">
@@ -39,6 +39,13 @@
                 <option value="DESC"<?php if (isset($ordre) && $ordre=="DESC") echo "selected";?>>Decroissant</option>
                 <option value="ASC"<?php if (isset($ordre) && $ordre=="ASC") echo "selected";?>>Croissant</option>
             </select> 
+            <label for="limit">Nb resultat par page</label>
+            <select name="limit">
+                    <option value="25"<?php if (isset($limit) && $limit==25) echo "selected";?>>25</option>
+                    <option value="50"<?php if (isset($limit) && $limit==50) echo "selected";?>>50</option>
+                    <option value="75"<?php if (isset($limit) && $limit==75) echo "selected";?>>75</option>
+                    <option value="100"<?php if (isset($limit) && $limit==100) echo "selected";?>>100</option>
+            </select>
             <input id="executer" class="subFiltre"  type="submit" name="tri" value="Executer"> 
     </form>
     <?php if(!empty($data)):?>

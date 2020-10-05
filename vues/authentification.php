@@ -1,8 +1,10 @@
 <div class="authentification">
     <div class="authentification-contenu">
-       
+
+   
         <form class="form" action="<?php echo BASEURL?>?requete=authentification" method = "POST">
              <h1 class="titre">Connexion</h1>
+             <?= ($lastUser !== "") ? "<p>Compte ajoutee</p>" : ""?>
              <hr>
             <input type="text" value ="<?=$lastUser ?>"placeholder="Identifiant *" name="identifiant">
             <span class="retourErreur">

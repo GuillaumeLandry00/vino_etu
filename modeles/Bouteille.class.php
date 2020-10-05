@@ -13,14 +13,14 @@
 class Bouteille extends Modele {
 	const TABLE = 'vino__bouteille';
     
-	public function getListeBouteille($mot_recherche ="", $critere ="nom", $sens ="ASC")
+	public function getListeBouteille($mot_recherche ="", $critere ="nom", $sens ="ASC", $limit = 25)
 	{
 		
 		$rows = Array();
 
-		$requete = "Select * from ". self::TABLE . " WHERE nom LIKE '%".$mot_recherche."%' OR description LIKE '%".$mot_recherche."%' OR 
+		$requete = "Select * from ". self::TABLE . " AS B INNER JOIN vino__type AS VT ON B.fk__vino__type_id = VT.id  WHERE nom LIKE '%".$mot_recherche."%' OR description LIKE '%".$mot_recherche."%' OR 
 		code_saq LIKE '%".$mot_recherche."%'
-		ORDER BY " .$critere. " " .$sens;
+		ORDER BY " .$critere. " " .$sens . " LIMIT " . $limit;
 
 		$res = $this->_db->query($requete);
 		if($res->num_rows)

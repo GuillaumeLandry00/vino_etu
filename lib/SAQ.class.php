@@ -63,7 +63,7 @@ class SAQ extends Modele {
 		  curl_close($s);
 		  $document = new DOMDocument();
 		  //chargement de la page
-		 var_dump( @ $document->loadHTML($str) );
+		  @ $document->loadHTML($str);
 		//recuperer tous les Li
 		  $elementList = $document->getElementsByTagName('LI');
 		  $i = 0;
