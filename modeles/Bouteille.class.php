@@ -13,11 +13,16 @@
 class Bouteille extends Modele {
 	const TABLE = 'vino__bouteille';
     
-	public function getListeBouteille()
+	public function getListeBouteille($mot_recherche ="", $critere ="nom", $sens ="ASC", $limit = 25)
 	{
 		
 		$rows = Array();
-		$res = $this->_db->query('Select * from '. self::TABLE);
+
+		$requete = "Select * from ". self::TABLE . " AS B INNER JOIN vino__type AS VT ON B.fk__vino__type_id = VT.id  WHERE nom LIKE '%".$mot_recherche."%' OR description LIKE '%".$mot_recherche."%' OR 
+		code_saq LIKE '%".$mot_recherche."%'
+		ORDER BY " .$critere. " " .$sens . " LIMIT " . $limit;
+
+		$res = $this->_db->query($requete);
 		if($res->num_rows)
 		{
 			while($row = $res->fetch_assoc())
@@ -474,7 +479,7 @@ class Bouteille extends Modele {
 		
 
 		//Verification bon format de pays
-		$regExp = "/^[a-zA-Z]+$/i";
+		$regExp = "/^[ÉÈÀéèàa-zA-Z-]+$/i";
 		if($data->pays == "" || !preg_match($regExp, $data->pays)){
 			$erreur["pays"] = true;
 		}else{

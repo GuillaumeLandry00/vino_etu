@@ -18,7 +18,7 @@ console.log(BaseURL);
 window.addEventListener("load", function () {
   console.log("load");
   document.querySelectorAll(".btnBoire").forEach(function (element) {
-    console.log(element);
+    // console.log(element);
     element.addEventListener("click", function (evt) {
       let id = evt.target.parentElement.dataset.id;
       let requete = new Request(
@@ -46,7 +46,7 @@ window.addEventListener("load", function () {
 
   //Permet de selectionner tous les éléments avec la classe .btnAjouter
   document.querySelectorAll(".btnAjouter").forEach(function (element) {
-    console.log(element);
+    // console.log(element);
 
     //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
     element.addEventListener("click", function (evt) {
@@ -524,6 +524,110 @@ window.addEventListener("load", function () {
         .catch((error) => {
           console.error(error);
         });
+    });
+  });
+
+  //Modal pour envoyer un message
+  let btnSignaler = document.querySelector(".btnSignaler");
+  let modal = document.getElementById("monModal");
+
+  if (document.querySelector(".btnmailbox")) {
+    //Permet de faire apparaitre le modal
+    document.querySelector(".btnmailbox").addEventListener("click", () => {
+      //Permet de faire apparaitre le modal
+      modal.style.display = "block";
+    });
+  }
+
+  //Permet de fermer le  modal
+  let spanClose = document.getElementById("close");
+  if (spanClose) {
+    spanClose.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+
+  //Permet de supprimer un message de la messagerie
+  document.querySelectorAll(".supprimerMail").forEach(function (element) {
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet d'aller chercher le id et créer la requête
+      let id = evt.target.dataset.id;
+
+      let requete = new Request(
+        BaseURL + "index.php?requete=admin/supprimerMessage",
+        {
+          method: "DELETE",
+          body: '{"id": ' + id + "}",
+          header: "Content-Type: application/json",
+        }
+      );
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  });
+
+  document.querySelectorAll(".btnSignaler").forEach(function (element) {
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet de faire apparaitre le modal
+      modal.style.display = "block";
+
+      //Permet d'aller mettre un texte par defaut
+      let nom = evt.target.dataset.nom;
+      document.getElementById("erreurTxt").value = "Erreur sur " + nom + ": ";
+
+      //Permer d'executer la requete
+      document.querySelector(".envoyerErreur").addEventListener("click", () => {
+        let texte = document.getElementById("erreurTxt").value;
+
+        let requete = new Request(
+          BaseURL + "index.php?requete=signalerErreur",
+          {
+            method: "POST",
+            body: '{"texte":  "' + texte + '"}',
+            header: "Content-Type: application/json",
+          }
+        );
+        console.log('{"texte":  "' + texte + '"}');
+        fetch(requete)
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              throw new Error("Erreur");
+            }
+          })
+          .then((response) => {
+            //location.reload();
+            //Permet de confirmer si le modifier à eu lieu
+            if (response == true) {
+              document.getElementById("confirmation").innerHTML =
+                "Envoie effectuée!";
+              document.getElementById("confirmation").style.color = "green";
+            } else if (response == false) {
+              document.getElementById("confirmation").innerHTML =
+                "Envoie non effectuée";
+              document.getElementById("confirmation").style.color = "red";
+            }
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
     });
   });
 });

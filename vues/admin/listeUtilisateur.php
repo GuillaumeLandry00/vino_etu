@@ -1,5 +1,20 @@
 
 <div class="catalogue-admin">
+<form id="fitltreForm" id="tri" name="formTri" method="post">
+             Nom d'utilisateur :<input type="text" value ="<?=(isset($mot)) ? $mot :"" ?>" name="recherche_utilisateur">
+            <label>Trier par</label>
+            <select name="typeTri" id="idType">
+                <option value="users_login" <?php if (isset($critere) && $critere=="users_login") echo "selected";?>>Username</option>
+                <option value="date_inscription"<?php if (isset($critere) && $critere=="date_inscription") echo "selected";?> >Date d'inscription</option>     
+            </select>
+
+            <label>Ordre</label>
+            <select name="ordre" id ="idOrdre">
+                <option value="DESC"<?php if (isset($ordre) && $ordre=="DESC") echo "selected";?>>Decroissant</option>
+                <option value="ASC"<?php if (isset($ordre) && $ordre=="ASC") echo "selected";?>>Croissant</option>
+            </select> 
+            <input id="executer" class="subFiltre"  type="submit" name="tri" value="Executer"> 
+    </form>
 <?php if(!empty($data)):?>
     <?php foreach ($data as $cle => $utilisateur) : ?>
         <div class="utilisateur" data-quantite="">
@@ -7,7 +22,7 @@
                 <img src="https://c7.uihere.com/files/136/22/549/user-profile-computer-icons-girl-customer-avatar.jpg" width="100" height="100">
             </div>
             <div class="description">
-                <p class="nom">ID utilisateur : <?php echo $utilisateur['users_id'] ?></p>
+                <p class="nom">Date inscription : <?php echo $utilisateur['date_inscription'] ?></p>
                 <p class="quantite">Username : <?php echo $utilisateur['users_login'] ?></p>
                 <p class="pays">Type d'utilisateur : <?php echo $utilisateur['users_type'] ?></p>
             </div>

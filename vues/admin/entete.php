@@ -30,6 +30,14 @@
 				<a href="?requete=authentification">Deconnexion</a>
 			<?php endif;?>
 			</div>
+			<nav>
+				<ul>
+					<li><a href="?requete=admin">Admin</a></li>
+					<li><a href="?requete=admin/utilisateur">Liste utilisateur</a></li>
+					<li><a href="?requete=admin/statistique">Voir les statistiques</a></li>
+					<li><a href="?requete=admin/importation">Importation</a></li>
+				</ul>
+			</nav>
 		</header>
 		<main>
 			

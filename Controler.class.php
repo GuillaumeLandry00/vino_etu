@@ -14,9 +14,6 @@ error_reporting(0);
 
 class Controler 
 {
-
-		private $donneeUtilisateur;
-
 		/**
 		 * Traite la requête
 		 * @return void
@@ -26,8 +23,8 @@ class Controler
 			
 			switch ($_GET['requete']) {
 				case 'accueil':
-                $this->accueil();
-                break;
+					$this->accueil();
+					break;
 				case 'listeBouteille':
 					$this->verificationUtilisateurConnecter();
 					$this->listeBouteille();
@@ -82,6 +79,10 @@ class Controler
 					$this->verificationUtilisateurConnecter();
 					$this->monCompte();
 					break;
+				case 'signalerErreur':
+					$this->verificationUtilisateurConnecter();
+					$this->signalerErreur();
+					break;
 				case 'admin':
 					$this->verificationUtilisateurConnecter();
 					$this->verificationAdmin();
@@ -107,8 +108,21 @@ class Controler
 					$this->verificationAdmin();
 					$this->supprimerUtilisateur();
 					break;
-					
-					
+				case 'admin/importation':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->importationBouteille();
+					break;
+				case 'admin/statistique':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->statistiqueUtilisateur();
+					break;
+				case 'admin/supprimerMessage':
+					$this->verificationUtilisateurConnecter();
+					$this->verificationAdmin();
+					$this->supprimerMessage();
+					break;
 				default:
 					$this->accueil();
 					break;
@@ -141,8 +155,7 @@ class Controler
 			
 		}
 
-			private function accueil()
-		{
+		private function accueil(){
 			
 			include("vues/enteteAcceuil.php");
 			////////////////////modif hind//////////////
@@ -150,16 +163,14 @@ class Controler
 			include("vues/pied.php");
                   
 		}
+
 		//Fonction permetant d'authentifier les utilisateur
 		private function authentification(){
-
-			
-			if($this->$donneeUtilisateur !== ""){
-				$data['dernierIdentifiant'] = $this->$donneeUtilisateur;
+			if(isset($_GET['user'])){
+				$lastUser= $_GET['user'];
 			}else{
-				$dataUtilisateur['dernierIdentifiant'] = "";
+				$lastUser = "";
 			}
-
 			$data = [
 				'identifiant' => "",
 				'motDePasse' =>  "",
@@ -240,8 +251,8 @@ class Controler
 					//Insere l'utilisateur dans la DB
 					if($utilisateur->enregistrementUtilisateur($data) == true){
 						//Redirige vers le login
-						$this->$donneeUtilissateur =  $_POST['identifiant'];
-						header('location:' . BASEURL . '?requete=authentification');
+						//$this->authentification();
+						header('location:' . BASEURL . '?requete=authentification&user='.$_POST['identifiant'].'');
 					}
 					
 				}
@@ -582,6 +593,14 @@ class Controler
 			include("vues/pied.php");
 		}	
 
+		//Fonction permetant de signaler une erreur
+		private function signalerErreur(){
+			$body = json_decode(file_get_contents('php://input'));
+			$msg = new Messagerie();
+			$resultat = $msg->ajouterMessage($body->texte, $_SESSION['users_id']);
+			echo json_encode($resultat);
+		}
+
 		
 		/*===================================SECTION ADMIN=============================================*/ 
 
@@ -599,13 +618,28 @@ class Controler
 		//Fonction permetant d'afficher la page d'accueil d'un admin
 		private function admin(){
 
+		
+
 			//Permet d'avoir la liste des bouteilles
 			$bte = new Bouteille();
 			$data = $bte->getListeBouteille();
 
-			//Permet d'avoir la liste des utilisateurs
-			$utilisateur = new Utilisateur();
-			$dataUtilisateur = $utilisateur->getListeUtilisateur();
+			//Permet d'avoir la liste des messages
+			$msg = new Messagerie();
+			$dataMsg = $msg->getListeMessage();
+			
+			
+			//Permet d'initialiser un compteur
+			$i = 1;
+
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$mot = $_POST['recherche_bouteille'];
+				$critere = $_POST['typeTri'];
+				$ordre = $_POST['ordre'];
+				$limit = $_POST['limit'];
+				$data = $bte->getListeBouteille($mot, $critere, $ordre, $limit);
+			}
+
 			include("vues/admin/entete.php");
 			include("vues/admin/acceuil.php");
 			include("vues/admin/pied.php");
@@ -616,6 +650,13 @@ class Controler
 			//Permet d'avoir la liste des utilisateurs
 			$utilisateur = new Utilisateur();
 			$data = $utilisateur->getListeUtilisateur();
+
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$mot = $_POST['recherche_utilisateur'];
+				$critere = $_POST['typeTri'];
+				$ordre = $_POST['ordre'];
+				$data =  $utilisateur->getListeUtilisateur($mot, $critere, $ordre);
+			}
 
 			include("vues/admin/entete.php");
 			include("vues/admin/listeUtilisateur.php");
@@ -650,12 +691,87 @@ class Controler
 
 		//Fonction qui permet de supprimer un utilisateur
 		private function supprimerUtilisateur(){
-			$body = json_decode(file_get_contents('php://input'));
 			$utilisateur = new Utilisateur();
-			$resultat = $utilisateur->ajouterDroitAdmin($body->id, $body->droit);
+			$data = $utilisateur->getUnUtilisateur($_GET['id']);
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				//Verifie si l'utilisateur veut supprimer
+				if(isset($_POST['supprimerUtilisateur'])){
+					$array = [
+						'identifiant' => $_SESSION['users_login'],
+						'motDePasse' => trim($_POST['ancienMotDePasseSupp']),
+						'ancienMotDePasseErreurSupp'=>""
+					];
+					//Permet de confirmer le mot de passe de l'utilisateur avant la suppression
+					if($utilisateur->controleUtilisateur($array)){
+						if($utilisateur->supprimerUtilisateur($_GET['id'])){
+							header('Location: '. BASEURL .'?requete=admin/utilisateur');
+						}else{
+							//Une erreur est sruvenue
+						}
+					}else{
+						//Mauvais mot de passe
+						$array['ancienMotDePasseErreurSupp'] = "Vous n'avez pas entrée le bon mot de passe";
+					}
+				}
+			}
+			include("vues/admin/entete.php");
+			include("vues/admin/supprimerUtilisateur.php");
+			include("vues/admin/pied.php");
+		}
+
+		//Fonction qui permet d'importer des bouteilles de la SAQ
+		private function importationBouteille(){
+
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$saq = new SAQ();
+				$data = Array();
+				$page = $_POST['page'];
+				$nombreProduit = $_POST['produit'];
+				$type = $_POST['type'];
+
+				for($i=0; $i<$page;$i++)	//permet d'importer séquentiellement plusieurs pages.
+				{
+					$data = array_merge($data, $saq->getProduits($nombreProduit,$i, $type));
+				}
+
+				//Permet de servir de compteur
+				$i = 1;
+			}
+			include("vues/admin/entete.php");
+			include("vues/admin/importation.php");
+			include("vues/admin/pied.php");
+		}
+
+		//Fonction permetant de modifier une bouteille du catalogue
+		private function statistiqueUtilisateur(){
+
+			$utilisateur = new Utilisateur();
+			$data = $utilisateur->getStatisiqueUtilisateur();
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$tri = $_POST['tri'];
+				$ordre =  $_POST['ordre'];
+				if(isset($_POST['date'])){
+					$date = $_POST['date'];
+					$data = $utilisateur->getStatisiqueUtilisateur($tri, $ordre, $date);
+				}else{
+					$data = $utilisateur->getStatisiqueUtilisateur($tri, $ordre);
+				}
+				
+			}
+			include("vues/admin/entete.php");
+			include("vues/admin/statistique.php");
+			include("vues/admin/pied.php");
+		}
+
+		//Fonction permetant de supprimer un message
+		private function supprimerMessage(){
+			$body = json_decode(file_get_contents('php://input'));
+			$msg = new Messagerie();
+			$resultat = $msg->supprimerUnMessage($body->id);
 			echo json_encode($resultat);
 			
 		}
+
 }
 ?>
 
