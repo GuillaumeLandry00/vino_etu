@@ -372,17 +372,18 @@ window.addEventListener("load", function () {
     fjs.parentNode.insertBefore(js, fjs);
   })(document, "script", "facebook-jssdk");
 
-  /////////////fonctio pour afficher ou cacher Filtre du cellier///////////////
-  // let btnFiltre = document.getElementById("btnFiltre");
-  // let filtre = document.getElementById("filtre");
+ /////////////fonction pour afficher ou cacher Filtre du cellier///////////////
+    let btnFiltre = document.getElementById("btnFiltre");
+    let filtre = document.getElementById("filtre");
+    
+    btnFiltre.addEventListener("click", () => {
+      if(getComputedStyle(filtre).display != "none"){
+       filtre.style.display = "none";
+      } else {
+       filtre.style.display = "block";
+      }
+    });
 
-  // btnFiltre.addEventListener("click", () => {
-  //   if (getComputedStyle(filtre).display != "none") {
-  //     filtre.style.display = "none";
-  //   } else {
-  //     filtre.style.display = "block";
-  //   }
-  // });
 
   //Modifier une  bouteille
   let btnModifierAdmin = document.querySelector(

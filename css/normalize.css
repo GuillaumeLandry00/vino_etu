@@ -116,26 +116,8 @@ button .seConnecter .sinscrire img{
 
 } 
 
-footer{
-  position: fixed;
-  bottom:0px;
-  width: 100%;
-  background-color: black;
-  height: 7%;
-  color: lightgrey;
-  font-family: 'Roboto', 'RobotoDraft', sans-serif;
-  font-size: 11px;
-  margin: auto;
-  text-align: center;
-  border-top: 1px solid #af0e3e;
-}
 
-footer p{
 
-  font-family: 'Roboto', 'RobotoDraft', sans-serif;
-  font-size: 11px;
-  
-}
 /*//////////////////////Mobile/////////////////*/
 @media all and (max-width:640px)
 {

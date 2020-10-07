@@ -21,7 +21,7 @@
             <br>
             <button id="submit" type="submit" value="submit">Créer mon compte</button>
 
-            <p class="options">J'ai déjà un compte ! <a href="<?php echo BASEURL?>?requete=authentification">Se connecter</a></p>
+            <p class="options"><a href="<?php echo BASEURL?>?requete=accueil">Retour à la page d'accueil</a></p>
         </form>
     </div>
 </div>
