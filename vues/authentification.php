@@ -15,7 +15,8 @@
 
             <button id="submit" type="submit" value="submit">Se connecter</button>
 
-            <p class="options"><a href="<?php echo BASEURL?>?requete=enregistrement"><b>Créer un compte</b></a></p>
+            <p class="options"><a href="<?php echo BASEURL?>?requete=accueil"><b>
+            Retour à la page d'accueil</b></a></p>
         </form>
     </div>
 </div>

@@ -56,10 +56,17 @@ class ListeAchat extends Modele {
 		}
 		return $rows;
 	}
-//   public function addSession($id){
-//       $_SESSION['panier'][$id]=1;
-   
-//   }
+	/* fonction d ajout des sessions */
+  public function addSession($id,$data,$q,$utilisateur){
+	  $_SESSION['listeAchat'][$id][$utilisateur]=$data;
+	  $_SESSION['quantite'][$id]=$q;
+	  if(count($_SESSION['listeAchat'][$id][$utilisateur]>0)){
+       $res=true;
+	  }else{
+		$res=false;
+	  }
+   return $res;
+  }
   const TABLE = 'vino__bouteille';
     
 	public function getListeAchatBouteille($tab=array())

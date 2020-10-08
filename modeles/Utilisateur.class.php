@@ -19,11 +19,14 @@ class Utilisateur extends Modele {
 	 * 
 	 * @return 1 si l'utilisateur est trouve
 	 */
-    public function getListeUtilisateur()
+    public function getListeUtilisateur($mot_recherche ="", $critere ="users_login", $sens ="ASC")
 	{
 		
-		$rows = Array();
-		$res = $this->_db->query('Select * from '. self::TABLE);
+        $rows = Array();
+        
+        $requete ="Select * from ". self::TABLE . " WHERE users_login LIKE '%".$mot_recherche."%' ORDER BY " .$critere. " " .$sens;
+
+		$res = $this->_db->query($requete);
 		if($res->num_rows)
 		{
 			while($row = $res->fetch_assoc())
@@ -88,7 +91,7 @@ class Utilisateur extends Modele {
 
 
             //Créer la 2e requete
-            $this->stmt = $this->_db->prepare("INSERT INTO  vino__cellier(fk__users_id) VALUES (?);");
+            $this->stmt = $this->_db->prepare("INSERT INTO  vino__cellier(fk__users_id, cellier__nom) VALUES (?,'Mon premier Cellier');");
 
             //Permet d'aller chercher le id de l'utilisateur
             $idUtilisateur = $this->controleUtilisateur($data);
@@ -240,4 +243,100 @@ class Utilisateur extends Modele {
         }
             
     }
+    /**
+	 * Fonction: Permetant d'ajouter un utilisateur a la DB
+     * 
+     * @param $data array[] contenant les donnees de l"utilisateur
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est upgrade
+	 */
+    public function getUnUtilisateur($id){
+        //Initialise l'array rows
+        $rows = Array();
+
+        //Créer la requete
+        $requete="SELECT * FROM users WHERE users_id=" . $id;
+
+        if(($res = $this->_db->query($requete)) ==	 true)
+        {
+            if($res->num_rows)
+            {
+                while($row = $res->fetch_assoc())
+                {
+                    $row['id'] = trim(utf8_encode($row['id']));
+                    $rows[] = $row;
+                }
+            }
+        }
+        else 
+        {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+            //$this->_db->error;
+        }
+
+        return $rows;
+            
+    }
+
+     /**
+	 * Fonction: Permetant d'ajouter un utilisateur a la DB
+     * 
+     * @param $data array[] contenant les donnees de l"utilisateur
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est upgrade
+	*/
+    public function getStatisiqueUtilisateur($by = "nbCellier", $ordre = "DESC", $time = "*"){
+        //Initialise l'array rows
+        $rows = Array();
+
+        //Créer la requete
+        $requete="SELECT
+        U.users_login,
+        COUNT(DISTINCT(VC.id)) AS nbCellier,
+        COUNT(DISTINCT(CB.vino__bouteille_id)) AS nbBouteille,
+        IFNULL(SUM(CB.quantite),0) AS qtTotal,
+        IFNULL(SUM(CB.prix),0) AS sumPrix
+        FROM
+            users AS U
+        LEFT JOIN vino__cellier AS VC
+        ON
+            U.users_id = VC.fk__users_id
+        LEFT JOIN cellier__bouteille AS CB
+        ON
+            VC.id = CB.vino__cellier_id";
+
+        //Permet de verifier si nous souhaitons ajouter une date
+        if($time !== "*"){
+            $requete .= " WHERE U.date_inscription > '$time'";
+        }
+        
+        $requete .= " GROUP BY
+            U.users_login
+        ORDER BY    
+        ". $by . " " . $ordre;
+
+        if(($res = $this->_db->query($requete)) ==	 true)
+        {
+            if($res->num_rows)
+            {
+                while($row = $res->fetch_assoc())
+                {
+                    $row['id'] = trim(utf8_encode($row['id']));
+                    $rows[] = $row;
+                }
+            }
+        }
+        else 
+        {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+            //$this->_db->error;
+        }
+        return $rows;
+            
+    }
+
 }

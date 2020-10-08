@@ -9,7 +9,9 @@
 		$_GET['requete'] = '';
 	}
     
-	
+	if(isset($_POST['identifiant'])){
+		$donneUtilisateur = $_POST['identifiant'];
+	}
 	
    
    

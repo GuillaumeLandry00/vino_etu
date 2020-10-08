@@ -21,7 +21,11 @@
             <br>
             <button id="submit" type="submit" value="submit">Créer mon compte</button>
 
+<<<<<<< HEAD
             <p class="options">J'ai déjà un compte ! <a href="<?php echo BASEURL?>?requete=authentification">Se connecter</a></p>
+=======
+            <p class="options"><a href="<?php echo BASEURL?>?requete=accueil">Retour à la page d'accueil</a></p>
+>>>>>>> 5de0ad342528d50c2f95a6d07dbe42affb28c166
         </form>
     </div>
 </div>

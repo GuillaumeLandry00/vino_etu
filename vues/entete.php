@@ -26,18 +26,6 @@
 
 <body>
     <header id="cellierBg">
-        <div class="headerConnex">
-            <?php if(isset($_SESSION['users_id'])):?>
-            <span>Bonjour, <strong><?= $_SESSION['users_login']?></strong></span>
-            <?php endif;?>
-            <div class="deconnexion">
-                <?php if(isset($_SESSION['users_id'])):?>
-                <a href="?requete=authentification">Deconnexion</a>
-                <?php endif;?>
-                
-            </div>
-			
-        </div>
 
 
         <div id="enteteCellier">
@@ -55,11 +43,20 @@
   						<label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
 						
                         <ul id="menu_principal">
-                            <li><a href="?requete=listeAchat">Ma liste d'achat:<?php echo(count($_SESSION['listeAchat'])); ?></a></li>
+                            <li><a href="?requete=listeAchat">Ma liste d'achat</a></li>
+                            <li>
+                            <?php if(isset($_SESSION['users_id'])):?>
+                             <?php endif;?>
+                            <?php if(isset($_SESSION['users_id'])):?>
+                            <a href="?requete=authentification">Deconnexion</a>
+                            <?php endif;?>
+                            </li>
+                            <li><a href="?requete=ajouterNouvelleBouteilleListe">Créer ma liste d'achat</a></li>
                             <li><a href="?requete=monCompte">Gerer mon compte</a></li>
                             <li><a href="?requete=cellier">Mon cellier</a></li>
                             <li><a href="?requete=ajouterNouvelleBouteilleCellier">Ajouter une bouteille au cellier</a></li>
                             <li><a href="?requete=ajouterNouveauCellier">Ajouter un cellier</a></li>
+                                    
                         </ul>
 						
                     </nav>
