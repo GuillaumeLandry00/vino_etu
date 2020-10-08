@@ -61,7 +61,7 @@ class Bouteille extends Modele {
 		C.notes,
 		C.garde_jusqua,
 		C.millesime,
-		T.type,
+		T.type as type,
 		C.vino__bouteille_id,
 		VC.id,
 		VC.cellier__nom
@@ -71,17 +71,18 @@ class Bouteille extends Modele {
 		INNER JOIN vino__type AS T ON B.fk__vino__type_id =T.id 
 		WHERE VC.fk__users_id =".$idUtilisateur; 
 
+
 		//Permet de vérifier si recherche un cellier précis
 		if($idCellier != "") {
 			$requete .= " AND C.vino__cellier_id = " .$idCellier;
 		}
-        if(!empty($mot_recherche)){
+
 		// //Continue la requete
-		$requete .=" AND ( LOWER(T.type)like LOWER('%$mot_recherche%') OR  LOWER(B.nom) like  LOWER('%$mot_recherche%') 
+		$requete .=" AND  (LOWER(T.type)like LOWER('%$mot_recherche%') OR  LOWER(B.nom) like  LOWER('%$mot_recherche%') 
 	    OR  LOWER(B.pays) like  LOWER('%$mot_recherche%') OR  LOWER(C.millesime) like  LOWER('%$mot_recherche%')
 		OR  LOWER(C.prix) like  LOWER('%$mot_recherche%') OR  LOWER(C.quantite) like  LOWER('%$mot_recherche%'))
-		ORDER BY B." .$critere. " " .$sens;
-		}
+		ORDER BY " .$critere. " " .$sens;
+		
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
 			if($res->num_rows)
@@ -175,7 +176,9 @@ class Bouteille extends Modele {
 		$nom = preg_replace("/\*/","%" , $nom);
 		 
 		//echo $nom;
-		$requete ='SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%'. $nom .'%") LIMIT 0,'. $nb_resultat; 
+		$requete ='SELECT B.id as id ,B.nom as nom FROM vino__bouteille AS B 
+		LEFT JOIN cellier__bouteille as CB ON B.id = CB.vino__bouteille_id 
+		WHERE CB.vino__bouteille_id is NULL AND LOWER(nom) like LOWER("%'.$nom.'%") LIMIT 0,'.$nb_resultat; 
 		//var_dump($requete);
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
@@ -422,9 +425,105 @@ class Bouteille extends Modele {
 		$this->stmt->bind_param('ii', $data->id, $data->cellier_id);
 		return $this->stmt->execute();	
 	}
+
+	public function getUneBouteilleCatalogue($id){
+		
+		$rows = Array();
+		$requete ='SELECT * FROM vino__bouteille WHERE id = '. $id; 
+		if(($res = $this->_db->query($requete)) ==	 true)
+		{
+			if($res->num_rows)
+			{
+				while($row = $res->fetch_assoc())
+				{
+					$row['nom'] = trim(utf8_encode($row['nom']));
+					$rows[] = $row;
+				}
+			}
+		}
+		else 
+		{
+			throw new Exception("Erreur de requête sur la base de donnée", 1);
+			 //$this->_db->error;
+		}
+		return $rows;
+	}
+
+	public function modifierBouteilleCatalogue($data){
+
+		//Debut creation de la requete
+		$requete ="UPDATE vino__bouteille
+		SET fk__vino__type_id = $data->type" ;
+
+		//Initialise un tableau pour inserer des erreurs
+		$erreur = array();
+
+		//Verification du nom
+		if($data->nom == "" ){
+			$erreur["nom"] = true;
+		}else{
+			//Permet de construire la requete
+			$requete .= ", nom = '" .utf8_encode($data->nom) ."'";
+		}
+
+		//Verification du code de la SAQ ne doit pas etre vide contenir que des chiffres
+		$regExp = "/^\d+$/i";
+		if($data->code_saq == "" || !preg_match($regExp, $data->code_saq)){
+			$erreur["code_saq"] = true;
+		}else{
+			//Permet de construire la requete
+			$requete .= ", code_saq = '" . $data->code_saq ."'";
+		}
+		
+
+		//Verification bon format de pays
+		$regExp = "/^[a-zA-Z]+$/i";
+		if($data->pays == "" || !preg_match($regExp, $data->pays)){
+			$erreur["pays"] = true;
+		}else{
+			$requete .= ", pays = '" . utf8_encode($data->pays) ."'";
+		}
+
+		//Verification prix
+		$regExp = "/^[1-9]\d*(\.\d{1,2})?$/i";
+		if($data->prix !== ""){
+			//Permet de construire la requete
+			$requete .= ", prix_saq = " . $data->prix ;
+			if(!preg_match($regExp, $data->prix)){
+				$erreur["prix"] = true;
+			}
+		}
+
+		
+		//Verification du code de la SAQ ne doit pas etre vide contenir que des chiffres
+		if($data->format == "" ){
+			$erreur["format"] = true;
+		}else{
+			//Permet de construire la requete
+			$requete .= ", format = '" . utf8_encode($data->format) ."'";
+		}
+
+
+		//Verification  du millesime
+		if($data->description !== ""){
+			//Permet de construire la requete
+			$requete .= ", description = '".utf8_encode($data->description) . "'";
+		}
+
+		//Permet de construire la requete
+		$requete .= " WHERE id = " . $data->id;
+
+		//Verifie si il y a des erreurs
+		if(count($erreur) == 0){
+			$res = $this->_db->query($requete);
+		}else{
+			//Si contient erreur envoie quelle sont les erreurs
+			$res = $erreur;
+
+		}
+        
+		return $res;
+	}
+	
 }
-
-
-
-
 ?>

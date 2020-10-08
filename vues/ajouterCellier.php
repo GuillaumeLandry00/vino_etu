@@ -1,12 +1,15 @@
-<div class="ajouter">
+<div class="ajouterCellier">
 
-    <div class="nouvelleBouteille" vertical layout>
+    <div class="nouveauCellier" vertical layout>
         
-    <h3>Souhaitez-vous ajouter un nouveau cellier ?</h3>
+    <p>Souhaitez-vous ajouter un nouveau cellier ?</p>
     <form action="" method="post">
-        <label for="cellier__nom">Nom :</label>
-        <input type="text" name='cellier__nom'placeholder="Voulez-vous ajouter un nom à votre cellier ?">
-        <button id="submit" type="submit" value="submit">Oui</button>
+        <label for="cellier__nom"></label>
+        <input type="text" name='cellier__nom' value ="Mon cellier" placeholder="Nom du cellier">
+        <button id="submit" type="submit" value="submit">Valider</button>
     </form>
+    <span id="confirmation">
+     <?php echo $data['retourAjouter']?>
+    </span>
     </div>
 </div>

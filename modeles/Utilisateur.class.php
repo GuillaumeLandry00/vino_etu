@@ -9,8 +9,32 @@
  * @license http://creativecommons.org/licenses/by-nc/3.0/deed.fr
  * 
  */
-class Utilisateurs extends Modele {
+class Utilisateur extends Modele {
     const TABLE = 'users';
+
+     /**
+	 * Fonction: Permetant de voir la liste de tous les utilisateurs
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est trouve
+	 */
+    public function getListeUtilisateur()
+	{
+		
+		$rows = Array();
+		$res = $this->_db->query('Select * from '. self::TABLE);
+		if($res->num_rows)
+		{
+			while($row = $res->fetch_assoc())
+			{
+				$rows[] = $row;
+			}
+		}
+		
+		return $rows;
+    }
+    
 
     /**
 	 * Fonction: Permetant de faire l'authentification des utilisateurs
@@ -52,7 +76,7 @@ class Utilisateurs extends Modele {
     public function enregistrementUtilisateur($data){
 
         try {
-            // First of all, let's begin a transaction
+            //Debut transaction
             $this->_db->begin_transaction() ;
             
             //Créer la 1er requete
@@ -122,5 +146,98 @@ class Utilisateurs extends Modele {
         }
 
         return $rows;
+    }
+
+    /**
+	 * Fonction: Permetant de faire l'authentification des utilisateurs
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est trouve
+	 */
+    public function supprimerUtilisateur($idUtilisateur){
+        try {
+            //Debut transaction 
+            $this->_db->begin_transaction() ;
+            
+            //Créer la 1er requete(1er partie)
+            $utilisateur = $this->getCellierUtilisateur($idUtilisateur);
+           
+            //Permet de delete tous les bouteilles assoccier au cellier appartenant a l'utilisateur
+            foreach($utilisateur as $index => $valeur){
+                //Permet d'aller chercher le id du cellier $valeur['id']; 
+                $this->stmt = $this->_db->prepare("DELETE FROM cellier__bouteille WHERE  vino__cellier_id = ?");
+                 //Bind le param
+                
+                $this->stmt->bind_param('i', $valeur['id'] );
+                $this->stmt->execute();
+                
+            }
+            
+
+            //Créer la 2e requete(2e partie)
+            $this->stmt = $this->_db->prepare("DELETE FROM vino__cellier WHERE  fk__users_id = ?");
+            //Bind le param
+            $this->stmt->bind_param('i', $idUtilisateur);
+            $this->stmt->execute();
+
+            //Créer la 3e requete(3e partie)
+            $this->stmt = $this->_db->prepare("DELETE FROM users WHERE  users_id = ?");
+            //Bind le param
+            $this->stmt->bind_param('i', $idUtilisateur);
+            $this->stmt->execute();
+
+
+            // Commit de la transaction si aucune erreur
+            $this->_db->commit();
+            return true;
+        } catch (\Throwable $e) {
+            
+            //Une erreur est survenue donc, on doit rollbacck
+            $this->_db->rollback();
+            throw $e; 
+        }
+    }
+
+    /**
+	 * Fonction: Permetant d'ajouter un utilisateur a la DB
+     * 
+     * @param $data array[] contenant les donnees de l"utilisateur
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est trouve
+	 */
+    public function modificationUtilisateur($data, $idUtilisateur){
+        
+        $this->stmt = $this->_db->prepare("UPDATE users SET users_login = ?, users_mpd =  SHA2(?, 256)  WHERE users_id = ?");
+        $this->stmt->bind_param('ssi',  $data['identifiant'],  $data['motDePasse'], $idUtilisateur);
+        if($this->stmt->execute()){
+            return true;
+        }else{
+             return false;
+        }
+            
+    }
+
+    /**
+	 * Fonction: Permetant d'ajouter un utilisateur a la DB
+     * 
+     * @param $data array[] contenant les donnees de l"utilisateur
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données 
+	 * 
+	 * @return 1 si l'utilisateur est upgrade
+	 */
+    public function ajouterDroitAdmin($id, $droit){
+        $this->stmt = $this->_db->prepare("UPDATE users SET users_type = ? WHERE users_id = ?");
+        $this->stmt->bind_param('si', $droit, $id);
+        if($this->stmt->execute()){
+            return true;
+        }else{
+
+            return false;
+        }
+            
     }
 }

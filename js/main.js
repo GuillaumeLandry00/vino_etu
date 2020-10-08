@@ -321,6 +321,8 @@ window.addEventListener("load", function () {
         id: urlParams.get("id"),
         cellier_id: urlParams.get("cellier_id"),
       };
+      console.log(param);
+
       //Permet de creer un objet options pour les requete
       let requete = new Request(
         BaseURL + "index.php?requete=supprimerBouteilleCellier",
@@ -358,4 +360,170 @@ window.addEventListener("load", function () {
         });
     });
   }
+
+  /////////fonction partage facebook/////////////
+  (function (d, s, id) {
+    var js,
+      fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, "script", "facebook-jssdk");
+
+  /////////////fonctio pour afficher ou cacher Filtre du cellier///////////////
+  // let btnFiltre = document.getElementById("btnFiltre");
+  // let filtre = document.getElementById("filtre");
+
+  // btnFiltre.addEventListener("click", () => {
+  //   if (getComputedStyle(filtre).display != "none") {
+  //     filtre.style.display = "none";
+  //   } else {
+  //     filtre.style.display = "block";
+  //   }
+  // });
+
+  //Modifier une  bouteille
+  let btnModifierAdmin = document.querySelector(
+    "[name='modifierBouteilleCatalogue']"
+  );
+  if (btnModifierAdmin) {
+    btnModifierAdmin.addEventListener("click", function (evt) {
+      //Permet de reinitaliser rles donnees
+      document.getElementById("errNom").innerHTML = "";
+      document.getElementById("errSaq").innerHTML = "";
+      document.getElementById("errPays").innerHTML = "";
+      document.getElementById("errPrix").innerHTML = "";
+      document.getElementById("errFormat").innerHTML = "";
+      document.getElementById("confirmation").innerHTML = "";
+
+      //Creer un objet qui permet d'aller chercher le GET dans le url
+      const urlParams = new URLSearchParams(window.location.search);
+
+      //Permet d'aller chercher le slect
+      var type = document.querySelector("[name='type']");
+
+      //Permet d'aller chercher les valeurs des inputs
+      var param = {
+        id: urlParams.get("id"),
+        nom: document.querySelector("[name='nom']").value,
+        code_saq: document.querySelector("[name='code_saq']").value,
+        pays: document.querySelector("[name='pays']").value,
+        description: document.querySelector("[name='desc']").value,
+        prix: document.querySelector("[name='prix']").value,
+        format: document.querySelector("[name='format']").value,
+        type: type.options[type.selectedIndex].value,
+      };
+      console.log(param);
+
+      //Permet de creer un objet options pour les requete
+      let requete = new Request(
+        BaseURL + "index.php?requete=admin/modifierBouteille",
+        {
+          method: "PUT",
+          body: JSON.stringify(param),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      console.log(JSON.stringify(param));
+
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          console.log(response);
+
+          //Permet de confirmer si le modifier à eu lieu
+          if (response == true) {
+            document.getElementById("confirmation").innerHTML =
+              "Modfication effectuée!";
+            document.getElementById("confirmation").style.color = "green";
+          } else if (response == false) {
+            document.getElementById("confirmation").innerHTML =
+              "Modication non effectuée";
+            document.getElementById("confirmation").style.color = "red";
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  }
+
+  //Permet de donner des droits de admin au user
+  document.querySelectorAll(".droitAdmin").forEach(function (element) {
+    console.log(element);
+
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet d'aller chercher le id et créer la requête
+      let id = evt.target.dataset.id;
+      let requete = new Request(
+        BaseURL + "index.php?requete=admin/ajouterDroit",
+        {
+          method: "PUT",
+          body: '{"id": ' + id + ', "droit": "admin"}',
+          header: "Content-Type: application/json",
+        }
+      );
+
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          location.reload();
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  });
+
+  //Permet de donner des droits de utilisateur au user
+  document.querySelectorAll(".droitUtilisateur").forEach(function (element) {
+    console.log(element);
+
+    //Ajoute un event qui vas permettre d'ajouter des bouteilles au ceillier
+    element.addEventListener("click", function (evt) {
+      //Permet d'aller chercher le id et créer la requête
+      let id = evt.target.dataset.id;
+      let requete = new Request(
+        BaseURL + "index.php?requete=admin/ajouterDroit",
+        {
+          method: "PUT",
+          body: '{"id": ' + id + ', "droit": "utilisateur"}',
+          header: "Content-Type: application/json",
+        }
+      );
+      console.log('{"id": ' + id + ', "droit": "utilisateur"}');
+      fetch(requete)
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("Erreur");
+          }
+        })
+        .then((response) => {
+          location.reload();
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  });
 });

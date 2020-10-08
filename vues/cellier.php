@@ -1,14 +1,15 @@
 <div class="cellier">
-
-<form id="tri" name="formTri" action="" method="post">
-             mot clé :<input type="text" value ="" name="recherche_bouteille">
+<button id="btnFiltre">Filtre </button>
+<div id="filtre">    
+<form id="fitltreForm" id="tri" name="formTri" action="<?php echo BASEURL?>?requete=cellier<?php echo isset($_GET['id']) ?'&id='.$_GET['id'] : ""?>" method="post">
+             Mot clé :<input type="text" value ="<?php echo $_POST["recherche_bouteille"]?>" placeholder ="rechercher" name="recherche_bouteille">
             <label>Trier par</label>
             <select name="typeTri" id="idType">
-                <option value="nom" <?php echo $critere === "nom" ? "selected" : "" ?>>nom</option>
-                <option value="type"<?php echo $critere === "type" ? "selected" : "" ?> >type</option>
-				<option value="quantite" <?php echo $critere === "quantite" ? "selected" : "" ?>>quantité</option> 
-                <option value="pays"<?php echo $critere === "pays" ? "selected" : "" ?>>pays</option>   
-                <option value="millesime"<?php echo $critere === "millesime" ? "selected" : "" ?>>millésime</option>             
+                <option  value="nom" <?php echo $critere === "nom" ? "selected" : "" ?>>Nom</option>
+                <option value="type"<?php echo $critere === "type" ? "selected" : "" ?> >Type</option>
+				<option value="quantite" <?php echo $critere === "quantite" ? "selected" : "" ?>>Quantité</option> 
+                <option value="pays"<?php echo $critere === "pays" ? "selected" : "" ?>>Pays</option>   
+                <option value="millesime"<?php echo $critere === "millesime" ? "selected" : "" ?>>Millésime</option>             
             </select>
 
             <label>Ordre</label>
@@ -16,26 +17,45 @@
                 <option value="DESC"<?php echo $sens === "DESC" ? "selected" : "" ?>>Decroissant</option>
                 <option value="ASC"<?php echo $sens === "ASC" ? "selected" : "" ?>>Croissant</option>
             </select> 
-            <input type="submit" name="tri" value="Executer"> 
+            <input id="executer" class="subFiltre"  type="submit" name="tri" value="Executer"> 
 </form>
-<label for="selectCellier">Choisir par cellier</label>
-<a href="?requete=cellier">Tous les celliers</a>
-<?php foreach($celliers as $cellier):?>
-    <a href="?requete=cellier&id=<?= $cellier['id']?>">Cellier: <?=(isset($cellier['cellier__nom'])) ? $cellier['cellier__nom'] : $i ?></a>
-<?php $i++; endforeach; ?>
 
+<div id="choix_cellier">
+<label for="selectCellier">Choisir par cellier :</label><br>
+<div class="filtreCell">
+<a href="?requete=cellier" >Tous les celliers</a>
+<?php foreach($celliers as $cellier):?>
+    <a href="?requete=cellier&id=<?= $cellier['id']?>">Cellier: <?=($cellier['cellier__nom'] !== "") ? $cellier['cellier__nom'] : "Mon cellier" ?></a>
+<?php $i++; endforeach; ?>
+ </div> 
+ 
+ </div>
+ <?php if(isset($_GET['id'])): ?>
+    <br>
+    <p>Cellier selectionne: <?=($cellierUnique[0]['cellier__nom'] !== '') ? $cellierUnique[0]['cellier__nom'] : "Mon Cellier" ?> </p>
+    <a href="?requete=supprimerCellier&id=<?= $cellierUnique[0]['id']?>">Supprimer Cellier: <?=($cellierUnique[0]['cellier__nom'] !== '') ? $cellierUnique[0]['cellier__nom'] : "Mon Cellier" ?></a>
+    <a href="?requete=modifierCellier&id=<?= $cellierUnique[0]['id']?>">Modifier Cellier: <?=($cellierUnique[0]['cellier__nom']!== '') ? $cellierUnique[0]['cellier__nom'] :"Mon Cellier" ?></a>
+
+ <?php else:?>
+    <p>Vue sur tous les celliers</p>
+<?php endif; ?>
+ </div> 
+<section class="liste_cellier">
+                  
 <?php
 
 if(!empty($data)):
     foreach ($data as $cle => $bouteille) :
-        
         ?>
+		
             <div class="bouteille" data-quantite="">
             <div class="img"> 
                 <img src="https:<?php echo $bouteille['image'] ?> " width="100" height="100">
             </div>
+			<div class="bouteille_info">
             <div class="description">
-                <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? $bouteille['cellier__nom'] : $i ?> </p>
+            
+                <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? $bouteille['cellier__nom'] : $bouteille['id'] ?> </p>
                 <p class="nom">Nom : <?php echo $bouteille['nom'] ?></p>
                 <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
                 <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
@@ -50,9 +70,26 @@ if(!empty($data)):
                 <button ><a href="?requete=supprimerBouteilleCellier&id=<?php echo $bouteille['vino__bouteille_id']?>&cellier_id=<?php echo $bouteille['id']?>">Supprimer</a></button>
                 <button class='btnAjouter'>Ajouter</button>
                 <button class='btnBoire'>Boire</button>
+                <p><a class='btnBoire' href="?requete=ajoutlisteAchat&id=<?php echo $bouteille['vino__bouteille_id']?>">Ajouter A la  liste d'achat</a></p>
+
+                <!--bouton partage facebook-->
+              
+                <div class="fb-share-button" 
+                 data-href="https:<?php echo $bouteille['image'] ?>" 
+                 data-layout="button_count">
+                </div>
+
+
+                
+
+
                 
             </div>
+            </div>
+
         </div>
+
+
     <?php
     endforeach;
 else:
@@ -61,6 +98,8 @@ else:
         <p>Vous n'avez pas de bouteille dans ce cellier pour le moment</p>
     </div>
 <?php endif;?>
+
+</section>
 </div>
 
 
