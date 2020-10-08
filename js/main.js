@@ -221,6 +221,66 @@ window.addEventListener("load", function () {
           });
       });
     }
+     //Ajouter une nouvelle a la liste d achat
+     let btnAjouters = document.querySelector("[name='ajouterBouteilleListeAchat']");
+     if (btnAjouters) {
+       btnAjouters.addEventListener("click", function (evt) {
+         //Permet de reinitaliser rles donnees
+         document.getElementById("errQt").innerHTML = "";
+         document.getElementById("confirmation").innerHTML = "";
+         //Permet d'aller chercher les valeurs des inputs
+         var param = {
+           id_bouteille: bouteille.nom.dataset.id,
+           quantite: bouteille.quantite.value,
+         };
+ 
+         console.log(param);
+         
+         //Permet de creer un objet options pour les requete '{"nom": "' + nom + '"}'
+         let requete = new Request(
+           BaseURL + "index.php?requete=ajouterNouvelleBouteilleListe",
+           {
+             method: "POST",
+             body: JSON.stringify(param) ,
+             headers: { "Content-Type": "application/json" },
+           }
+         );
+         fetch(requete)
+           .then((response) => {
+             if (response.status === 200) {
+               //Rentre ici
+               console.log(response);
+               return response.json();
+             } else {
+               throw new Error("Erreur");
+             }
+           })
+           .then((response) => {
+             console.log(response);
+             //window.refresh();
+               //  location.reload();
+             //Vérifie la quantite
+             if (response.quantite == true) {
+               document.getElementById("errQt").innerHTML =
+                 "Veuillez entrer une quantite valide";
+             }
+ 
+             //Permet de confirmer si l'ajout à eu lieu
+             if (response == true) {
+               document.getElementById("confirmation").innerHTML =
+                 "Bien ajoutée!";
+               document.getElementById("confirmation").style.color = "green";
+             } else if (response == false) {
+               document.getElementById("confirmation").innerHTML =
+                 "Ajout non effectuée";
+               document.getElementById("confirmation").style.color = "red";
+             }
+           })
+           .catch((error) => {
+             console.error(error);
+           });
+       });
+     }
   }
 
   //Modifier une  bouteille
@@ -372,18 +432,17 @@ window.addEventListener("load", function () {
     fjs.parentNode.insertBefore(js, fjs);
   })(document, "script", "facebook-jssdk");
 
- /////////////fonction pour afficher ou cacher Filtre du cellier///////////////
-    let btnFiltre = document.getElementById("btnFiltre");
-    let filtre = document.getElementById("filtre");
-    
-    btnFiltre.addEventListener("click", () => {
-      if(getComputedStyle(filtre).display != "none"){
-       filtre.style.display = "none";
-      } else {
-       filtre.style.display = "block";
-      }
-    });
+  /////////////fonctio pour afficher ou cacher Filtre du cellier///////////////
+  // let btnFiltre = document.getElementById("btnFiltre");
+  // let filtre = document.getElementById("filtre");
 
+  // btnFiltre.addEventListener("click", () => {
+  //   if (getComputedStyle(filtre).display != "none") {
+  //     filtre.style.display = "none";
+  //   } else {
+  //     filtre.style.display = "block";
+  //   }
+  // });
 
   //Modifier une  bouteille
   let btnModifierAdmin = document.querySelector(

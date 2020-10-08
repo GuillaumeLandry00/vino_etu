@@ -243,7 +243,6 @@ class Utilisateur extends Modele {
         }
             
     }
-
     /**
 	 * Fonction: Permetant d'ajouter un utilisateur a la DB
      * 

@@ -37,6 +37,18 @@ class Controler
 					$this->verificationUtilisateurConnecter();
 					$this->ajouterNouvelleBouteilleCellier();
 					break;
+					case 'ajouterNouvelleBouteilleListe':
+						$this->verificationUtilisateurConnecter();
+						$this->ajouterNouvelleBouteilleListe();
+						break;
+					case 'listeAchat':
+							$this->verificationUtilisateurConnecter();
+							$this->listeAchat();
+					break;
+					case 'supprimerBouteilleListe':
+						$this->verificationUtilisateurConnecter();
+						$this->supprimerBouteilleListe();
+					break;
 				case 'ajouterBouteilleCellier':
 					$this->verificationUtilisateurConnecter();
 					$this->ajouterBouteilleCellier();
@@ -687,7 +699,9 @@ class Controler
 			$resultat = $utilisateur->ajouterDroitAdmin($body->id, $body->droit);
 			echo json_encode($resultat);
 			
+		
 		}
+	
 
 		//Fonction qui permet de supprimer un utilisateur
 		private function supprimerUtilisateur(){
@@ -771,6 +785,64 @@ class Controler
 			echo json_encode($resultat);
 			
 		}
+			//================ ajout a liste d ' achat ==============================
+			private function ajouterNouvelleBouteilleListe()
+			{
+				
+				if (!isset($_SESSION)) {
+					//initialiser la session
+					session_start();
+		
+				}
+				$body = json_decode(file_get_contents('php://input'));
+				if (!empty($body)) {
+				
+					if (!isset($_SESSION['listeAchat'])) {
+		
+						$_SESSION['listeAchat'] = array();
+					}
+							$bte = new Bouteille();
+						   $tab=array();
+		
+							$liste = new ListeAchat();
+							$resultat =  $liste->addSession($body->id_bouteille,$bte->getUneBouteilleCatalogue($body->id_bouteille),$body->quantite, $_SESSION['users_id']);
+						  
+							echo json_encode($resultat);
+				   
+				} else {
+				 //   $_SESSION['total']=0;
+					$dataListe =$_SESSION['listeAchat'];
+					//Créer un objet utilisateur pour aller chercher les celliers qui possede
+					$utilisateur = new Utilisateur();
+					$celliers = $utilisateur->getCellierUtilisateur($_SESSION['users_id']);
+					
+					//initialise une variable $i
+					$i = 1;
+					include "vues/entete.php";
+					include "vues/ajouterListe.php";
+					include "vues/pied.php";
+				}
+		
+			}
+			 //affichage de la liste
+			 private function listeAchat()
+			 {
+				$dataListe =$_SESSION['listeAchat'];
+				 include "vues/entete.php";
+				 include "vues/listeAchat.php";
+				 include "vues/pied.php";
+			 }
+			 /*  function qui supprime les bouteille de la liste d achat*/
+		private function supprimerBouteilleListe(){
+			//supprimer une bouteille
+			unset($_SESSION['listeAchat'][$_GET['id']][$_SESSION['users_id']]);
+			unset($_SESSION['quantite'][$_GET['id']]);
+			$_SESSION['total']=count($_SESSION['total'])-1;
+			$dataListe =$_SESSION['listeAchat'];
+			include "vues/entete.php";
+				include "vues/listeAchat.php";
+				include "vues/pied.php";
+			}
 
 }
 ?>

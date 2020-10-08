@@ -544,7 +544,14 @@ form p .options{
   color: #a73249;
   margin-left: 10px;
 }
-
+ #enteteAcceuil{
+	position: absolute;
+	background-color: rgba(0,0,0,0.6);
+	z-index: 5;
+	width: 100%;
+	height: 20%;
+	border-bottom: 1px solid #af0e3e;
+ }
 #filtre{
   margin: 0px auto;
 }

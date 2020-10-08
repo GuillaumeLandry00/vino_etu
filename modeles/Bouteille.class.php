@@ -66,7 +66,7 @@ class Bouteille extends Modele {
 		C.notes,
 		C.garde_jusqua,
 		C.millesime,
-		T.type,
+		T.type as type,
 		C.vino__bouteille_id,
 		VC.id,
 		VC.cellier__nom
@@ -86,7 +86,8 @@ class Bouteille extends Modele {
 		$requete .=" AND  (LOWER(T.type)like LOWER('%$mot_recherche%') OR  LOWER(B.nom) like  LOWER('%$mot_recherche%') 
 	    OR  LOWER(B.pays) like  LOWER('%$mot_recherche%') OR  LOWER(C.millesime) like  LOWER('%$mot_recherche%')
 		OR  LOWER(C.prix) like  LOWER('%$mot_recherche%') OR  LOWER(C.quantite) like  LOWER('%$mot_recherche%'))
-		ORDER BY B." .$critere. " " .$sens;
+		ORDER BY " .$critere. " " .$sens;
+		
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
 			if($res->num_rows)
@@ -180,7 +181,9 @@ class Bouteille extends Modele {
 		$nom = preg_replace("/\*/","%" , $nom);
 		 
 		//echo $nom;
-		$requete ='SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%'. $nom .'%") LIMIT 0,'. $nb_resultat; 
+		$requete ='SELECT B.id as id ,B.nom as nom FROM vino__bouteille AS B 
+		LEFT JOIN cellier__bouteille as CB ON B.id = CB.vino__bouteille_id 
+		WHERE CB.vino__bouteille_id is NULL AND LOWER(nom) like LOWER("%'.$nom.'%") LIMIT 0,'.$nb_resultat; 
 		//var_dump($requete);
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{

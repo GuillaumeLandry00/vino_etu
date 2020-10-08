@@ -2,7 +2,7 @@
 
     <div class="nouveauCellier" vertical layout>
         
-    <h3>Souhaitez-vous ajouter un nouveau cellier ?</h3>
+    <p>Souhaitez-vous ajouter un nouveau cellier ?</p>
     <form action="" method="post">
         <label for="cellier__nom"></label>
         <input type="text" name='cellier__nom'placeholder="Nom du cellier">
