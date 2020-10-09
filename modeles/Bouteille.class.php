@@ -19,7 +19,7 @@ class Bouteille extends Modele {
 		$rows = Array();
 
 		$requete = "Select B.id, B.nom, B.image, B.code_saq, B.pays, B.description, B.prix_saq, B.url_saq, B.url_img, B.format, VT.type from ". self::TABLE . " AS B INNER JOIN vino__type AS VT ON B.fk__vino__type_id = VT.id  WHERE nom LIKE '%".$mot_recherche."%' OR description LIKE '%".$mot_recherche."%' OR 
-		code_saq LIKE '%".$mot_recherche."%'
+		code_saq LIKE '%".$mot_recherche."%' OR pays LIKE '%".$mot_recherche."%'
 		ORDER BY " .$critere. " " .$sens . " LIMIT " . $limit;
 
 		$res = $this->_db->query($requete);
@@ -268,7 +268,7 @@ class Bouteille extends Modele {
 			$requete .= ",prix";
 			$requete2 .= ",'".$data->prix."'";
 
-			$regExp = "/^[1-9]\d*\.?\d\d$/i";
+			$regExp = "/^[1-9]\d*(\.\d{1,2})?$/i";
 			if(!preg_match($regExp, $data->prix)){
 				$erreur["prix"] = true;
 			}
@@ -362,7 +362,7 @@ class Bouteille extends Modele {
 			//Permet de construire la requete
 			$requete .= ", prix = " . $data->prix ;
 
-			$regExp = "/^[1-9]\d*\.?\d\d$/i";
+			$regExp = "/^[1-9]\d*(\.\d{1,2})?$/i";
 			if(!preg_match($regExp, $data->prix)){
 				$erreur["prix"] = true;
 			}

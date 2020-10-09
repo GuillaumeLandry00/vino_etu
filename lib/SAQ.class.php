@@ -88,13 +88,13 @@ class SAQ extends Modele {
 				 
 
 			    //affichage  des infos par necessaire 
-				$data[$i]['nom'] = $info->nom;
+				$data[$i]['nom'] = utf8_encode($info->nom);
 				$data[$i]['img'] = $info->img;
 				$data[$i]['url'] =$info->url;
 				$data[$i]['type'] =$info ->desc->type;
 				$data[$i]['format'] =$info ->desc->format;
 				$data[$i]['code_SAQ'] =$info->desc ->code_SAQ;
-				$data[$i]['pays'] =$info->desc->pays;
+				$data[$i]['pays'] =utf8_encode($info->desc->pays);
 				$data[$i]['texte'] =$info->desc->texte;
 				$data[$i]['prix'] =$info->prix;
 			
@@ -153,7 +153,7 @@ private function nettoyerEspace($chaine)
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
 		
-        $info -> nom = self::nettoyerEspace(trim($a_titre -> textContent));
+        $info -> nom = self::nettoyerEspace(trim(utf8_encode ($a_titre -> textContent)));
 		// Retirer le format de la bouteille du titre.
 		//mettre le nom sous forme de tableau	
 		$tabNom= explode(" ", $info -> nom);
@@ -174,7 +174,7 @@ private function nettoyerEspace($chaine)
 					
 					$info -> desc -> type = trim($aDesc[0]);
 					$info -> desc -> format = trim($aDesc[1]);
-					$info -> desc -> pays = trim($aDesc[2]);
+					$info -> desc -> pays = trim(utf8_encode ($aDesc[2]));
 				}
 				
 				$info -> desc -> texte = trim($info -> desc -> texte);

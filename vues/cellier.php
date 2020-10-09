@@ -64,8 +64,8 @@ if(!empty($data)):
             <div class="bouteille_info">
             <div class="description">
             
-                <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? $bouteille['cellier__nom'] : $bouteille['id'] ?> </p>
-                <p class="nom">Nom :<b> <?php echo $bouteille['nom'] ?></b></p>
+                <p class="cellier_nom">Cellier: <?=(isset($bouteille['cellier__nom'])) ? utf8_encode ($bouteille['cellier__nom']) : 'Mon cellier' ?> </p>
+                <p class="nom">Nom :<b> <?php echo utf8_encode($bouteille['nom']) ?></b></p>
 
 
                  <input type="checkbox" id="menu-toggle" />
@@ -77,7 +77,7 @@ if(!empty($data)):
 
                 <div class="detailBt" id="detailBt">
                     <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
-                    <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
+                    <p class="pays">Pays : <?php echo utf8_encode ($bouteille['pays']) ?></p>
                     <p class="type">Type : <?php echo $bouteille['type'] ?></p>
                     <p class="millesime">Millesime : <?php echo $bouteille['millesime'] ?></p>
                     <p class="prix">Prix : <?php echo $bouteille['prix'] ?></p>
@@ -93,7 +93,7 @@ if(!empty($data)):
                 <button class='btnAjouter'>Ajouter</button>
                 <button class='btnBoire'>Boire</button>
                 <br>
-                <button data-nom="<?php echo $bouteille['nom'] ?>" class="btnSignaler">Singaler erreur</button>
+                <button data-nom="<?php echo $bouteille['nom'] ?>" class="btnSignaler">Signaler erreur</button>
 
                 <!--bouton partage facebook-->
                  <br>
@@ -119,13 +119,14 @@ else:
 ?>  
     <div>
         <p>Vous n'avez pas de bouteille dans ce cellier pour le moment</p>
+        <a href="?requete=ajouterNouvelleBouteilleCellier">Ajouter une bouteille au cellier</a>
     </div>
 <?php endif;?>
 
- <!-- The Modal -->
+ 
         <div id="monModal" class="modal">
 
-            <!-- Modal content -->
+         
             <div class="modal-content">
                 <span class="close" id="close">&times;</span>
                 <h4>Singaler erreur</h4>

@@ -745,7 +745,7 @@ class Controler
 
 				for($i=0; $i<$page;$i++)	//permet d'importer séquentiellement plusieurs pages.
 				{
-					$data = array_merge($data, $saq->getProduits($nombreProduit,$i, $type));
+					$data = array_merge($data, $saq->getProduits($nombreProduit,($i+1), $type));
 				}
 
 				//Permet de servir de compteur

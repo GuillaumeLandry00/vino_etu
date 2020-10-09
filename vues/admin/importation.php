@@ -33,9 +33,9 @@
        
         <tr>
             <td><?= $i++ ?></td>
-            <td><?= $item['nom'] ?></td>
+            <td><?= utf8_encode ($item['nom']) ?></td>
             <td><?= $item['code_SAQ'] ?></td>
-            <td><?= $item['pays'] ?></td>
+            <td><?= utf8_encode ($item['pays']) ?></td>
             <td><?= $item['prix'] ?></td>
             <td style="color:<?= $item['raison'] === "duplication" ? "red" : "green" ?>"><?= $item['raison'] ?></td>
         </tr>
