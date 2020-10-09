@@ -603,6 +603,7 @@ window.addEventListener("load", function () {
   let spanClose = document.getElementById("close");
   if (spanClose) {
     spanClose.addEventListener("click", () => {
+      location.reload();
       modal.style.display = "none";
     });
   }
@@ -613,7 +614,7 @@ window.addEventListener("load", function () {
     element.addEventListener("click", function (evt) {
       //Permet d'aller chercher le id et créer la requête
       let id = evt.target.dataset.id;
-
+      let parent = evt.target.parentElement;
       let requete = new Request(
         BaseURL + "index.php?requete=admin/supprimerMessage",
         {
@@ -631,6 +632,9 @@ window.addEventListener("load", function () {
           }
         })
         .then((response) => {
+          if(response == true){
+            parent.innerHTML += "<span style='color: red;'>Message supprimé</span>"
+          }
           console.log(response);
         })
         .catch((error) => {
@@ -647,6 +651,7 @@ window.addEventListener("load", function () {
 
       //Permet d'aller mettre un texte par defaut
       let nom = evt.target.dataset.nom;
+      
       document.getElementById("erreurTxt").value = "Erreur sur " + nom + ": ";
 
       //Permer d'executer la requete

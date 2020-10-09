@@ -1,4 +1,4 @@
-        <div id="bas"></div>';
+
 		</main>
 		<footer>
 			<p>

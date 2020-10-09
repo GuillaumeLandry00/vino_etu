@@ -3,15 +3,15 @@
 <button id="btnFiltre">Filtre <i class="fas fa-chevron-down"></i></button>
 
 <div id="filtre">    
-<form id="fitltreForm" id="tri" name="formTri" action="<?php echo BASEURL?>?requete=cellier<?php echo isset($_GET['id']) ?'&id='.$_GET['id'] : ""?>"  method="post">
-             Mot clé :<input type="text" value ="" name="recherche_bouteille">
+<form id="fitltreForm" id="tri" name="formTri" action="<?php echo BASEURL?>?requete=cellier<?php echo isset($_GET['id']) ?'&id='.$_GET['id'] : ""?>" method="post">
+             Mot clé :<input type="text" value ="<?php echo $_POST["recherche_bouteille"]?>" placeholder ="rechercher" name="recherche_bouteille">
             <label>Trier par</label>
             <select name="typeTri" id="idType">
-                <option value="nom" <?php echo $critere === "nom" ? "selected" : "" ?>>Nom</option>
-                <option value="type"<?php echo $critere === "type" ? "selected" : "" ?> >type</option>
-                <option value="quantite" <?php echo $critere === "quantite" ? "selected" : "" ?>>quantité</option> 
-                <option value="pays"<?php echo $critere === "pays" ? "selected" : "" ?>>pays</option>   
-                <option value="millesime"<?php echo $critere === "millesime" ? "selected" : "" ?>>millésime</option>             
+                <option  value="nom" <?php echo $critere === "nom" ? "selected" : "" ?>>Nom</option>
+                <option value="type"<?php echo $critere === "type" ? "selected" : "" ?> >Type</option>
+				<option value="quantite" <?php echo $critere === "quantite" ? "selected" : "" ?>>Quantité</option> 
+                <option value="pays"<?php echo $critere === "pays" ? "selected" : "" ?>>Pays</option>   
+                <option value="millesime"<?php echo $critere === "millesime" ? "selected" : "" ?>>Millésime</option>             
             </select>
 
             <label>Ordre</label>
@@ -92,6 +92,7 @@ if(!empty($data)):
                 <br>
                 <button class='btnAjouter'>Ajouter</button>
                 <button class='btnBoire'>Boire</button>
+                <br>
                 <button data-nom="<?php echo $bouteille['nom'] ?>" class="btnSignaler">Singaler erreur</button>
 
                 <!--bouton partage facebook-->

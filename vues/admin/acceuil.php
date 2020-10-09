@@ -10,7 +10,7 @@
             <div class="message">
             <?php if(!empty($dataMsg)): ?>
                 <?php foreach($dataMsg as $msg):?>
-                    <div class="container-message">
+                    <div class="container-message" data-idMsg="messageID<?=$i?>">
                         <p>Mail #<?= $i ?></p>
                         <p>De: <?= $msg['users_login']?></p>
                         <p>Message: <?= $msg['message']?></p>

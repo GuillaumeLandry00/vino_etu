@@ -1,6 +1,15 @@
 /* /********
  * Votre CSS
  ********/
+ 
+ /***   couleur différent pour boutton****/ 
+button{
+  opacity: 65%;
+}
+button:hover:not(.active) {
+  opacity: 100%;
+  cursor: pointer;
+}
 
 /*//////////////////////////////////////////////****  page admin accueil   ///////////////////////////////////////*/
 
@@ -11,7 +20,7 @@
   padding: 50px;
   background-color: white;
 }
-
+/*******  container pour liste bouteille     ******/
 .liste_adminCat {
   width: 100%;
   display: flex;
@@ -22,21 +31,21 @@
 
 .catalogue-admin .bouteille {
   width: 20%;
-  /*margin: 25px 40px 50px 20px;*/
   margin: 50px auto;
   padding: 10px;
-  border: 1px solid #a73249;
   line-height: 15px;
   font-size: 16px;
 }
 
 .bouteille .img {
   padding: 5px;
-  text-align: center;
+ text-align: start;
+ margin-left: 10px;
 }
 .bouteille .img img {
   height: 150px;
   width: auto;
+  
 }
 
 .bouteille .description {
@@ -44,7 +53,7 @@
 }
 
 .bouteille .description .nom {
-  border-bottom: 0.1em solid #a73249;
+  
   height: 3em;
   line-height: 25px;
 }
@@ -71,7 +80,7 @@
   color: white;
   font-size: 16px;
   padding: 6px;
-  margin: 5px 15px;
+  margin: 5px 25px 5px 50px;
   border: 1px solid #a73249;
 }
 
@@ -100,6 +109,7 @@
   padding: 50px;
 }
 
+/******** container pour liste utilisateur   **********/
 .utilisateur-admin {
   display: flex;
   flex-flow: row wrap;
@@ -116,6 +126,8 @@
   justify-content: space-around;
 }
 
+
+/******* effacer pour lien text-decoration, ajoute une autre couleur    ********/ 
 a {
   text-decoration: none;
   color: white;
@@ -130,10 +142,7 @@ button {
   text-align: center;
   border-style: none;
 }
-.suppression-compte button {
-  width: 120px;
-  margin: 2px;
-}
+
 .utilisateur-admin .utilisateur {
   width: 25%;
   padding: 15px;
@@ -151,6 +160,22 @@ button {
 .utilisateur .info_user {
   padding: 10px;
   margin: 5px;
+}
+
+
+/****** suppression compte   *****/
+
+.suppression-compte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/**********   button pour supprimer compte utilisateur        ****************************/
+.suppression-compte button {
+  width: 120px;
+  margin: 2px;
 }
 
 /*//////////////////////////////////////  page statistique /////////////////////////////*/
@@ -267,14 +292,7 @@ input {
   height: 15px;
 }
 
-/****** suppression compte   *****/
 
-.suppression-compte {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
 
 /*////////////////////////  version tablette ///////////////////////////////////*/
 
@@ -302,6 +320,7 @@ input {
     background-color: white;
   }
 
+  /***  page statistique version tablette ***/
   .container-importation table {
     margin: 0px auto;
     padding: 5px;
@@ -358,6 +377,7 @@ input {
   .container-importation table {
     padding: 0px;
     margin: 0px;
+    margin-top: 50px;;
   }
 
   .catalogue-admin .bouteille {
@@ -366,8 +386,8 @@ input {
 
   .catalogue-admin .bouteille {
     width: 100%;
-    /*margin: 5px 15px 60px 25px;*/
-    margin: 40px 0;
+    margin: 0px;
+    margin-bottom: 20px;
     padding: 3px;
     font-size: 12px;
     line-height: 10px;
@@ -377,114 +397,22 @@ input {
     border-bottom: 1px solid #a73249;
   }
 
+  .catalogue-admin .bouteille .img{
+      margin: 0px 30px 5px 5px;
+      padding-top: 25px;
+  }
+
   .bouteille .description .nom {
     height: 10%;
     line-height: 20px;
   }
 
-  #menuMobile {
-    background-color: black;
-    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
-
-    width: 100%;
-    z-index: 3;
+  .bouteille .description {
+    padding: 0px;
+    margin: 0px;;
   }
+ 
 
-  #menuMobile ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
 
-    overflow: hidden;
-    background-color: black;
-  }
-
-  #menuMobile li a {
-    display: block;
-    text-align: right;
-    padding: 20px 20px;
-    border-right: 1px solid #f4f4f4;
-    text-decoration: none;
-    font-size: 18px;
-  }
-  #menuMobile li {
-    border-bottom: 1px solid #af0e3e;
-    width: 100%;
-  }
-
-  #menuMobile input {
-    clear: none;
-  }
-
-  /* menu */
-
-  #menuMobile #menu_principal {
-    clear: both;
-    max-height: 0;
-    transition: max-height 0.2s ease-out;
-  }
-
-  #menuMobile .menu-icon {
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    padding: 28px 20px;
-    position: relative;
-    user-select: none;
-  }
-
-  #menuMobile .menu-icon .navicon {
-    background: #333;
-    display: block;
-    height: 3px;
-    position: relative;
-    transition: background 0.2s ease-out;
-    width: 30px;
-  }
-
-  #menuMobile .menu-icon .navicon:before,
-  #menuMobile .menu-icon .navicon:after {
-    background: white;
-    content: "";
-    display: block;
-    height: 100%;
-    position: absolute;
-    transition: all 0.2s ease-out;
-    width: 100%;
-  }
-
-  #menuMobile .menu-icon .navicon:before {
-    top: 5px;
-  }
-
-  #menuMobile .menu-icon .navicon:after {
-    top: -5px;
-  }
-
-  /* menu btn */
-
-  #menuMobile .menu-btn {
-    display: none;
-  }
-
-  #menuMobile .menu-btn:checked ~ #menu_principal {
-    max-height: 600px;
-  }
-
-  #menuMobile .menu-btn:checked ~ .menu-icon .navicon {
-    background: transparent;
-  }
-
-  #menuMobile .menu-btn:checked ~ .menu-icon .navicon:before {
-    transform: rotate(-45deg);
-  }
-
-  #menuMobile .menu-btn:checked ~ .menu-icon .navicon:after {
-    transform: rotate(45deg);
-  }
-
-  #menuMobile .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
-  #menuMobile .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
-    top: 0;
-  }
+ 
 }
