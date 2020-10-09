@@ -43,14 +43,14 @@
   						<label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
 						
                         <ul id="menu_principal">
-                            <li><a href="?requete=listeAchat">Ma liste d'achat</a></li>
-                            <li>
+                        <li>
                             <?php if(isset($_SESSION['users_id'])):?>
                              <?php endif;?>
                             <?php if(isset($_SESSION['users_id'])):?>
                             <a href="?requete=authentification">Deconnexion</a>
                             <?php endif;?>
                             </li>
+                            <li><a href="?requete=listeAchat">Ma liste d'achat</a></li>
                             <li><a href="?requete=ajouterNouvelleBouteilleListe">Créer ma liste d'achat</a></li>
                             <li><a href="?requete=monCompte">Gerer mon compte</a></li>
                             <li><a href="?requete=cellier">Mon cellier</a></li>
