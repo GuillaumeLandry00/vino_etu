@@ -1,5 +1,8 @@
 
-<div class="catalogue-admin">
+<div class="utilisateur-admin">
+
+<button id="btnFiltre">Filtre <i class="fas fa-chevron-down"></i></button>
+<div id="filtre"> 
 <form id="fitltreForm" id="tri" name="formTri" method="post">
              Nom d'utilisateur :<input type="text" value ="<?=(isset($mot)) ? $mot :"" ?>" name="recherche_utilisateur">
             <label>Trier par</label>
@@ -15,12 +18,16 @@
             </select> 
             <input id="executer" class="subFiltre"  type="submit" name="tri" value="Executer"> 
     </form>
+</div>
+
+<section class="liste_utilisateur">  
 <?php if(!empty($data)):?>
     <?php foreach ($data as $cle => $utilisateur) : ?>
         <div class="utilisateur" data-quantite="">
             <div class="img"> 
                 <img src="https://c7.uihere.com/files/136/22/549/user-profile-computer-icons-girl-customer-avatar.jpg" width="100" height="100">
             </div>
+			<section class="info_user">
             <div class="description">
                 <p class="nom">Date inscription : <?php echo $utilisateur['date_inscription'] ?></p>
                 <p class="quantite">Username : <?php echo $utilisateur['users_login'] ?></p>
@@ -29,7 +36,7 @@
             <button class='droitAdmin'  data-id="<?php echo $utilisateur['users_id'] ?>">Ajouter droit admin</button>
             <button class='droitUtilisateur'  data-id="<?php echo $utilisateur['users_id'] ?>">Retirer droit admin</button>
             <button class='supprimerUtilisateur'><a href="?requete=admin/supprimerUtilisateur&id=<?= $utilisateur['users_id'] ?>">Supprimer Utilisateur</a></button>
-        
+         </section>
         </div>
         <?php endforeach;?>
 <?php else: ?>	
@@ -37,6 +44,7 @@
         <p>Vous n'avez pas de bouteille dans ce cellier pour le moment</p>
     </div>
 <?php endif;?>
+</section>
 </div>
 
 

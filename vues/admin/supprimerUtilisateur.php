@@ -16,7 +16,7 @@
             <span class="retourErreur">
             <?php echo $array['ancienMotDePasseErreurSupp']?>
             <button id="submit" type="submit" value="submit" name="supprimerUtilisateur">Oui</button>
-            <button><a href="?requete=admin">Non</a></button>
+            <button><a href="?requete=cellier">Non</a></button>
         </div>
     </form>
 </div>

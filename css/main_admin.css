@@ -1,0 +1,513 @@
+/* /********
+ * Votre CSS
+ ********/
+
+
+
+/*//////////////////////////////////////////////****  page admin accueil   ///////////////////////////////////////*/ 
+
+.catalogue-admin{
+	display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 50px;
+	background-color: white;
+}
+
+.liste_adminCat{
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	margin: 0px auto;
+}
+
+.catalogue-admin .bouteille{
+    width: 20%;
+    /*margin: 25px 40px 50px 20px;*/
+	margin: 50px auto;
+    padding: 10px;
+    border: 1px solid #a73249;
+    line-height: 15px;
+    font-size: 16px;
+	
+}
+
+.bouteille .img{
+    padding: 5px;
+    text-align: center;
+}
+.bouteille .img img{
+    height: 150px;
+    width: auto;
+}
+
+.bouteille .description{
+   padding: 10px;  
+}
+
+.bouteille .description .nom{
+    border-bottom: 0.1em solid #a73249;
+    height: 3em;
+    line-height: 25px;
+   
+}
+
+.bouteille button{
+    
+    margin: 5px;
+    padding: 5px 15px;
+    width: 150px;
+    background-color: #a73249;
+    color: white;
+    text-align: center;
+    border-style: none;
+}
+
+.bouteille a{
+    color: white;
+    text-decoration: none;
+}
+
+.btnmailbox, .supprimerMail {
+    width: 200px;
+   background-color: #a73249;
+    color: white;
+    font-size: 16px;
+    padding: 6px;
+    margin: 5px 15px;
+    border: 1px solid #a73249;
+}
+
+.container-message p{
+	 padding: 6px;
+    margin: 5px 15px;
+}
+
+/********** PAGE IMPORTATION      **********/
+
+.container-importations form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    background-color: white;
+}
+
+/*///////////////////////////////////////// liste utilisateur /////////////////////////////////////*/
+
+.utilisateur-admin, .container-importation, .container-adminCompte, .container-importations{
+    background-color: white;
+    padding: 50px;
+   
+}
+
+.utilisateur-admin {
+    display: flex;
+    flex-flow: row wrap;
+    padding-bottom: 100px;
+   
+    justify-content: space-around;
+
+}
+
+.utilisateur-admin .liste_utilisateur{
+    display: flex;
+    flex-flow: row wrap;
+    padding-bottom: 100px;
+   
+    justify-content: space-around;
+
+}
+
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+button {
+    margin: 5px;
+    padding: 5px 15px;
+    width: 180px;
+    background-color: #a73249;
+    color: white;
+    text-align: center;
+    border-style: none;
+}
+.suppression-compte button{
+    width: 120px;
+    margin: 2px;
+    
+}
+.utilisateur-admin .utilisateur {
+    width: 25%;
+    padding: 15px;
+    margin: 25px 20px;
+    border: 1px solid #a73249;
+
+}
+
+.utilisateur {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.utilisateur .img,
+.utilisateur .info_user {
+    padding: 10px;
+    margin: 5px;
+}
+
+/*//////////////////////////////////////  page statistique /////////////////////////////*/
+.container-importation, .container-adminCompte, .container-importations {
+    padding-bottom: 450px;
+    text-align: center;
+}
+
+.container-importation form {
+    text-align: center;
+    width: 100%;
+    margin: 25px 20px 50px 20px;
+    padding: 10px;
+    font-size: 16px; 
+}
+
+
+.container-importation table {
+    margin: auto;
+    padding: 25px;
+}
+
+.container-importation form select, .container-importation form input, button, input, #limit{
+  width: 200px;
+   font-size: 16px;
+    padding: 6px;
+    margin: 5px 15px;
+    border-color: lightgrey;  
+}
+
+.container-importation h2, .container-adminCompte h2, .suppression-compte h3, .suppression-compte strong, .container-importations h2{
+    margin: 10px;
+    text-align: center;
+    color: grey;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+
+.container-importation th{
+    
+    text-align: center;
+    color: grey;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+.container-importation table td{
+   border-bottom: 1px solid #a73249;
+    line-height: 35px;
+    
+}
+
+/******** modifier bouteille   ******/
+
+.modifierBouteille{
+    background-color: white;
+    text-align: center;
+    padding: 50px;
+    padding-bottom: 100px;
+    margin-bottom: 20px;
+    
+    
+    
+    min-height: 100vh;
+    z-index:0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.modifierBouteille h3{
+	
+margin: 0;
+text-align: center;
+color: grey;
+font-family: 'Roboto', sans-serif;
+font-size: 20px;
+padding-top: 20px;
+   
+	
+}
+
+.modifierBouteille button, .container-importations form button {
+	background-color: #af0e3e;
+	border: none;
+	width: 250px;
+	height: 40px;
+	color: white;
+	font-size: 20px; 
+	margin: 10px;
+}
+
+
+select, textarea{
+	width: 250px;
+	height: 30px;
+	color: grey;
+	margin:10px;
+	border: 1px solid #af0e3e;
+}
+
+input{
+	width: 240px;
+	height: 20px;
+	color: grey;
+	margin:10px;
+	border: 1px solid #af0e3e;
+   
+}
+
+.utilisateur-admin input, .catalogue-admin input{
+   border: 1px solid lightgrey;
+   height: 15px;
+}
+
+/****** suppression compte   *****/
+
+.suppression-compte{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/*////////////////////////  version tablette ///////////////////////////////////*/
+
+@media all and (max-width: 1024px) and (min-width: 640px){
+    
+.catalogue-admin .bouteille{
+    width: 40%;	
+}
+    
+    .utilisateur-admin{
+        padding: 10px 10px 100px 0px;
+		margin: 0px;
+    }
+    
+    .utilisateur-admin .utilisateur {
+    width: 100%;
+    padding: 5px;
+    margin: 10px 0px;
+}
+    
+    
+    
+    .container-importation form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    background-color: white;
+}
+    
+ .container-importation table {
+    margin: 0px auto;
+    padding: 5px;
+} 
+    
+    
+    .container-importation th{
+    font-size: 12px;
+}
+
+.container-importation table td{
+    line-height: 30px;
+    
+}
+    
+}
+
+
+/*////////////////////////////////////   version mobile ////////////////////////////*/
+
+@media all and (max-width:640px){
+    
+    .container-importation form{
+        margin: 0px;
+        padding: 0px;
+    }
+    
+     .container-importation{
+        margin: 0px 0px 50px  0px;
+        padding: 50px 5px;
+    }
+    
+    .container-importation table {
+    margin: 0px;
+    padding: 0px;
+        width: 100%;
+        padding: 50px 5px;
+        margin: 50px 0px;
+} 
+    
+    
+    .container-importation th{
+    font-size: 9px;
+}
+
+.container-importation table td{
+    line-height: 25px;
+    
+}
+    
+    .utilisateur-admin{
+        padding: 0px;
+        padding-bottom: 100px;
+    }
+    
+    .utilisateur-admin .utilisateur {
+    width: 100%;
+    padding: 0px;
+    margin: 5px ;
+} 
+  .container-importation table {
+    padding: 0px;
+      margin: 0px;
+}  
+    
+    
+.catalogue-admin .bouteille{
+    width: 100%;  	
+}
+    
+  .catalogue-admin .bouteille{
+    width: 100%;
+    /*margin: 5px 15px 60px 25px;*/
+	margin: 40px 0;
+    padding: 3px;
+    font-size: 12px;
+	line-height: 10px; 
+	display: flex;
+	flex-direction: row;
+	border-style: none;
+	border-bottom: 1px solid #a73249;
+	
+} 
+    
+    .bouteille .description .nom{
+    height: 10%;
+    line-height: 20px; 
+}
+	
+#menuMobile {
+  background-color: black;
+  box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+
+  width: 100%;
+  z-index: 3;
+}
+
+#menuMobile ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  overflow: hidden;
+  background-color: black;
+}
+
+#menuMobile li a {
+  display: block;
+  text-align: right;
+  padding: 20px 20px;
+  border-right: 1px solid #f4f4f4;
+  text-decoration: none;
+  font-size: 18px;
+  
+}
+#menuMobile li {
+ 
+  border-bottom: 1px solid #af0e3e;
+  width: 100%;
+}
+	
+  #menuMobile input {
+    clear: none;
+  }
+
+/* menu */
+
+#menuMobile #menu_principal {
+  clear: both;
+  max-height: 0;
+  transition: max-height .2s ease-out;
+}
+
+#menuMobile .menu-icon {
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  padding: 28px 20px;
+  position: relative;
+  user-select: none;
+}
+
+#menuMobile .menu-icon .navicon {
+  background: #333;
+  display: block;
+  height: 3px;
+  position: relative;
+  transition: background .2s ease-out;
+  width: 30px;
+}
+
+#menuMobile .menu-icon .navicon:before,
+#menuMobile .menu-icon .navicon:after {
+  background: white;
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all .2s ease-out;
+  width: 100%;
+}
+
+#menuMobile .menu-icon .navicon:before {
+  top: 5px;
+}
+
+#menuMobile .menu-icon .navicon:after {
+  top: -5px;
+}
+
+/* menu btn */
+
+#menuMobile .menu-btn {
+  display: none;
+}
+
+#menuMobile .menu-btn:checked ~ #menu_principal {
+  max-height: 300px;
+}
+
+#menuMobile .menu-btn:checked ~ .menu-icon .navicon {
+  background: transparent;
+}
+
+#menuMobile .menu-btn:checked ~ .menu-icon .navicon:before {
+  transform: rotate(-45deg);
+}
+
+#menuMobile .menu-btn:checked ~ .menu-icon .navicon:after {
+  transform: rotate(45deg);
+}
+
+#menuMobile .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+#menuMobile .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+  top: 0;
+}
+    
+    
+    
+}
+

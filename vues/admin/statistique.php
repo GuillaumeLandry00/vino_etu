@@ -1,7 +1,10 @@
 
 <div class="container-importation">
     <h2>Statistique général</h2>
-    <form action="" method="post">
+	<button id="btnFiltre">Filtre <i class="fas fa-chevron-down"></i></button>
+	
+	<div id="filtre"> 
+    <form id="fitltreForm" action="" method="post">
         <br>
         <label for="tri">Trier par :</label>
         <select name="tri">
@@ -19,6 +22,8 @@
         <input type="date" value="<?php if (isset($date)) echo $date?>" name="date">
         <button class='trier'>Trier</button>
     </form>
+	
+	</div> 
     <?php if(!empty($data)):?>
         <table>
         <tr>

@@ -24,6 +24,8 @@
             </div>
         </div>
     </div>
+	<button id="btnFiltre">Filtre <i class="fas fa-chevron-down"></i></button>
+	<div id="filtre">
     <form id="fitltreForm" id="tri" name="formTri" method="post">
              Mot clé :<input type="text" value ="<?=(isset($mot)) ? $mot :"" ?>" name="recherche_bouteille">
             <label>Trier par</label>
@@ -40,7 +42,7 @@
                 <option value="ASC"<?php if (isset($ordre) && $ordre=="ASC") echo "selected";?>>Croissant</option>
             </select> 
             <label for="limit">Nb resultat par page</label>
-            <select name="limit">
+            <select name="limit" id="limit">
                     <option value="25"<?php if (isset($limit) && $limit==25) echo "selected";?>>25</option>
                     <option value="50"<?php if (isset($limit) && $limit==50) echo "selected";?>>50</option>
                     <option value="75"<?php if (isset($limit) && $limit==75) echo "selected";?>>75</option>
@@ -48,8 +50,10 @@
             </select>
             <input id="executer" class="subFiltre"  type="submit" name="tri" value="Executer"> 
     </form>
+	</div> 
+	<div class="liste_adminCat">
     <?php if(!empty($data)):?>
-        <form action="" method="post">
+        
         <?php foreach ($data as $cle => $bouteille) : ?>
 
             <div class="bouteille" data-quantite="">
@@ -70,11 +74,12 @@
 
             </div>
     <?php endforeach;?>
-        </form>
+        
     <?php else: ?>	
         <div>
             <p>Il n'y pas encore de bouteille enregistre</p>
         </div>
     <?php endif;?>
+	</div>
 </div>
 
