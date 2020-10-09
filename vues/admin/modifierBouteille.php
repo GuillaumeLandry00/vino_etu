@@ -1,8 +1,8 @@
 <div class="modifier">
     <div class="modifierBouteille" vertical layout>
-    <h3 id="titre">Modifier: <?= $data[0]['nom']?></h3>
+    <h3 id="titre">Modifier: <?=$data[0]['nom']?></h3>
         <div>
-                <p> <input value="<?= $data[0]['nom']?>" min="1" name="nom" placeholder="nom"><span style="color:red"id="errNom"></span></p>
+                <p> <input value="<?= $data[0]['nom']?>"type="text" name="nom" placeholder="nom"><span style="color:red"id="errNom"></span></p>
                 <label for="code_saq">Code saq</label>
                 <p> <input  value="<?= $data[0]['code_saq']?>" type="number" name="code_saq" value="1" placeholder="code_saq :"><span style="color:red"id="errSaq"></span></p>
                 <label for="pays">Pays</label>

@@ -18,7 +18,7 @@ class Bouteille extends Modele {
 		
 		$rows = Array();
 
-		$requete = "Select * from ". self::TABLE . " AS B INNER JOIN vino__type AS VT ON B.fk__vino__type_id = VT.id  WHERE nom LIKE '%".$mot_recherche."%' OR description LIKE '%".$mot_recherche."%' OR 
+		$requete = "Select B.id, B.nom, B.image, B.code_saq, B.pays, B.description, B.prix_saq, B.url_saq, B.url_img, B.format, VT.type from ". self::TABLE . " AS B INNER JOIN vino__type AS VT ON B.fk__vino__type_id = VT.id  WHERE nom LIKE '%".$mot_recherche."%' OR description LIKE '%".$mot_recherche."%' OR 
 		code_saq LIKE '%".$mot_recherche."%'
 		ORDER BY " .$critere. " " .$sens . " LIMIT " . $limit;
 
@@ -30,7 +30,6 @@ class Bouteille extends Modele {
 				$rows[] = $row;
 			}
 		}
-		
 		return $rows;
 	}
 

@@ -9,7 +9,7 @@
             <option value="96" <?php if (isset($nombreProduit) && $nombreProduit==96) echo "selected"?>>96</option>
         </select>
         <label for="page">Nombre de page \ importer</label>
-        <input type="number" min='1' value='<?= (isset($page) ) ? $page : ""?>' name='page'>
+        <input type="number" min='1' value='<?= (isset($page) ) ? $page : "1"?>' name='page'>
         <label for="type">Type de vin</label>
         <select name="type" id="">
             <option value="rouge" <?php if (isset($type) && $type=="rouge") echo "selected"?>>Vin Rouge</option>
